@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FAF7F2"><title>LIFE / 아직 안 망했다 (v09.8 단독 실행본)</title><style>/* Version 08 marker retained by the build to replace the complete stylesheet. */
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FAF7F2"><title>LIFE / 아직 안 망했다 (v09.9 단독 실행본)</title><style>/* Version 08 marker retained by the build to replace the complete stylesheet. */
 :root{--paper:#faf7f2;--ink:#413b4b;--muted:#655b6a;--line:#bca8c0;--accent:#a64564;--soft:#f4e4ea;--lavender:#e7def4;--mint:#e2eee5}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overscroll-behavior:none}body{background:#eee7ed;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;font-size:13px}body:before{display:none}main{width:100%;max-width:480px;height:100dvh;min-height:0;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(8px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px;background:var(--paper);overflow:hidden;border-inline:1px solid #e0d6e2}header{display:flex;justify-content:space-between;align-items:center;flex:none;padding:2px 2px 7px;border-bottom:1px solid var(--line);font-size:9px;letter-spacing:1.2px;color:var(--muted)}.brand{color:var(--accent);font-weight:800}button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}button:focus-visible,a:focus-visible{outline:3px solid #81639e;outline-offset:3px}button:disabled{opacity:.45;cursor:default}h1,h2,h3,p{margin:0}p{white-space:pre-line}h1{font-size:26px;letter-spacing:-1px;line-height:1.25}h2{font-size:18px}h3{font-size:13px;margin:10px 0 5px}.muted{color:var(--muted);font-size:11px!important}.eyebrow{display:block;font-size:9px;letter-spacing:1.5px;font-weight:700;color:var(--accent);margin-bottom:8px}.hud-card{border:1.5px solid var(--line);background:#fffdfa;border-radius:13px;padding:9px 10px;box-shadow:0 2px 0 #e7dae7}.hud-top,.hud-cash,.hud-bottom{display:flex;align-items:center;gap:8px}.hud-top{justify-content:space-between}.job-pill{background:var(--lavender);border-radius:12px;padding:4px 7px;font-size:10px;font-weight:600;max-width:53%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.countdown{margin-left:auto;font-size:19px;letter-spacing:-.5px;color:var(--accent)}.mini{border:0;background:none;color:var(--muted);padding:3px;font-size:10px;white-space:nowrap}.hud-cash{margin-top:7px;font-size:10px;justify-content:space-between}.hud-cash span b{font-size:16px;display:inline-block;margin-left:3px;letter-spacing:-.7px}.repay-pill{border:1px solid #d7a5b6;border-radius:8px;background:var(--soft);color:#8a445c;padding:7px;font-size:10px;white-space:nowrap;font-weight:700}.debt-line{height:5px;border-radius:5px;overflow:hidden;background:#ede7ef;margin:8px 0 6px}.debt-line i{height:100%;display:block;background:#cb8fae;transition:width .6s ease}.hud-bottom{justify-content:space-between;color:var(--muted);font-size:9px}.save-bar{display:flex;align-items:center;gap:8px;min-height:18px;font-size:8px;color:var(--muted);padding:2px 2px 0}.save-bar>span{margin-right:auto}.save-bar button{border:0;background:none;padding:2px;color:#90647e;font-size:9px;text-decoration:underline}#content{display:flex;flex:1;flex-direction:column;gap:8px;min-height:0;overflow:hidden}.scene-heading{display:flex;align-items:baseline;gap:8px;flex:none;padding:2px 1px}.scene-heading>span{font-size:9px;color:var(--accent);white-space:nowrap}.scene-heading h2{font-size:16px;letter-spacing:-.6px;line-height:1.35}.comic{position:relative;flex:0 1 29%;min-height:90px;overflow:hidden;border:2px solid #cbb7d0;border-radius:13px;background:#e7def4;contain:layout paint}.sprite{position:absolute;left:0;top:50%;width:100%;height:auto;aspect-ratio:1;transform:translateY(-35%);background-size:600% 600%;background-repeat:no-repeat}.caption{position:absolute;left:8px;bottom:7px;max-width:94%;background:#fffaf0ed;padding:3px 7px;border:1px solid #d8c7d8;border-radius:5px;font-size:8px;color:#70566d}.panel{flex:1;min-height:65px;overflow:auto;padding:11px 12px;border:1px solid #dfd0dd;border-radius:12px;background:#fffdfa;scrollbar-width:thin;scrollbar-color:#d9c5d6 transparent}.panel p{font-size:13px;line-height:1.7;white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere}.panel p+p{margin-top:9px}.choices{display:flex;flex-direction:column;flex:none;gap:7px;margin:0;padding:0 1px 2px}.choice,.primary,.outline{display:block;width:100%;border:2px solid var(--line);border-radius:11px;padding:10px 12px;background:#fffdfa;color:var(--ink);text-align:left;box-shadow:0 2px 0 #ddcddd;line-height:1.45;font-size:12px}.choice{display:flex;align-items:flex-start;gap:9px;min-height:54px}.choice .num{color:#ad829f;font-size:10px;line-height:1.8;flex:none}.choice>span:nth-child(2){flex:1;min-width:0}.choice .hint{display:block;margin-top:3px;font-size:9px;line-height:1.4;color:var(--muted)}.choice:active,.primary:active,.outline:active{transform:translateY(1px);box-shadow:none}.primary{background:var(--soft);border-color:#d99aaf;color:#713d54;text-align:center;font-weight:700;min-height:42px}.outline{text-align:center;background:#f6f1f8;box-shadow:0 1px 0 #e2d6e4;padding:8px}.choice.special{border-color:#93b69c}.choice.dark{border-color:#bb6b81;background:#fbe9ed;color:#814357}.tempt-tag{display:inline-block;align-self:center;font-size:8px;border-radius:5px;padding:3px 5px;background:#f7d89b;color:#76521c;max-width:100px}.page-indicator{text-align:right;color:var(--muted);font-size:9px;flex:none}.app-forecast{display:flex;align-items:center;justify-content:space-between;font-size:10px;padding:4px 6px;background:#ede7f3;border-radius:7px;flex:none}.app-forecast button{width:auto;padding:3px 10px;font-size:9px;border-width:1px}.deltas{display:flex;flex-wrap:wrap;gap:4px;margin-top:9px}.chip{font-size:9px;padding:3px 5px;background:#eee8f0;border-radius:5px;color:#766078}.chip.pos{background:#e6f0e3;color:#54705c}.chip.neg{background:#f6e4e7;color:#a15e6a}.cause,.observation{font-size:10px;color:#776578;background:#f2edf5;border-left:2px solid #c3a7ce;padding:6px 8px;margin-top:9px;line-height:1.6;white-space:pre-line}.luck{font-size:10px;color:var(--muted);margin-top:9px}.phone-cut{border:1px solid #dfd2e1;border-radius:9px;background:#f3eef7;margin-bottom:9px;padding:7px}.phone-label{font-size:8px;color:#958398}.bubble{margin:6px 0;background:#fffdfa;border-radius:8px;padding:5px 8px}.bubble small{font-size:9px;color:#9a708a}.bubble p{font-size:11px!important;line-height:1.5!important;margin-top:3px}.live-comments{background:#f0eaf6;border-radius:7px;padding:7px;margin-top:8px;font-size:10px}.live-comments b{color:#a06686}.live-comments span{display:block;padding:4px 0;border-top:1px solid #dfd2e3}footer{display:flex;justify-content:space-between;align-items:center;flex:none;color:#9d8b9f;font-size:8px;min-height:19px}footer button{width:auto;padding:3px 7px;border:1px solid var(--line);border-radius:5px;background:none;color:#88738c;font-size:9px}.meta-actions{display:flex;gap:6px}.meta-actions button{flex:1;font-size:10px}dialog{width:calc(100% - 30px);max-width:450px;max-height:88dvh;border:2px solid #c9afcc;border-radius:16px;background:var(--paper);color:var(--ink);padding:20px;box-shadow:0 8px 30px #66506430;overflow:auto}dialog::backdrop{background:#3c2d494d}dialog h2{margin-bottom:12px}dialog p{font-size:13px;line-height:1.8;margin:10px 0;white-space:pre-line}dialog button{margin-top:8px}dialog label{display:block;color:#8b6f89;font-size:11px;margin:12px 0 6px}dialog input,dialog select,dialog textarea{display:block;width:100%;padding:10px;border:1px solid #cbb7d0;border-radius:7px;background:white;color:var(--ink);font-size:14px}dialog textarea{font-family:monospace;font-size:10px;resize:vertical}.manager-buttons{display:flex;gap:8px}.clear-card{text-align:center;padding:10px}.clear-card>span{display:block;color:#9d758d}.clear-card strong{display:block;font-size:52px;color:#be718d;margin:12px}.clear-stamp{display:inline-block;border:3px double #a7b7aa;color:#6b927b;transform:rotate(-7deg);padding:7px 20px;font-size:27px}.jackpot-card{text-align:center;padding:16px}.jackpot-card h2{margin:15px 0;color:#b56b89}.jackpot-card small{color:#9b7894}#toast{position:fixed;bottom:max(30px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#f4e4ea;color:#73485f;border:1px solid #c795b0;border-radius:10px;padding:10px 16px;z-index:20;max-width:90%;font-size:12px}#toast[hidden]{display:none}.endings-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:10px}.endings-grid span{border:1px solid #d8c5da;border-radius:6px;padding:8px}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:12px 0}.gallery-tile,.gallery-locked{aspect-ratio:1;border:1px solid #cdb8d1;border-radius:7px;background:#eee5f0;padding:0;overflow:hidden;margin:0}.gallery-tile span{display:block;width:100%;height:100%;background-size:600% 600%}.gallery-locked{display:grid;place-items:center;color:#b5a0b8;font-size:20px}.gallery-large{width:100%;aspect-ratio:1;background-size:600% 600%;border:1px solid #ccb6d0;border-radius:9px}.gallery-pages{display:flex;gap:12px;align-items:center;justify-content:center;margin:12px 0}.gallery-pages button{width:auto;min-width:72px}.create-heading{flex:none;padding:4px 2px}.create-heading h1{font-size:24px;margin:6px 0}.create-heading p{font-size:11px;color:var(--muted)}.presets{display:flex;gap:5px;margin-bottom:9px}.presets button{flex:1;font-size:9px;padding:7px 4px}.trait-row{display:flex;align-items:center;gap:9px;padding:9px 0;border-top:1px solid #e4d8e6}.trait-row>div{flex:1}.trait-row b{font-size:12px;color:#835d7f}.trait-row small{display:block;font-size:9px;color:var(--muted);margin-top:3px}.trait-row button{width:30px;height:30px;border:1px solid #c9aed0;border-radius:8px;background:#f3eaf7;color:#8e6594;font-size:18px}.trait-row strong{width:15px;text-align:center;color:#a36285}.personality-copy{margin-top:9px;font-size:11px!important;background:#f1eaf5;padding:7px;border-radius:7px}.character-panel{min-height:100px}.end-money{font-size:11px;background:#f1eaf5;border-radius:7px;padding:9px;margin:10px 0}.after-detail{font-size:11px!important;color:#8b7488}.ending-panel details{font-size:11px;margin-top:12px}.ending-panel ol{padding-left:20px}.ending-panel li{margin:7px 0;line-height:1.6}body[data-phase=end] .comic{flex-basis:25%}body[data-phase=intro] .comic{flex-basis:35%}body[data-phase=intro] .panel{border:0;background:none}body[data-phase=intro] .panel p{font-size:13px}body[data-unease=high]{--accent:#7b83ac;--line:#c3cadd;--soft:#e8eaf4}.money{color:#8d5f85}.bad{color:#b25e71}summary{cursor:pointer}#finance-note{font-size:12px}.loading-panel{display:flex;flex-direction:column;justify-content:center;text-align:center}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 
@@ -211,7 +211,21 @@ body[data-unease="high"] mark.hl{background-color:rgba(255,214,64,.28);backgroun
   .choice,.primary,.outline,.debt-line i,.countdown{transition:none!important}
   .choice.picked,.choice:active{transform:none}
 }
-</style></head><body><main><header><span class="brand">LIFE / HARD MODE</span><span>아직 안 망했다</span></header><div id="hud"></div><div id="content" tabindex="-1"></div><footer><span>VERSION 09.8 / 계정 저장 / 성인 인생 시뮬레이션</span><button class="outline" id="reset">처음으로</button></footer></main><dialog id="settlement-modal" aria-label="상환과 정산"></dialog><dialog id="finance-modal" aria-label="내 돈 관리"></dialog><div id="toast" role="status" hidden></div><script>'use strict';
+
+/* v09.9 — 결말 두 축(빚 완제 / 빚 미완제 / 중도 종료) 표시 */
+.end-axis-note{font-size:11px;color:#8b7488;margin:-2px 0 10px}
+.end-group{margin:10px 0 14px}
+.end-group h3{display:flex;align-items:baseline;gap:6px;margin:0 0 6px;font-size:12px;letter-spacing:-.2px;border-left:3px solid #c9aed0;padding-left:7px}
+.end-group h3 .end-count{font-size:11px;color:var(--accent);font-weight:800}
+.end-group h3 small{display:block;flex-basis:100%;font-size:9px;color:var(--muted);font-weight:400;margin-top:3px}
+.end-group.paid h3{border-left-color:#93b69c}
+.end-group.unpaid h3{border-left-color:#c98a9b}
+.end-group.cut h3{border-left-color:#9b8fae}
+.end-group .endings-grid span{line-height:1.35}
+.end-group .endings-grid span.met{border-color:#b7a0c0;background:#f7f1fa;font-weight:600}
+.end-group .endings-grid span.locked{color:#b0a0b4;background:#fbf8fb}
+@media (prefers-reduced-motion: reduce){.end-axis-note{animation:none!important}}
+</style></head><body><main><header><span class="brand">LIFE / HARD MODE</span><span>아직 안 망했다</span></header><div id="hud"></div><div id="content" tabindex="-1"></div><footer><span>VERSION 09.9 / 계정 저장 / 성인 인생 시뮬레이션</span><button class="outline" id="reset">처음으로</button></footer></main><dialog id="settlement-modal" aria-label="상환과 정산"></dialog><dialog id="finance-modal" aria-label="내 돈 관리"></dialog><div id="toast" role="status" hidden></div><script>'use strict';
 const $=s=>document.querySelector(s), W=n=>Math.round(n*10000), money=n=>Math.round(n).toLocaleString('ko-KR')+'원', clamp=n=>Math.max(0,Math.min(100,n));
 let state=null,phase='intro',active=null,history=[],result=null,notice='',choiceOrder=[],resultPage=0;
 const START='2026-11-14',MAX_TURNS=16;
@@ -288,7 +302,7 @@ function refresh(){if(phase==='result')renderResult();else if(phase==='event'){a
 function v8Hud(){if(!state){$('#hud').innerHTML='';return}let progress=Math.max(0,Math.min(100,(W(3000)-state.debt)/W(3000)*100));$('#hud').innerHTML='<section class="app-hud"><div class="app-job"><span>'+jobs[state.job][0]+'</span><b class="countdown">D-'+daysLeft()+'</b><button id="manage" class="outline" '+(phase==='end'?'disabled':'')+'>돈 관리</button></div><div class="app-money"><span>현금 <b>'+compactMoney(state.cash)+'</b></span><span>남은 빚 <b>'+compactMoney(state.debt)+'</b></span><span>월수입 <b>'+compactMoney(state.salary+currentSupport()+currentDividend())+'</b></span><span>월지출 <b>'+compactMoney(state.rent+state.living)+'</b></span></div><div class="repay-row"><div><span>시작 빚 대비 '+Math.round(progress)+'% 정리</span><div class="repay-track"><i style="width:'+progress+'%"></i></div></div><button id="quick-pay" '+(phase==='end'||state.debt===0?'disabled':'')+'>빚 바로 갚기</button></div><button id="stats" class="stats-link">'+state.date+' / 멘탈 '+state.mind+' / 건강 '+state.health+' / 매력 '+state.charm+' / 경력 '+state.career+' ⓘ</button></section>';$('#manage').onclick=showManager;$('#quick-pay').onclick=quickRepay;$('#stats').onclick=showStats}
 function showToast(t){$('#toast').textContent=t;$('#toast').hidden=false;setTimeout(()=>$('#toast').hidden=true,3500)}
 function showStats(){let d=$('#settlement-modal');d.innerHTML='<h2>내 성향과 능력</h2><p>'+esc(personalityText(state.personality))+'</p><p>'+Object.keys(TRAITS).map(k=>TRAITS[k][0]+' '+trait(k)).join(' / ')+'</p><p>매력 '+state.charm+' / 외모 심사와 제안 보수<br>경력 '+state.career+' / 고정 고객과 협상, 독립<br>건강 '+state.health+' / 25 이하이면 7일 휴업<br>멘탈 '+state.mind+' / 22 이하이면 회복 사건<br>예민함은 멘탈 손실, 정 많음은 관계 정리의 부담에 반영돼.</p><p class="muted">성격은 기회를 바꾸고 행동은 네가 골라. 상대의 성향과 흥행에는 운이 작용해.</p><button id="stats-close" class="primary">확인</button>';openDialog(d);$('#stats-close').onclick=()=>d.close()}
-function v8Intro(){state=null;phase='intro';history=[];result=null;notice='';setView(artHTML(24,'빚 3,000만 원 / 180일')+'<div class="panel"><span class="eyebrow">LIFE / HARD MODE 09.8</span><h1>아직 안 망했다.</h1><p>만 20세 / 고졸 / 무직. 현금 30만 원.\n믿었던 사람이 사라지고 내 이름의 빚 3,000만 원이 남았다.\n180일 안에 내 삶을 되찾고 싶다.</p><p class="muted">성격으로 달라지는 사건 / 최대 16번의 선택<br>등장인물은 모두 만 20세 이상인 가상 인물. 범죄와 착취 피해를 다루는 이야기.</p></div><div class="choices"><button class="primary" id="begin">처음부터 / 성격 고르기</button></div>');$('#begin').onclick=createCharacter}
+function v8Intro(){state=null;phase='intro';history=[];result=null;notice='';setView(artHTML(24,'빚 3,000만 원 / 180일')+'<div class="panel"><span class="eyebrow">LIFE / HARD MODE 09.9</span><h1>아직 안 망했다.</h1><p>만 20세 / 고졸 / 무직. 현금 30만 원.\n믿었던 사람이 사라지고 내 이름의 빚 3,000만 원이 남았다.\n180일 안에 내 삶을 되찾고 싶다.</p><p class="muted">성격으로 달라지는 사건 / 최대 16번의 선택<br>등장인물은 모두 만 20세 이상인 가상 인물. 범죄와 착취 피해를 다루는 이야기.</p></div><div class="choices"><button class="primary" id="begin">처음부터 / 성격 고르기</button></div>');$('#begin').onclick=createCharacter}
 function createCharacter(){let p=$('#content .panel'),scroll=p?p.scrollTop:0;phase='create';state=null;let used=Object.values(draft).reduce((a,b)=>a+b,0);setView('<div class="create-heading"><span class="eyebrow">같은 빚, 다른 사람</span><h1>나는 이런 편이다.</h1><p>5점을 나눠 써. 한 성향에 최대 3점.</p></div><div class="panel character-panel"><div class="presets">'+PRESETS.map((p,i)=>'<button data-preset="'+i+'" class="outline">'+p.name+'</button>').join('')+'</div>'+Object.keys(TRAITS).map(k=>'<div class="trait-row"><div><b>'+TRAITS[k][0]+'</b><small>'+TRAITS[k][1]+'</small></div><button data-trait="'+k+'" data-delta="-1" '+(!draft[k]?'disabled':'')+' aria-label="'+TRAITS[k][0]+' 줄이기">−</button><strong>'+draft[k]+'</strong><button data-trait="'+k+'" data-delta="1" '+(draft[k]>=3||used>=5?'disabled':'')+' aria-label="'+TRAITS[k][0]+' 늘리기">+</button></div>').join('')+'<p class="personality-copy">'+personalityText(draft)+'</p><p class="muted">성격은 발생할 사건과 선택의 부담에 영향을 줘. 직업이나 운명을 확정하지는 않아.</p></div><div class="choices"><button class="primary" id="start-life" '+(used!==5?'disabled':'')+'>▶ '+(used===5?'이 성격으로 시작':'남은 '+(5-used)+'점 배분하기')+'</button></div>');document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{draft={...PRESETS[Number(b.dataset.preset)].p};createCharacter()});document.querySelectorAll('[data-trait]').forEach(b=>b.onclick=()=>{draft[b.dataset.trait]+=Number(b.dataset.delta);createCharacter()});let panel=$('#content .panel');if(panel)panel.scrollTop=scroll;$('#start-life').onclick=()=>{state=initial();event()}}
 const GAME_VERSION='09.5';const SAVE_KEY='life-hard-mode-save-v095';let saveAvailable=true;
 
@@ -456,7 +470,7 @@ C('개인 연락을 줄이고 정해진 업무만 하기','멘탈 +15 / 현재 �
 EP('debt-review','life',0,()=>state.turn>=8,'남은 기한과 남은 원금',()=> '현금 '+money(state.cash)+' / 남은 빚 '+money(state.debt)+'.\n상환일까지 D-'+daysLeft()+'. 상단의 「빚 바로 갚기」에서는 생활비를 남기거나 금액을 직접 정해 언제든 갚을 수 있어.\n이자 조정이나 마지막 수입 계획도 정할 수 있어.',24,()=>[
 C('한 달 생활비를 남기고 원금을 갚기',()=> '지금 상환 가능 '+money(Math.min(state.debt,Math.max(0,state.cash-state.rent-state.living))),()=>{let n=payDebt(Math.max(0,state.cash-state.rent-state.living));state.repaid+=n;return resultOf(n?'줄어든 원금':'지금은 생활비부터','상환 '+money(n)+'.\n'+(n?'통장 잔고와 함께 빚 숫자도 내려갔어. 이후 이자는 줄어든 원금으로 계산돼.':'생활비를 남기면 지금 갚을 현금은 없어. 남은 수입과 비용을 다시 계산해야 해.'),29,{mind:5})}),
 C('상담을 통해 남은 이자 조건을 조정하기','게임용 월 이자 1% → 0.3% / 원금 유지',()=>{state.flags.plan=true;return resultOf('바뀐 상환표','이자 조건을 조정했어. 줄어든 것은 앞으로 붙는 이자이며, 이미 남아 있는 원금은 그대로야.\n상환 기한도 그대로여서 실제로 갚을 돈은 계속 마련해야 해.',24,{mind:5})}),
-C('검증한 단기 일을 더 맡기','일회성 목돈 / 건강 -12',()=>resultOf('마지막 추가 일정','납기와 보수를 확인한 단기 일을 맡았어. 일을 끝내고 350만 원을 받았어.\n이번 돈은 정기 월수입이 아니라 한 번의 보수야.',33,{cash:350,health:-12,career:8}))]);
+C('검증한 단기 일을 더 맡기','일회성 목돈 / 건강 -12',()=>resultOf('마지막 추가 일정','납기와 보수를 확인한 단기 일을 맡았어. 일을 끝내고 300만 원을 받았어.\n이번 돈은 정기 월수입이 아니라 한 번의 보수야.',33,{cash:300,health:-12,career:8}))]);
 EP('deadline','life',0,()=>true,'마지막 상환일',()=> '오늘이 마지막 날이야. 현금 '+money(state.cash)+' / 남은 빚 '+money(state.debt)+'.\n돈과 별개로 내가 해온 행동과 남아 있는 관계도 결말에 반영돼.',24,()=>[
 C('가능한 현금으로 남은 원금을 갚기',()=> '지금 상환 '+money(Math.min(state.cash,state.debt)),()=>{let n=payDebt(state.debt);state.repaid+=n;return resultOf(state.debt===0?'마지막 입금':'아직 남은 숫자',money(n)+'을 갚았어.\n'+(state.debt===0?'부채가 0원이 됐어. 기한을 바라보던 생활이 끝났어.':'오늘 가진 현금만으로는 전부 갚지 못했어. 남은 빚은 결산에 반영돼.'),state.debt===0?29:35)}),
 C('지금의 일과 자리를 계속 이어가기','현재 현금과 부채 그대로 결산',()=>resultOf('그다음 날에도 이어질 일','지금까지 만든 일과 관계를 이어가기로 했어. 갚지 않은 원금이 있다면 그대로 남아.\n통장에는 돈만 남았는데, 여기까지 오면서 한 일은 나한테 남아 있어.',state.control>=2?34:33)),
@@ -515,7 +529,7 @@ C('검증한 단기 작업을 추가로 맡는다','일회성 +180만 / 건강 -
 C('돈을 쓰지 않고 가까운 사람과 시간을 보낸다','멘탈 +14 / 현재 수입 유지',()=>resultOf('돈 이야기를 쉬었다','오늘만큼은 통장 화면을 내려놓고 이야기를 들었어. 돌아와서는 내일 일정을 확인했어.',29,{mind:14}))]);
 EP('midpoint','life',0,()=>true,'D-90 / 지금 속도로 갚을 수 있을까',()=>{let future=simulate(state,state.deadline),left=Math.max(0,future.debt-future.cash);return '기한의 절반이 지났어. 지금 빚은 '+money(state.debt)+'.\n지금 수입과 지출이 그대로라면 상환일에는 약 '+money(left)+'이 모자라. 한 번뿐인 사건 보수나 앞으로 생길 계약은 빼고 센 숫자야.\n완납을 준비할지, 오래 갚을 계획을 세울지 정해야 해.'},24,()=>[
 C('이자를 낮추고 36개월 상환 계획을 준비한다','월 이자 0.3% / 원금 유지 / 안정적인 소득과 상환 실적 필요',()=>{state.flags.plan=true;state.flags.repaymentPlan=true;return resultOf('180일 뒤에도 이어질 계획','원금이 없어지는 계약은 아니야. 남은 빚을 36개월로 나눠 갚는 계획을 세웠어.\n\n결산할 때 안정적인 내 수입, 한 달 생활비, 줄어든 원금, 정리된 관계를 다시 봐. 조건이 맞으면 완납과 다른 방식으로 내 시간을 되찾을 수 있어.',24,{mind:8},null,'결산 기준 / 빚 2,700만 이하, 건강 30·멘탈 25 이상, 자체 소득이 생활비와 계획상 상환액을 감당해야 한다.')}),
-C('지금 일에 고정 외주를 더해 수입 구조를 바꾼다','월 근로수입 +180만 / 건강 -10 / 정기 후원은 종료',()=>{endSupport();if(state.job==='none')setJob('freelance',180);else state.salary+=W(180);return resultOf('기다리는 입금 대신 할 일','반복해서 맡을 수 있는 외주를 붙였어. 정기 후원에 기대고 있었다면 그 계약은 끝냈고.\n매달 들어오는 근로수입은 늘었지만, 그만큼 더 일할 몸이 필요해.',33,{health:-10,career:10})}),
+C('지금 일에 고정 외주를 더해 수입 구조를 바꾼다','월 근로수입 +150만 / 건강 -10 / 정기 후원은 종료',()=>{endSupport();if(state.job==='none')setJob('freelance',180);else state.salary+=W(150);return resultOf('기다리는 입금 대신 할 일','반복해서 맡을 수 있는 외주를 붙였어. 정기 후원에 기대고 있었다면 그 계약은 끝냈고.\n매달 들어오는 근로수입은 늘었지만, 그만큼 더 일할 몸이 필요해.',33,{health:-10,career:10})}),
 C('남은 기간 검증한 큰 작업에 집중한다','일회성 +500만 / 건강 -15 / 새 투자 없음',()=>resultOf('확인한 계약의 금액','이미 확인해 둔 업체의 집중 작업을 맡았어. 납품하고 500만 원이 들어왔어.\n큰돈이지만 남은 원금과 앞으로의 생활비는 다시 계산해야 해.',33,{cash:500,health:-15,career:12}))]);
 EP('comfort','life',2,()=>state.mind<=30||state.lastEventGain>=W(600),'오늘만 가격표를 보지 말까','빚을 갚아야 하는 건 알아. 그래도 오늘만큼은 돈 얘기도, 남의 기분을 맞추는 일도 잊고 싶어.\n잠깐 사치를 부릴지, 다른 방식으로 쉴지 골라야 해.',30,()=>[
 C('40만 원을 쓰고 좋은 옷과 저녁을 즐긴다','현금 40만 필요 / 멘탈 +25 / 빚은 그대로',()=>resultOf('내가 고른 저녁','마음에 들던 옷을 입고 혼자 좋은 저녁을 먹었어. 오늘이 아무것도 아닌 날처럼 느껴져서 좋았어.\n40만 원은 썼고 빚은 그대로야. 그래도 이 기분이 거짓은 아니야.',30,{cash:-40,mind:25}),40),
@@ -620,7 +634,7 @@ C('비싼 견적서를 넘기고 600만 원을 받기','+600만 / 통제 성향 
 C('정상 견적과 메시지를 보고하고 정산 업무를 협상하기','눈치 2 또는 경력 35면 월 +80만 / 그 외 일회성 +100만',()=>{let ok=trait('read')>=2||state.career>=35;state.flags.evidence=true;if(ok)state.salary+=W(80);return resultOf('이번에는 공식 급여로', '제안 메시지와 원래 견적을 책임자에게 전달했어. 회사는 거래를 바로잡았어.\n\n'+(ok?'기존 업무에 정산 검증을 맡는 조건으로 월 보수가 80만 원 올랐어.':'추가 자료 정리 업무를 마친 보수 100만 원을 받았어. 월수입은 그대로야.'),33,{cash:ok?0:100,career:15})})]);
 EP('work-cycle','life',0,()=>true,()=>state.job==='none'?'수입이 끊긴 뒤의 구직':jobs[state.job][0]+' / 다음 정산 전',()=>state.job==='none'?'지금은 직업에서 들어오는 월수입이 없어. 후원 계약이 있다면 그 돈만 따로 들어와. 생활비와 이자는 계속 나가.\n이대로 기다릴지, 새 일을 시작할지 정해야 해.':'현재 월 근로수입은 '+money(state.salary)+'이야. 정기 급여는 다음 장면까지 흐른 날짜만큼 계산돼.\n'+(['office','freelance'].includes(state.job)?'지난 작업의 견적과 지급 내역을 정리하던 중 추가 업무 제안도 왔어.':'다음 일정을 잡기 전, 기존 일에 집중할지 추가 작업을 받을지 정할 수 있어.'),()=>jobArt(),()=>[
 C(state.job==='none'?'서류 보조 계약직을 구해':'현재 업무만 맡고 다음 일정을 조절해',state.job==='none'?'월 280만 / 후원 계약 종료':'월수입 유지 / 건강 +6 / 멘탈 +6',()=>{if(state.job==='none'){changeWork('office',280);return resultOf('다시 생긴 급여일','서류와 예약 관리 업무로 채용됐어. 월급 280만 원이며 기존 후원 계약은 종료했어.\n다음 장면부터 실제 근무한 날짜만큼 급여가 쌓이야.',33,{career:8})}return resultOf('정해둔 일만 했어','추가 일은 받지 않았어. '+jobs[state.job][0]+'로 예정된 업무를 하고 쉬는 시간을 남겼어.\n월 근로수입 '+money(state.salary)+'은 그대로야. 날짜가 흐르면 생활비와 이자도 함께 정산돼.',jobArt(),{health:6,mind:6})}),
-C(['office','freelance'].includes(state.job)&& (trait('read')>=2||state.career>=30)?'누락된 추가 작업 보수를 정식 청구해':'어떤 일인지, 얼마 받는지 확인하고 맡기',()=>['office','freelance'].includes(state.job)&&(trait('read')>=2||state.career>=30)?'보관한 작업 기록 활용 / 일회성 +300만 / 경력 +8':'일회성 +180만 / 건강 -8 / 경력 +8',()=>{let skilled=['office','freelance'].includes(state.job)&&(trait('read')>=2||state.career>=30);return resultOf(skilled?'작업 기록이 돈으로 돌아왔어':'추가 작업 납품 완료',skilled?'요청받은 수정 작업과 지급 내역을 대조했어. 처음 정한 범위를 넘긴 작업이 확인되어 업체가 추가 보수 300만 원을 지급했어.\n\n매달 늘어나는 급여는 아니야. 이번에 빠진 보수를 받은 거야.':'납기와 수정 횟수를 적은 단기 작업을 맡았어. 납품 후 보수 180만 원을 받았어.\n본업은 유지하지만 쉬는 시간을 써서 건강이 8 줄었어.',33,{cash:skilled?300:180,career:8,health:skilled?0:-8})}),
+C(['office','freelance'].includes(state.job)&& (trait('read')>=2||state.career>=30)?'누락된 추가 작업 보수를 정식 청구해':'어떤 일인지, 얼마 받는지 확인하고 맡기',()=>['office','freelance'].includes(state.job)&&(trait('read')>=2||state.career>=30)?'보관한 작업 기록 활용 / 일회성 +250만 / 경력 +8':'일회성 +150만 / 건강 -8 / 경력 +8',()=>{let skilled=['office','freelance'].includes(state.job)&&(trait('read')>=2||state.career>=30);return resultOf(skilled?'작업 기록이 돈으로 돌아왔어':'추가 작업 납품 완료',skilled?'요청받은 수정 작업과 지급 내역을 대조했어. 처음 정한 범위를 넘긴 작업이 확인되어 업체가 추가 보수 250만 원을 지급했어.\n\n매달 늘어나는 급여는 아니야. 이번에 빠진 보수를 받은 거야.':'납기와 수정 횟수를 적은 단기 작업을 맡았어. 납품 후 보수 150만 원을 받았어.\n본업은 유지하지만 쉬는 시간을 써서 건강이 8 줄었어.',33,{cash:skilled?250:150,career:8,health:skilled?0:-8})}),
 C('추가 수입보다 회복을 선택하기','멘탈 +14 / 현재 계약 유지',()=>resultOf('이번 의뢰는 넘겼어','새로운 의뢰는 받지 않고 연락과 일정을 줄였어. 기존 직업이나 계약을 끝낸 건 아니야.\n\n즉시 입금되는 돈은 없어. 다음 장면까지의 정기 수입과 생활비는 원래 조건으로 계산돼.',29,{mind:14}))]);
 // One unresolved event receives an actual choice at the final story slot.
 episodes.get('threads-close').build=()=>{pruneQueue();let priority=['investigation','contract','stalker','twin-cross','rebate-after','partner-proof','partner-fled','advance-demand','shoot-work','partner-open','own-open'];let id=priority.find(id=>state.queue.includes(id))||state.queue[0];let s=id?episodes.get(id).build():episodes.get('work-cycle').build();let pending=state.queue.filter(x=>x!==id);s.title='상환일 전 마지막 담판 · '+s.title;s.body='상환일까지 '+daysLeft()+'일. '+(id?'미뤄둔 일 중에 이번엔 이 건부터 답할 차례야.':'새 약속을 벌이기 전에 지금 하는 일부터 정리하자.')+'\n\n'+s.body+(pending.length?'\n\n그 밖의 '+pending.length+'건은 이번 기한 뒤로 미뤄. 미수금이나 준비 비용은 자동으로 돌려받지 않아.':'');s.choices=s.choices.map(c=>({...c,run:()=>{let r=c.run();if(id&&!state.seen.includes(id))state.seen.push(id);for(let rest of pending){if(['contract','investigation'].includes(rest))state.flags.investigation=true;note(episodes.get(rest).build().title+' / 상환일 뒤로 미룸. 현금 자동 지급 없음.')}state.queue=[];return r}}));return s};
@@ -646,7 +660,7 @@ function scene(){lifeInit();if(!state.currentId){pruneQueue();let selected;
 if(state.turn===0)selected=episodes.get('start');else if(state.turn===15)selected=episodes.get('deadline');else if(state.turn===14)selected=episodes.get('debt-review');else if(state.turn===8)selected=episodes.get('midpoint');else{
 let due=state.queue.find(id=>!(['shoot-offer','shoot-work'].includes(id)&&state.flags.recoveryUntil&&state.date<state.flags.recoveryUntil));
 let urgent=state.health<=25&&!state.flags.healthHelp?'health-break':state.mind<=22&&!state.flags.mentalHelp?'mental-pause':null;
-if(urgent&&state.turn<13)selected=episodes.get(urgent);else if(due){selected=episodes.get(due);state.queue=state.queue.filter(x=>x!==due)}else if(state.turn>=10&&state.turn<=13&&!state.seen.includes('last-bet')&&state.debt>0&&state.cash>=W(50))selected=episodes.get('last-bet');else if(state.turn===13)selected=episodes.get('closing-choice');
+if(urgent&&state.turn<13)selected=episodes.get(urgent);else if(due){selected=episodes.get(due);state.queue=state.queue.filter(x=>x!==due)}else if(state.turn>=10&&state.turn<=13&&!state.seen.includes('last-bet')&&state.debt>0&&state.cash>=W(50))selected=episodes.get('last-bet');else if(state.turn===13)selected=episodes.get(state.queue.some(id=>['contract','investigation'].includes(id))?'threads-close':'closing-choice');
 else{let candidates=[...episodes.values()].filter(e=>e.weight>0&&!state.seen.includes(e.id)&&e.when()&&episodeValid(e.id)&&(state.turn<10||(DEPTH[e.id]||1)<=2)&&admitArc(currentRootFor(e.id)));if(state.turn>=10)candidates.sort((a,b)=>(a.arc===state.currentRoot?-1:0)-(b.arc===state.currentRoot?-1:0));if(candidates.length){let weighted=candidates.map(e=>({e,w:e.weight*(e.arc==='occult'?1+(trait('sensitive')+trait('focus'))*.5:e.arc==='broadcast'?1+trait('focus')*.4:1)}));let n=rnd()*weighted.reduce((s,x)=>s+x.w,0);selected=(weighted.find(x=>(n-=x.w)<0)||weighted[0]).e}else selected=episodes.get(lastActualScene()==='work-cycle'?'debt-pressure':'work-cycle')}
 }
 state.currentId=selected.id;state.currentRoot=currentRootFor(selected.id);if(state.currentRoot!=='life'&&!state.threads.includes(state.currentRoot)){if(state.threads.length>=2){let free=state.threads.findIndex(t=>!arcBusy(t));if(free>=0)state.threads.splice(free,1);else state.currentRoot=state.threads[0]}if(!state.threads.includes(state.currentRoot))state.threads.push(state.currentRoot)}state.rootFor[selected.id]=state.currentRoot;if(!state.seen.includes(selected.id))state.seen.push(selected.id);state.episodeStatus[selected.id]='active';if(selected.arc!=='life'&&!state.arcs.includes(selected.arc))state.arcs.push(selected.arc);state.currentGap={days:Math.max(0,OFFSETS[Math.min(15,state.turn+1)]-Math.round((new Date(state.date+'T00:00:00Z')-new Date(START+'T00:00:00Z'))/86400000))}}
@@ -859,21 +873,85 @@ function artIndex95(id){
 function artUrl95(index){return 'assets/art95-'+String(index).padStart(2,'0')+'.webp'}
 function sceneArt95(id,caption){let i=artIndex95(id);return '<div class="comic" role="img" aria-label="'+esc(caption)+'"><img class="scene-image" src="'+artUrl95(i)+'" alt="'+esc(caption)+'" decoding="async" fetchpriority="high"></div>'}
 
+// v09.9: 결말을 두 축으로 나눈다. [빚 완제] / [빚 미완제] / [중도 종료] — 13종.
+// 앞의 0~8번은 v09.8까지의 결말 번호를 그대로 이어받아, 예전에 모은 도감 기록도 같은 이름으로 읽힌다.
 const ENDINGS=[
-{name:'내 시간을 되찾았다',art:136,body:'빚도, 나를 붙잡던 관계도 정리했어. 이제 내 생활로 돌아갈 거야.',after:'점심에는 휴대폰부터 뒤집어둬. 누가 입금했나 확인하는 대신, 오늘 뭐 먹을지부터 생각해.'},
-{name:'이 세계에서 살아남았다',art:137,body:'여기서 번 돈으로 빚을 다 갚았어. 떠나지는 않을 거야. 지금 하는 일도, 만나는 사람들도 내가 다시 고른 거니까.',after:'새 계약서가 왔어. 이번에는 가장 잘 번 달 얘기보다, 장사 안 되는 달의 비용을 누가 내는지부터 물었어.'},
-{name:'그 바닥의 실장',art:138,body:'예전에 나를 묶었던 조건을, 이번엔 다른 사람에게 내밀었어. 이제 정산표를 보내는 쪽은 나야.',after:'신입이 “얼마나 일하면 빚 갚아요?”라고 물어. 나는 가장 잘 번 달의 표를 골라 보여줘. 예전에 나한테 보여줬던 그 표처럼.'},
-{name:'아직 끝나지 않았다',art:139,body:'상환일은 왔는데 빚은 남았어. 끝까지 버텼다는 것만으로 통장에 돈이 생기지는 않더라.',after:'아직 갚을 돈이 있어. 이번에는 누가 말해준 최고 수입 말고, 지난 석 달에 실제로 받은 돈부터 적어봐.'},
-{name:'기록이 끝난 밤',art:140,body:'그날의 폭력으로 이 삶의 기록은 끝났어. 돈이나 관계가 허락한 일이 아니라, 가해자가 저지른 범죄였어.',after:'남은 사람들은 그날의 연락과 기록을 모았어. 후원이나 빚 때문에 생긴 오해가 아니라, 한 사람이 다른 사람을 해친 사건으로 남겼어.'},
-{name:'살아서 나온 값',art:141,body:'살아서 나왔어. 하지만 예전처럼 일할 수는 없었어. 빚보다 먼저 회복해야 할 몸이 남았어.',after:'다시 일할 날짜는 천천히 정할 거야. 버틸 수 있다는 말만으로 괜찮은 척하고 싶지는 않아.'},
-{name:'판결로 남은 이름',art:142,body:'판결이 나왔어. 내가 한 일에 유죄가 인정됐고, 빚을 갚는 것과 별개로 기록이 남았어.',after:'새 일에 지원하려고 신청서를 열었어. 경력란보다 오래 멈춘 칸이 있어. 그때 한 일을 없었다고 쓸 수는 없더라.'},
-{name:'아직 닫히지 않은 사건',art:143,body:'아직 조사와 분쟁이 끝나지 않았어. 유죄가 정해진 건 아니야. 그렇다고 빚을 갚았다는 이유로 이 일까지 끝난 건 아니었어.',after:'자료를 보내달라는 연락이 또 왔어. 이번엔 통장에 돈이 있어도 넘길 수 없는 마감이야.'},
-{name:'빚 대신 그 사람',art:144,body:'내 이름의 빚은 0원. 그런데 집도, 생활비도, 다음 달 일정도 그 사람이 정해. 돈을 다 갚았는데 혼자 나갈 준비는 안 돼 있어.',after:'입금 알림이 뜨고, 바로 “오늘 어디 가?”라는 메시지가 와. '+ '빚이 없어지면 뭐든 내 마음대로 할 수 있을 줄 알았는데.'}
+{name:'내 시간을 되찾았다',group:'paid',art:136,body:'빚도, 나를 붙잡던 관계도 정리했어. 이제 내 생활로 돌아갈 거야.',after:'점심에는 휴대폰부터 뒤집어둬. 누가 입금했나 확인하는 대신, 오늘 뭐 먹을지부터 생각해.'},
+{name:'이 세계에서 살아남았다',group:'paid',art:137,body:'여기서 번 돈으로 빚을 다 갚았어. 떠나지는 않을 거야. 지금 하는 일도, 만나는 사람들도 내가 다시 고른 거니까.',after:'새 계약서가 왔어. 이번에는 가장 잘 번 달 얘기보다, 장사 안 되는 달의 비용을 누가 내는지부터 물었어.'},
+{name:'그 바닥의 실장',group:'paid',art:138,body:'예전에 나를 묶었던 조건을, 이번엔 다른 사람에게 내밀었어. 이제 정산표를 보내는 쪽은 나야.',after:'신입이 “얼마나 일하면 빚 갚아요?”라고 물어. 나는 가장 잘 번 달의 표를 골라 보여줘. 예전에 나한테 보여줬던 그 표처럼.'},
+{name:'아직 끝나지 않았다',group:'unpaid',art:147,body:'상환일은 와서 빚은 남았어. 그래도 매달 갚을 금액과 내가 쓸 돈은 이제 내가 정해. 끝난 건 아니고, 계속 갚는 중이야.',after:'월급 다음 날 상환 알림이 와. 남은 빚은 아직 있지만, 이번 달 얼마를 갚고 얼마로 살지는 통장을 열기 전에 이미 알고 있어.'},
+{name:'기록이 끝난 밤',group:'cut',art:140,body:'그날의 폭력으로 이 삶의 기록은 끝났어. 돈이나 관계가 허락한 일이 아니라, 가해자가 저지른 범죄였어.',after:'남은 사람들은 그날의 연락과 기록을 모았어. 후원이나 빚 때문에 생긴 오해가 아니라, 한 사람이 다른 사람을 해친 사건으로 남겼어.'},
+{name:'살아서 나온 값',group:'cut',art:141,body:'살아서 나왔어. 하지만 예전처럼 일할 수는 없었어. 빚보다 먼저 회복해야 할 몸이 남았어.',after:'다시 일할 날짜는 천천히 정할 거야. 버틸 수 있다는 말만으로 괜찮은 척하고 싶지는 않아.'},
+{name:'판결로 남은 이름',group:'paid',art:142,body:'판결이 나왔어. 내가 한 일에 유죄가 인정됐고, 빚을 갚는 것과 별개로 기록이 남았어.',after:'새 일에 지원하려고 신청서를 열었어. 경력란보다 오래 멈춘 칸이 있어. 그때 한 일을 없었다고 쓸 수는 없더라.'},
+{name:'아직 닫히지 않은 사건',group:'unpaid',art:143,body:'빚도 남았고 조사와 분쟁도 안 끝났어. 유죄가 정해진 건 아니지만, 빚을 갚았다고 이 일까지 없어지지도 않아.',after:'자료를 보내달라는 연락이 또 와. 이번엔 통장에 돈이 있어도 넘길 수 없는 마감이야.'},
+{name:'빚 대신 그 사람',group:'paid',art:144,body:'내 이름의 빚은 0원. 그런데 집도, 생활비도, 다음 달 일정도 그 사람이 정해. 돈을 다 갚았는데 혼자 나갈 준비는 안 돼 있어.',after:'입금 알림이 뜨고, 바로 “오늘 어디 가?”라는 메시지가 와. 빚이 없어지면 뭐든 내 마음대로 할 수 있을 줄 알았는데.'},
+{name:'비밀값으로 산 평온',group:'paid',art:146,body:'빚은 0원이야. 그런데 그 0원을 만든 사람들이 아직 내 주변에 있어. 누가 뭘 알고 있는지, 그 목록은 내가 다 알고 있지.',after:'오늘도 “그 얘긴 아무 데도 안 했지?”라는 메시지가 와. 갚을 돈은 없는데, 답장을 정하지 않으면 잠이 안 와.'},
+{name:'빚은 갚았고 몸이 남았다',group:'paid',art:139,body:'빚은 0원. 대신 잠을 줄이고, 끼니를 거르고, 아픈 데를 미뤄둔 채 180일을 지나왔어. 통장은 깨끗한데 몸이 먼저 멈췄어.',after:'아침에 일어나면 제일 먼저 손목과 허리를 확인해. 갚을 돈이 없으니 오늘은 병원부터 가면 돼.'},
+{name:'빚과 사람, 둘 다 남았다',group:'unpaid',art:144,body:'빚은 그대로야. 대신 다음 달 생활비는 그 사람이 보내줘. 갚으라고 재촉하지 않는 대신, 어디에 있는지 계속 알려줘야 해.',after:'입금 알림과 함께 “오늘 뭐 해?”가 와. 갚을 돈은 줄지 않았는데, 대답해야 할 사람만 하나 늘었어.'},
+{name:'이름에 남은 숫자',group:'unpaid',art:140,body:'상환일이 지나고 독촉이 시작됐어. 통장은 비었고 다음 달 월세도 아직 몰라. 빚은 숫자보다 오래 남아.',after:'새 휴대폰을 사려다 개통이 막혔어. 이름을 대면 먼저 조회되는 숫자가 있다는 걸 그때 알았어.'},
+{name:'도망치는 밤',group:'unpaid',art:145,body:'선불금 잔액과 독촉이 같이 남았어. 주소를 옮기고 번호를 바꿨어. 빚은 없어지지 않았는데, 연락이 닿는 곳만 줄었어.',after:'모르는 번호는 받지 않아. 대신 아는 사람 번호도 저장해두지 않아. 누가 이 번호로 찾아올까 봐.'}
 ];
-function ending(){let f=state.flags;if(f.dead)return 4;if(f.majorInjury)return 5;if(f.record)return 6;if(f.investigation)return 7;if(state.debt===0&&(f.dependentOnPatron||f.affairActive&&state.salary===0&&currentSupport()>0))return 8;if(state.control>=2&&f.exploited)return 2;if(planEligible())return 0;if(state.debt>0)return 3;return f.leave||['office','part','freelance'].includes(state.job)?0:1}
-function finish(){upgradeState();settleLooseEnds();phase='end';let id=ending(),e=ENDINGS[id],plan=id===0&&state.debt>0;collect('ends',id);state.flags.endingId=id;
-let details=[state.flags.affairDiscovered?(state.flags.knewMarriedAtStart?'기혼이라는 설명을 듣고도 사적인 관계를 시작했다.':state.flags.knewMarried?'기혼인 걸 알게 된 뒤에도 관계를 이어간 적이 있다.':'미혼이라는 설명을 믿었고, 사실을 안 뒤 관계를 멈췄다.'):'',state.flags.liedToSpouse?'배우자에게 업무 관계였다고 거짓말한 기록이 남았다.':'',state.flags.loverOutcome==='ended'||state.flags.loverOutcome==='lied'?'연인과의 관계는 끝났다.':'',state.flags.rookieFair?'신입에게 실제 공제와 종료 조건을 공개했다.':'',state.flags.sisterOutcome?'유리 언니와의 관계 / '+({ended:'소개를 끝냈다',boundary:'앞으로의 소개비를 끊었다',retry:'한 번 더 소개를 받았다'}[state.flags.sisterOutcome]||state.flags.sisterOutcome):'',state.flags.surgery?'외모는 달라졌다. 다음 생활을 결정한 것은 얼굴보다 내가 정리한 계약과 관계였다.':''].filter(Boolean);
-setView(artHTML(e.art,'결말 / '+e.name)+'<div class="panel ending-panel"><span class="eyebrow">ENDING '+(id+1)+' / '+ENDINGS.length+'</span><h1>'+esc(e.name)+'</h1><b class="end-stamp'+(state.debt>0?' short':'')+'">'+(state.debt>0?'남은 빚 '+compactMoney(state.debt)+' 원':'빚 0원')+'</b><p>'+esc(plan?'전부 갚은 건 아니야. 그래도 생활비와 매달 갚을 돈을 감당할 일은 구했어. 남은 빚은 36개월에 나눠 갚기로 했어.':e.body)+'</p><div class="end-money">현금 '+money(state.cash)+'<br>남은 빚 '+money(state.debt)+(plan?'<br>계획상 월 상환액 '+money(planPayment()):'')+'</div><h3>1년 뒤</h3><p>'+esc(plan?'월급 다음 날 상환 알림이 왔어. 빚은 아직 있어. 그래도 이번 달 얼마를 갚고, 얼마로 살지는 내가 알고 있어.':id===8&&state.flags.affairActive?'오늘도 “곧 정리할게”라는 메시지가 왔어. 빚은 0원. 내 수입도 0원. 다음 달 어디서 뭘 먹고 살지는 그 사람 답장에 달렸어.':e.after)+'</p>'+(details.length?'<p class="after-detail">'+esc(details.join('\n'))+'</p>':'')+recapHTML96()+'<details><summary>이 삶의 선택과 남은 일</summary><p>'+esc(state.notes.join('\n')||'추가로 미룬 계약은 없다.')+'</p><ol>'+history.map(h=>'<li>'+esc(h.date+' / '+h.title+' / '+h.choice)+'</li>').join('')+'</ol></details></div><div class="choices"><button id="again" class="primary">다른 선택으로 다시 살기</button><button id="ending-archive" class="outline">모은 결말과 그림 보기</button></div>');$('#again').onclick=confirmNewGame;$('#ending-archive').onclick=showArchive}
+const ENDING_GROUPS={
+ paid:{label:'빚 완제 엔딩',short:'빚 완제',hint:'상환일까지 내 이름의 빚을 0원으로 만든 결말'},
+ unpaid:{label:'빚 미완제 엔딩',short:'빚 미완제',hint:'상환일이 지나도 빚이 남은 결말'},
+ cut:{label:'중도 종료',short:'중도 종료',hint:'180일을 채우지 못하고 삶의 기록이 멈춘 결말'}
+};
+function endingGroupOf(id){return (ENDINGS[id]&&ENDINGS[id].group)||'paid'}
+function endingIdsIn(group){return ENDINGS.map((e,i)=>i).filter(i=>ENDINGS[i].group===group)}
+// 미완제 축에서 '사채·독촉에 쫓기는' 상태인지. 선불금 잔액이 남았고, 마음이 이미 닫힌 경우.
+function chased99(){let f=state.flags;return !!(f.advanceBalance>0&&(state.mind<=38||state.control>=2||state.salary<=0))}
+// 미완제 축에서 '신용이 무너진' 상태인지. 원금이 거의 줄지 않았고 한 달 고정비도 못 내는 경우.
+function broke99(){return state.debt>=W(2700)&&state.cash<state.rent+state.living&&state.salary<W(250)}
+function ending(){let f=state.flags;
+ if(f.dead)return 4;                                   // 중도 종료 / 사망
+ if(f.majorInjury)return 5;                            // 중도 종료 / 중상
+ let stuck=f.dependentOnPatron||(f.affairActive&&state.salary===0&&currentSupport()>0);
+ if(state.debt<=0){                                    // ── 빚 완제 축
+  if(stuck)return 8;
+  if(f.record||f.investigation)return 6;
+  if(state.control>=2&&f.exploited)return 2;
+  if(state.health<=20||state.mind<=20||(f.healthHelp&&state.health<=30)||(f.mentalHelp&&state.mind<=30))return 10;
+  if(f.affairActive&&!f.relationshipEnded)return 9;
+  if(f.leave||['office','part','freelance'].includes(state.job))return 0;
+  return 1;
+ }
+ if(stuck)return 11;                                   // ── 빚 미완제 축
+ if(f.record||f.investigation)return 7;
+ if(chased99())return 13;
+ if(broke99())return 12;
+ return 3;
+}
+// 결산 직전, 현금만으로 원금을 다 갚을 수 있으면 먼저 물어본다. 남기는 것도 선택이니까.
+function askEndSettle99(){
+ let d=$('#settlement-modal');
+ d.innerHTML='<span class="eyebrow">마지막 정산</span><h2>남은 원금을 지금 갚을 수 있어</h2><p>현금 '+money(state.cash)+' / 남은 빚 '+money(state.debt)+'.\n여기서 갚으면 빚 0원으로 결산돼. 남기면 현금은 그대로 남고, 빚도 그대로 남아.</p><button class="primary" id="end-settle-pay">전액 갚고 결산</button><button class="outline" id="end-settle-keep">현금 남기고 결산</button>';
+ openDialog(d);
+ $('#end-settle-pay').onclick=()=>{state.flags.endSettled99=true;let n=payDebt(state.debt);state.repaid+=n;state.flags.endPaid99=n;d.close();finish()};
+ $('#end-settle-keep').onclick=()=>{state.flags.endSettled99=true;state.flags.endKept99=true;d.close();finish()};
+}
+function endExtra99(id){
+ let f=state.flags,out=[];
+ if(f.endPaid99)out.push('결산 직전에 현금으로 남은 원금 '+money(f.endPaid99)+'을 갚았어.');
+ if(id===3){
+  if(planEligible())out.push('남은 빚은 36개월에 나눠 갚는 계획으로 넘겼어. 이번 결산에서 내 소득과 생활비로 감당할 수 있는 금액인지 확인했고, 조건에 맞았어.');
+  else if(f.repaymentPlan)out.push('36개월 계획은 접수했지만 이번 결산 조건(남은 원금·소득·건강)을 다 채우지는 못했어. 그래도 매달 갚을 금액은 정해져 있어.');
+ }
+ if(id===7&&f.record)out.push('조사는 유죄 기록으로 끝났어. 빚과 별개로 이름에 남는 기록이야.');
+ if(id===6&&f.investigation)out.push('판결은 났지만 조사와 분쟁이 아직 다 끝나지는 않았어.');
+ if(id===9)out.push(f.affairDiscovered?(f.knewMarriedAtStart?'기혼이라는 설명을 듣고도 관계를 시작했어.':'사실을 안 뒤에도 관계를 이어간 적이 있어.'):'공개되지 않은 비밀이 아직 나를 붙잡고 있어.');
+ if(id===10)out.push('건강 '+state.health+' / 멘탈 '+state.mind+'. 숫자로는 끝났지만 몸이 먼저 신호를 보냈어.');
+ if(id===12)out.push('연체가 시작됐어. 빚이 통장 숫자로만 남는 게 아니라, 이름을 대면 먼저 조회되는 기록이 됐어.');
+ return out.join('\n');
+}
+function finish(){upgradeState();
+ if(state.debt>0&&state.cash>=state.debt&&!state.flags.dead&&!state.flags.majorInjury&&!state.flags.endSettled99){askEndSettle99();return}
+ settleLooseEnds();phase='end';let id=ending(),e=ENDINGS[id],g=ENDING_GROUPS[e.group],plan=id===3&&planEligible();collect('ends',id);state.flags.endingId=id;
+ let groupIds=endingIdsIn(e.group),rank=groupIds.indexOf(id)+1;
+ let stamp=e.group==='cut'?'중도 종료':state.debt>0?'남은 빚 '+compactMoney(state.debt)+' 원':'빚 0원';
+ let details=[state.flags.affairDiscovered?(state.flags.knewMarriedAtStart?'기혼이라는 설명을 듣고도 사적인 관계를 시작했다.':state.flags.knewMarried?'기혼인 걸 알게 된 뒤에도 관계를 이어간 적이 있다.':'미혼이라는 설명을 믿었고, 사실을 안 뒤 관계를 멈췄다.'):'',state.flags.liedToSpouse?'배우자에게 업무 관계였다고 거짓말한 기록이 남았다.':'',state.flags.loverOutcome==='ended'||state.flags.loverOutcome==='lied'?'연인과의 관계는 끝났다.':'',state.flags.rookieFair?'신입에게 실제 공제와 종료 조건을 공개했다.':'',state.flags.sisterOutcome?'유리 언니와의 관계 / '+({ended:'소개를 끝냈다',boundary:'앞으로의 소개비를 끊었다',retry:'한 번 더 소개를 받았다'}[state.flags.sisterOutcome]||state.flags.sisterOutcome):'',state.flags.surgery?'외모는 달라졌다. 다음 생활을 결정한 것은 얼굴보다 내가 정리한 계약과 관계였다.':''].filter(Boolean);
+ let extra=endExtra99(id);
+ let after=plan?'월급 다음 날 상환 알림이 왔어. 빚은 아직 있어. 그래도 이번 달 얼마를 갚고, 얼마로 살지는 내가 알고 있어.':id===8&&state.flags.affairActive?'오늘도 “곧 정리할게”라는 메시지가 왔어. 빚은 0원. 내 수입도 0원. 다음 달 어디서 뭘 먹고 살지는 그 사람 답장에 달렸어.':e.after;
+ setView(artHTML(e.art,'결말 / '+e.name)+'<div class="panel ending-panel"><span class="eyebrow">ENDING '+(id+1)+' / '+ENDINGS.length+' · '+esc(g.label)+' '+rank+' / '+groupIds.length+'</span><h1>'+esc(e.name)+'</h1><b class="end-stamp'+(stamp==='빚 0원'?'':' short')+'">'+esc(stamp)+'</b><p class="end-axis-note">'+esc(g.hint)+'</p><p>'+esc(plan?'전부 갚은 건 아니야. 그래도 생활비와 매달 갚을 돈을 감당할 일은 구했어. 남은 빚은 36개월에 나눠 갚기로 했어.':e.body)+'</p><div class="end-money">현금 '+money(state.cash)+'<br>남은 빚 '+money(state.debt)+(plan?'<br>계획상 월 상환액 '+money(planPayment()):'')+'</div><h3>'+(e.group==='cut'?'그 뒤':'1년 뒤')+'</h3><p>'+esc(after)+'</p>'+(extra?'<p class="after-detail">'+esc(extra)+'</p>':'')+(details.length?'<p class="after-detail">'+esc(details.join('\n'))+'</p>':'')+recapHTML96()+'<details><summary>이 삶의 선택과 남은 일</summary><p>'+esc(state.notes.join('\n')||'추가로 미룬 계약은 없다.')+'</p><ol>'+history.map(h=>'<li>'+esc(h.date+' / '+h.title+' / '+h.choice)+'</li>').join('')+'</ol></details></div><div class="choices"><button id="again" class="primary">다른 선택으로 다시 살기</button><button id="ending-archive" class="outline">모은 결말과 그림 보기</button></div>');$('#again').onclick=confirmNewGame;$('#ending-archive').onclick=showArchive}
 function hud(){
  if(!state){$('#hud').innerHTML='';return}
  let progress=Math.max(0,Math.min(100,(W(3000)-state.debt)/W(3000)*100));
@@ -882,7 +960,12 @@ function hud(){
  $('#quick-pay').onclick=quickRepay;$('#stats').onclick=showStats;$('#hud-menu').onclick=pauseMenu;updateSaveStatus();
 }
 function storyArt(id,caption){if(typeof sceneArt95==='function')return sceneArt95(id,caption);id=Math.max(0,Math.min(35,id));let pos=(id%6)*20+'% '+Math.floor(id/6)*20+'%';return '<div class="comic" role="img" aria-label="'+esc(caption)+'"><div class="sprite sheet-new" style="background-position:'+pos+'"></div><span class="caption">'+esc(caption)+'</span></div>'}
-function showArchive(page=0){if(!Number.isInteger(page))page=0;page=Math.max(0,Math.min(Math.ceil(ART95_COUNT/9)-1,page));let d=$('#settlement-modal');d.innerHTML='<span class="eyebrow">다른 삶의 흔적</span><h2>결말 '+collection.ends.filter(i=>i<ENDINGS.length).length+' / '+ENDINGS.length+'</h2><div class="endings-grid">'+ENDINGS.map((e,i)=>'<span>'+esc(collection.ends.includes(i)?e.name:'아직 만나지 않은 삶')+'</span>').join('')+'</div><p class="muted">본 장면 '+new Set(collection.scenes).size+' / '+episodes.size+'<br>'+esc(collection.people.join(' / ')||'만난 사람을 여기에 기록해.')+'</p><div class="gallery">'+Array.from({length:9},(_,i)=>100+i+page*9).filter(i=>i<100+ART95_COUNT).map(i=>collection.art.includes(i)?'<button class="gallery-tile" data-art="'+i+'" aria-label="그림 '+(i-99)+' 크게 보기"><img loading="lazy" decoding="async" src="'+artUrl95(i-100)+'" alt="모은 그림"></button>':'<div class="gallery-locked">?</div>').join('')+'</div><div class="gallery-pages"><button id="gallery-prev" class="outline" '+(!page?'disabled':'')+'>이전</button><span>'+(page+1)+' / '+Math.ceil(ART95_COUNT/9)+'</span><button id="gallery-next" class="outline" '+(page===Math.ceil(ART95_COUNT/9)-1?'disabled':'')+'>다음</button></div><button id="archive-close" class="primary">돌아가기</button>';openDialog(d);document.querySelectorAll('[data-art]').forEach(b=>b.onclick=()=>{let i=Number(b.dataset.art);d.innerHTML='<h2>그림 '+(i-99)+'</h2><img class="gallery-large" src="'+artUrl95(i-100)+'" alt="모은 그림"><button id="gallery-back" class="primary">도감으로</button>';$('#gallery-back').onclick=()=>showArchive(page)});$('#gallery-prev').onclick=()=>showArchive(page-1);$('#gallery-next').onclick=()=>showArchive(page+1);$('#archive-close').onclick=()=>d.close()}
+function showArchive(page=0){if(!Number.isInteger(page))page=0;page=Math.max(0,Math.min(Math.ceil(ART95_COUNT/9)-1,page));let d=$('#settlement-modal');
+let groups=['paid','unpaid','cut'].map(key=>{let ids=endingIdsIn(key),met=ids.filter(i=>collection.ends.includes(i)).length,g=ENDING_GROUPS[key];
+ return '<div class="end-group '+key+'"><h3>'+esc(g.label)+' <span class="end-count">'+met+' / '+ids.length+'</span><small>'+esc(g.hint)+'</small></h3><div class="endings-grid">'+
+  ids.map(i=>'<span class="'+(collection.ends.includes(i)?'met':'locked')+'">'+esc(collection.ends.includes(i)?ENDINGS[i].name:'아직 만나지 않은 삶')+'</span>').join('')+'</div></div>'}).join('');
+let metAll=collection.ends.filter(i=>i<ENDINGS.length);
+d.innerHTML='<span class="eyebrow">다른 삶의 흔적</span><h2>결말 '+new Set(metAll).size+' / '+ENDINGS.length+'</h2>'+groups+'<p class="muted">본 장면 '+new Set(collection.scenes).size+' / '+episodes.size+'<br>'+esc(collection.people.join(' / ')||'만난 사람을 여기에 기록해.')+'</p><div class="gallery">'+Array.from({length:9},(_,i)=>100+i+page*9).filter(i=>i<100+ART95_COUNT).map(i=>collection.art.includes(i)?'<button class="gallery-tile" data-art="'+i+'" aria-label="그림 '+(i-99)+' 크게 보기"><img loading="lazy" decoding="async" src="'+artUrl95(i-100)+'" alt="모은 그림"></button>':'<div class="gallery-locked">?</div>').join('')+'</div><div class="gallery-pages"><button id="gallery-prev" class="outline" '+(!page?'disabled':'')+'>이전</button><span>'+(page+1)+' / '+Math.ceil(ART95_COUNT/9)+'</span><button id="gallery-next" class="outline" '+(page===Math.ceil(ART95_COUNT/9)-1?'disabled':'')+'>다음</button></div><button id="archive-close" class="primary">돌아가기</button>';openDialog(d);document.querySelectorAll('[data-art]').forEach(b=>b.onclick=()=>{let i=Number(b.dataset.art);d.innerHTML='<h2>그림 '+(i-99)+'</h2><img class="gallery-large" src="'+artUrl95(i-100)+'" alt="모은 그림"><button id="gallery-back" class="primary">도감으로</button>';$('#gallery-back').onclick=()=>showArchive(page)});$('#gallery-prev').onclick=()=>showArchive(page-1);$('#gallery-next').onclick=()=>showArchive(page+1);$('#archive-close').onclick=()=>d.close()}
 function strategicHint(c){
  let raw=String(typeof c.hint==='function'?c.hint():c.hint||'');
  if(state.cash<c.need)return '현금 부족 / '+money(c.need)+' 필요';
@@ -971,7 +1054,7 @@ async function resolveSaveConflict(which){let conflict=cloudConflict;if(!conflic
 function restoreData(d,recovery=false){validateSave(d);cloudSuspended=true;restoredFromRecovery=recovery;lastSavedAt=d._savedAt||Date.now();saveSequence=d._sequence||0;lastCanonical=JSON.stringify(canonical(d));try{loadSnapshot(d);canResume=true}finally{cloudSuspended=false}}
 function offerContinue(item){titleCandidate=item||null;canResume=!!item;intro()}
 function resumeTitle(){if(cloudConflict){showSaveConflict();return}if(!titleCandidate){showRecovery();return}let item=titleCandidate;try{restoreData(item.data,item.recovery);saveGame()}catch(e){restoreError=e.message;showRecovery()}}
-async function bootGame(){if(cloudBooting||cloudBusy)return;if(cloudConflict){showSaveConflict();return}let local=storageCandidates();if(!hasNetwork()){if(local.length&&autoResume98(local[0]))return;if(local.length)return;if(corruptSeen98){showRecovery();return}intro();return}cloudBooting=true;state=null;phase='loading';setView('<div class="panel loading-panel"><span class="eyebrow">LIFE / HARD MODE 09.8</span><h1>저장 확인 중</h1><p>기기와 계정의 진행을 확인하고 있어. 저장본은 고르기 전까지 열지 않아.</p></div>');try{let remote=await requestCloud();guestMode=false;cloudReady=true;cloudRevision=remote.revision||0;cloudStatus='계정 저장 완료';mergeCollection(remote.collection);let online=remote.found?validateSave(remote.save):null,chosen=local[0];lastAcknowledged=online?payloadKey({save:online,collection:remote.collection}):'';
+async function bootGame(){if(cloudBooting||cloudBusy)return;if(cloudConflict){showSaveConflict();return}let local=storageCandidates();if(!hasNetwork()){if(local.length&&autoResume98(local[0]))return;if(local.length)return;if(corruptSeen98){showRecovery();return}intro();return}cloudBooting=true;state=null;phase='loading';setView('<div class="panel loading-panel"><span class="eyebrow">LIFE / HARD MODE 09.9</span><h1>저장 확인 중</h1><p>기기와 계정의 진행을 확인하고 있어. 저장본은 고르기 전까지 열지 않아.</p></div>');try{let remote=await requestCloud();guestMode=false;cloudReady=true;cloudRevision=remote.revision||0;cloudStatus='계정 저장 완료';mergeCollection(remote.collection);let online=remote.found?validateSave(remote.save):null,chosen=local[0];lastAcknowledged=online?payloadKey({save:online,collection:remote.collection}):'';
 if(online&&chosen){let comparison=compareSaves(chosen.data,online),different=JSON.stringify(canonical(chosen.data))!==JSON.stringify(canonical(online));if(different&&(comparison===null||comparison===0)){cloudConflict={pending:{save:chosen.data,collection:JSON.parse(JSON.stringify(collection))},remote};cloudPending=cloudConflict.pending;cloudStatus='두 진행 확인 필요'}else if(comparison<0)chosen={data:online,recovery:false}}else if(online)chosen={data:online,recovery:false};if(chosen){if(!autoResume98(chosen))return}else if(corruptSeen98)showRecovery();else intro()
 }catch(e){if(e.status===401){guestMode=true;cloudReady=false;cloudPending=null;cloudStatus='방문자 / 이 기기에 저장';if(local.length&&autoResume98(local[0]))return;if(local.length)return;if(corruptSeen98){showRecovery();return}intro();return}restoreError=e.message||'저장 정보를 확인하지 못했어.';cloudStatus='기기 저장 / 계정 연결 대기';if(local.length){autoResume98(local[0])}else if(corruptSeen98){showRecovery()}else{guestMode=true;cloudReady=false;try{showToast('계정 저장에 연결하지 못했어. 이 기기에만 저장할게.')}catch(err){}intro()}}finally{cloudBooting=false;updateSaveStatus()}}
 
@@ -985,7 +1068,7 @@ function afterBoot(){let reset=$('#reset');reset.textContent='메뉴';reset.oncl
 async function reconnectCloud(){if(!state||cloudBusy||cloudBooting||cloudConflict||guestMode)return;cloudBooting=true;saveGame();try{let remote=await requestCloud();cloudRevision=remote.revision||0;cloudReady=true;mergeCollection(remote.collection);let local=cloudPending||{save:JSON.parse(lastSavedRaw),collection:JSON.parse(JSON.stringify(collection))};if(remote.found&&JSON.stringify(canonical(remote.save))!==JSON.stringify(canonical(local.save))){cloudConflict={pending:local,remote};cloudPending=local;cloudStatus='다시 연결됨 / 두 진행 확인 필요';showSaveConflict()}else{cloudPending=local;cloudRetries=0;cloudStatus='계정 다시 연결됨';flushCloud()}}catch(e){cloudStatus='기기 저장 / 계정 연결 대기'}finally{cloudBooting=false;updateSaveStatus()}}
 
 /* ==========================================================================
-   v09.8 / 진행이 사라지지 않게 하는 층
+   v09.9 / 진행이 사라지지 않게 하는 층
    - 매 선택 직후와 화면 전환 직전에 같은 저장을 두 번(현재 + 직전) 남긴다.
    - 페이지가 숨겨지거나 닫힐 때, 오류가 났을 때는 동기로 한 번 더 쓴다.
    - 읽을 때는 고칠 수 있는 값은 고쳐서 연다. 세이브를 버리고 처음 화면으로
@@ -1490,6 +1573,52 @@ const CARD97 = {
   }
 };
 
+// v09.9 화자 표시 — 진짜 대화 상대가 있는 카드에만 '나 → 상대'를 붙인다.
+// CAST98에 없는 사건의 기본 상대. ''는 '상대가 없는 사건'(독백·행동)이라는 뜻이다.
+const CAST99_DEFAULT = {
+  'start': '',
+  'stream-offer': () => (state.people?.manager?.name || '민석') + ' 실장',
+  'excel-audition': () => (state.people?.manager?.name || '민석') + ' 실장',
+  'excel-settlement': () => (state.people?.manager?.name || '민석') + ' 실장',
+  'fan-boundary': () => patron().name + ' 씨',
+  'night-trial': () => (state.people?.manager?.name || '민석') + ' 실장',
+  'night-transfer': () => (state.people?.sister?.name || '유리') + ' 언니',
+  'regular': '',
+  'makeover': '',
+  'fake-rank': () => (state.people?.manager?.name || '민석') + ' 실장',
+  'expose': '방송 시청자',
+  'expose-after': '방송 시청자',
+  'comfort': '',
+  'mental-pause': '',
+  'closing-choice': () => patron().name + ' 씨'
+};
+// 카드 문장 단위 예외. 값이 ''면 그 카드는 혼잣말·행동이라 화자 칩을 달지 않는다.
+const CAST99_CARD = {
+  '다음 주 월요일부터 나오면 되죠?': '면접관',
+  '언니, 나도 그 자리 해볼래.': () => (state.people?.sister?.name || '유리') + ' 언니',
+  '카메라 켜. 오늘부터 할 거야.': '',
+  '돈 대신 보여줄 걸 만들자.': '',
+  '얼굴 말고 일로 보여줄게요.': '',
+  '안 열어요. 지금 경찰에 연락할게요.': () => patron().name + ' 씨',
+  '2주만 신경 꺼줘. 연락은 네가 받아줄래?': '지인',
+  '내가 직접 끝낼게.': '지인',
+  '프로필 보내드릴게요. 면접 볼 수 있을까요?': '업장 담당자',
+  '비용만 먼저 알려주세요.': '스튜디오 담당자',
+  '다음에도 제 이름으로 예약해주세요.': '단골 손님',
+  '이번 달엔 새 비용 안 만들래요.': () => (state.people?.sister?.name || '유리') + ' 언니',
+  '행사만 할게요. 끝나면 바로 갈게요.': '행사 담당자',
+  '끝나고 한 잔은 괜찮아요.': '행사 손님',
+  '프로필이랑 가능한 시간 보냈어요.': '촬영 담당자',
+  '할게요. 회복은 30일로 잡아주세요.': '병원 상담',
+  '사진만 찍을게요.': '스튜디오 담당자',
+  '옷이랑 헤어만 바꿔서 찍을게요.': '스튜디오 담당자',
+  '이제 제 돈으로 살게요.': () => patron().name + ' 씨',
+  '오늘 있었던 일 좀 들어줄래?': '친구',
+  '정리해서 말해볼게요.': '상담사',
+  '일주일만 아무 연락도 안 볼래.': '',
+  '일 관련 연락만 받을게요.': ''
+};
+
 // v09.7 presentation layer: action cards, exact pre-choice numbers, natural reading flow.
 // Numbers and odds shown on a card come from actually running that choice on a copy of
 // the current save, so the display and the real outcome can never drift apart.
@@ -1880,7 +2009,7 @@ function fxChipsHTML97(before, after) {
 }
 
 /* ==========================================================================
-   v09.8 / 화자·컷인·형광펜
+   v09.9 / 화자·컷인·형광펜·결말 두 축
    1) 누가 누구에게 하는 말인지 화면에서 바로 읽히게 한다.
       - 대사만 있는 줄은 화자 칩을 붙여 말하는 사람을 밝힌다.
       - 선택지 카드의 대사에는 '나 → 상대'를 붙인다.
@@ -1948,6 +2077,23 @@ const CAST98 = {
 function cast98(id) {
   let v = CAST98[id];
   try { return (typeof v === 'function' ? v() : v || '') || ''; } catch (e) { return ''; }
+}
+
+// v09.9 화자 판정: 카드 단위 예외 → 사건 기본값 → 기존 표 순서로 상대를 찾는다.
+const CAST99_INDEX = {};
+for (let k of Object.keys(CAST99_CARD)) CAST99_INDEX[k.replace(/[“”"'‘’\s]/g, '')] = CAST99_CARD[k];
+
+function cast99(id, line) {
+  let key = String(line || '').replace(/[“”"'‘’\s]/g, '');
+  if (key && Object.prototype.hasOwnProperty.call(CAST99_INDEX, key)) {
+    let v = CAST99_INDEX[key];
+    try { return String(typeof v === 'function' ? v() : v || '') || ''; } catch (e) { return ''; }
+  }
+  if (Object.prototype.hasOwnProperty.call(CAST99_DEFAULT, id)) {
+    let v = CAST99_DEFAULT[id];
+    try { return String(typeof v === 'function' ? v() : v || '') || ''; } catch (e) { return ''; }
+  }
+  return cast98(id);
 }
 
 // 컷인 머리말. 무슨 창으로 온 연락인지, 이 장면의 새 소식인지 답장인지 적는다.
@@ -2118,7 +2264,8 @@ function choiceCardHTML97(i, k) {
     }
   }
   let tag = crisisTag(c);
-  let speaker = /^\s*[“"‘']/.test(card.line) ? ('나' + (cast98(active.id) ? ' → ' + cast98(active.id) : '')) : '';
+  let to = /^\s*[“"‘']/.test(card.line) ? cast99(active.id, card.line) : '';
+  let speaker = to ? ('나 → ' + to) : '';
   return '<button class="choice' + (c.special ? ' special' : '') + (c.dark ? ' dark' : '') + '" data-i="' + i + '" style="--i:' + k + '"' + (short ? ' disabled' : '') + '>' +
     '<span class="num">0' + (k + 1) + '</span>' +
     '<span class="card">' +
@@ -2187,12 +2334,15 @@ const BODY97 = [
   ['기다릴지, 다른 수입을 만들지 정해야 해.', '기다릴지, 다른 돈을 만들지. 오늘 안에 답이 필요해.'],
   ['이직할지 한 건만 받을지 고를 수 있어.', '이직할지, 한 건만 받을지.'],
   ['주말을 내줄지, 이미 맡은 일의 값을 다시 말할지 정해야 해.', '주말을 내줄지, 이미 맡은 일의 값을 다시 말할지.'],
-  ['LIFE / HARD MODE 09.6', 'LIFE / HARD MODE 09.8'],
-  ['LIFE / HARD MODE 09.7', 'LIFE / HARD MODE 09.8'],
-  ['VERSION 09.8', 'VERSION 09.8'],
-  ['VERSION 09.8', 'VERSION 09.8'],
-  ['v09.6', 'v09.8'],
-  ['v09.7', 'v09.8']
+  ['LIFE / HARD MODE 09.6', 'LIFE / HARD MODE 09.9'],
+  ['LIFE / HARD MODE 09.7', 'LIFE / HARD MODE 09.9'],
+  ['LIFE / HARD MODE 09.8', 'LIFE / HARD MODE 09.9'],
+  ['VERSION 09.9', 'VERSION 09.9'],
+  ['VERSION 09.9', 'VERSION 09.9'],
+  ['VERSION 09.9', 'VERSION 09.9'],
+  ['v09.6', 'v09.9'],
+  ['v09.8', 'v09.9'],
+  ['v09.7', 'v09.9']
 ];
 
 const BODY97_RE = [
@@ -2220,15 +2370,15 @@ function quote(base) { return charmRate(base) + Math.floor(state.career / 10) * 
 const careerRenew97 = episodes.get('career-renew').build;
 episodes.get('career-renew').build = () => {
   let s = careerRenew97();
-  s.choices[0] = C('주말 업무까지 맡기', '주말 근무 / 월 +150만 / 건강 −15 / 경력 +15', () => {
-    state.salary += W(150);
-    return resultOf('더 많은 돈이 찍힌 계약서', '토요일 일정까지 근무표에 들어갔어. 다음 급여부터 150만 원이 더 들어와.\n상환 계획은 빨라졌지만 쉴 시간은 줄었어.', 9, {
+  s.choices[0] = C('주말 업무까지 맡기', '주말 근무 / 월 +130만 / 건강 −15 / 경력 +15', () => {
+    state.salary += W(130);
+    return resultOf('더 많은 돈이 찍힌 계약서', '토요일 일정까지 근무표에 들어갔어. 다음 급여부터 130만 원이 더 들어와.\n상환 계획은 빨라졌지만 쉴 시간은 줄었어.', 9, {
       health: -15,
       career: 15
     });
   });
-  s.choices[1] = C('업무 범위와 급여를 협상하기', '협상 / 경력 25 또는 눈치 2면 월 +120만 / 아니면 +40만', () => {
-    let n = state.career >= 25 || trait('read') >= 2 ? 120 : 40;
+  s.choices[1] = C('업무 범위와 급여를 협상하기', '협상 / 경력 25 또는 눈치 2면 월 +100만 / 아니면 +40만', () => {
+    let n = state.career >= 25 || trait('read') >= 2 ? 100 : 40;
     state.salary += W(n);
     return resultOf('이미 맡고 있던 일', '주말을 더 내주기 전에 지금 하는 업무부터 정리했어. 급여가 월 ' + money(W(n)) + ' 늘었어.\n그동안 쌓은 경력과 조건을 읽는 눈이 협상에 쓰였어.', 25, {
       career: 10
@@ -2240,11 +2390,11 @@ episodes.get('career-renew').build = () => {
 const officeEthics97 = episodes.get('office-ethics').build;
 episodes.get('office-ethics').build = () => {
   let s = officeEthics97();
-  s.choices[2] = C('정상 견적과 메시지를 보고하고 정산 업무를 협상하기', '눈치 2 또는 경력 35면 월 +120만 / 그 외 일회성 +100만', () => {
+  s.choices[2] = C('정상 견적과 메시지를 보고하고 정산 업무를 협상하기', '눈치 2 또는 경력 35면 월 +100만 / 그 외 일회성 +100만', () => {
     let ok = trait('read') >= 2 || state.career >= 35;
     state.flags.evidence = true;
-    if (ok) state.salary += W(120);
-    return resultOf('이번에는 공식 급여로', '제안 메시지와 원래 견적을 책임자에게 전달했어. 회사는 거래를 바로잡았어.\n\n' + (ok ? '기존 업무에 정산 검증을 맡는 조건으로 월 보수가 120만 원 올랐어.' : '추가 자료 정리 업무를 마친 보수 100만 원을 받았어. 월수입은 그대로야.'), 33, {
+    if (ok) state.salary += W(100);
+    return resultOf('이번에는 공식 급여로', '제안 메시지와 원래 견적을 책임자에게 전달했어. 회사는 거래를 바로잡았어.\n\n' + (ok ? '기존 업무에 정산 검증을 맡는 조건으로 월 보수가 100만 원 올랐어.' : '추가 자료 정리 업무를 마친 보수 100만 원을 받았어. 월수입은 그대로야.'), 33, {
       cash: ok ? 0 : 100,
       career: 15
     });
@@ -2293,12 +2443,7 @@ function wrapChoices97(s, id) {
 
 /* ---------------------------------------------------------------- endings */
 
-ENDINGS[0].after = '점심엔 휴대폰부터 뒤집어둬. 누가 입금했나 확인하는 대신, 오늘 뭐 먹을지를 먼저 생각해.';
-ENDINGS[1].after = '새 계약서가 왔어. 이번엔 가장 잘 번 달 얘기보다, 장사 안 되는 달의 비용을 누가 내는지부터 물었어.';
-ENDINGS[3].body = '상환일은 왔고 빚은 남았어. 180일 내내 숫자를 봤는데, 마지막 날 통장에 남은 건 숫자 하나였어.';
-ENDINGS[3].after = '아직 갚을 돈이 있어. 이번 달에 실제로 들어온 돈부터 적어보려고. 누가 말해준 최고 수입 말고.';
-ENDINGS[7].body = '조사도 분쟁도 아직 안 끝났어. 유죄가 정해진 건 아니야. 빚을 갚았다고 이 일까지 없어지지는 않았어.';
-
+// 결말 문안은 presentation94.js의 ENDINGS가 최종본이다(v09.9에서 두 축·13종으로 재작성).
 // The ending recap quotes what actually happened, in her voice. No parallel-universe lectures.
 function recapHTML97() {
   let f = state.flags;
