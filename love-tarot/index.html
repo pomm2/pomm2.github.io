@@ -343,7 +343,7 @@ const STRAT={
   predTitle1:'같은 밤이 또 오면',pred1:'붙잡는 말이 먼저 나올 거야. 피곤은 그 뒤에 따라오고.',
   predTitle2:'지우가 자리를 비우면',pred2:'그게 거절처럼 느껴져서 더 세게 붙잡을 거야. 그러면 지우는 설명하기보다 자리를 피하게 되고.',
   actTitle:'피곤을 먼저 말하기',act:'요구보다 피곤을 먼저 말해봐. “오늘 좀 지쳐서 그런데, 잠깐 목소리만 듣고 싶어”처럼 둘을 한 문장에 넣으면 지우도 부담과 필요를 같이 볼 수 있어.'},
- hold:{card:9,title:'말보다 때를 보는 쪽',head:'말보다 때를 보는',
+ hold:{card:9,title:'말보다 때를 보는 쪽',
   line:'하고 싶은 말은 있는데, 언제 꺼내야 할지를 먼저 계산해.',
   tensionTitle:'때만 재다가 말이 늦어져',
   tension:'타이밍만 재다 보면 말이 늦어지고, 늦어진 말은 지우한테 갑자기 도착해. 이번에도 불편했던 장면이랑 말한 시점 사이가 꽤 벌어져 있었어.',
@@ -393,19 +393,20 @@ const PICK={atm:['key','scale'],fisher:['hook','star'],cat:['moon','key'],mirror
  cleaner:['lock','sword'],boundary:['sword','lock'],unsent:['moon','star'],knot:['rings','moon'],hourglass:['hourglass','star']};
 const sym=s=>SYM[s]||SYM.star;
 
-/* ---- frame ---- */
+/* ---- arch plate path (same path used for the clip and the frame) ---- */
+const PLATE='M40 902 H720 V340 A340 322 0 0 0 40 340 Z';
+const INNER='M58 884 H702 V340 A322 304 0 0 0 58 340 Z';
 const frame=
-'<path d="M40 902 H720 V340 A340 322 0 0 1 40 340 Z" fill="none" stroke="#24211c" stroke-width="4"/>'+
-'<path d="M58 884 H702 V340 A322 304 0 0 1 58 340 Z" fill="none" stroke="#24211c" stroke-width="1.4"/>'+
-'<path d="M64 878 H696" stroke="#24211c" stroke-width="1"/>'+
-'<path d="M64 346 H700 M64 352 H700" stroke="#39342d" stroke-width=".8" opacity=".55"/>';
+ '<path d="'+PLATE+'" fill="none" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="'+INNER+'" fill="none" stroke="#24211c" stroke-width="1.2"/>'+
+ '<path d="M64 346 H700 M64 352 H700" stroke="#39342d" stroke-width=".8" opacity=".45"/>';
 
 /* ---- corner ornaments: star, crescent, thin filigree ---- */
-function corner(x,y,rx,ry,inner){
- return '<g transform="translate('+x+' '+y+') scale('+(rx||1)+' '+((ry||1))+')">'+
+function corner(x,y,s){
+ return '<g transform="translate('+x+' '+y+') scale('+s+')">'+
  '<path d="M0 -13 L3.4 -3.4 13 0 3.4 3.4 0 13 -3.4 3.4 -13 0 -3.4 -3.4Z" fill="#24211c"/>'+
  '<path d="M-18 0H-13M13 0H18M0 -18V-13M0 13V18" stroke="#24211c" stroke-width="1.1"/>'+
- '</g>'+(inner||'');
+ '</g>';
 }
 function crescent(x,y,s,flip){
  return '<g transform="translate('+x+' '+y+') scale('+(flip?-s:s)+' '+s+')">'+
@@ -414,16 +415,16 @@ function crescent(x,y,s,flip){
  '<path d="M-8 20 q10 8 20 0" fill="none" stroke="#24211c" stroke-width="1.1"/></g>';
 }
 const orn=
- corner(96,306)+corner(664,306)+crescent(92,806,1)+crescent(668,806,1,true)+
- '<path d="M40 366 q56 -26 112 -2M720 366 q-56 -26 -112 -2" fill="none" stroke="#39342d" stroke-width="1" opacity=".55"/>'+
- '<path d="M40 872 q56 24 112 2M720 872 q-56 24 -112 2" fill="none" stroke="#39342d" stroke-width="1" opacity=".55"/>';
+ corner(112,268,1)+corner(648,268,1)+crescent(96,796,1)+crescent(664,796,1,true)+
+ '<path d="M44 372 q54 -22 108 -2M716 372 q-54 -22 -108 -2" fill="none" stroke="#39342d" stroke-width="1" opacity=".5"/>'+
+ '<path d="M44 858 q54 20 108 2M716 858 q-54 20 -108 2" fill="none" stroke="#39342d" stroke-width="1" opacity=".5"/>';
 
 /* ---- halo rays + dotted orbit ---- */
 let halo='';
 for(let i=0;i<32;i++){const ang=Math.PI*2*i/32,r1=i%2?196:176,r2=i%4===0?292:258;
  halo+='<path d="M'+(380+Math.cos(ang)*r1).toFixed(1)+' '+(520+Math.sin(ang)*r1).toFixed(1)+'L'+(380+Math.cos(ang)*r2).toFixed(1)+' '+(520+Math.sin(ang)*r2).toFixed(1)+'" stroke="#2a2620" stroke-width="1" opacity=".13"/>';}
-const orbit='<ellipse cx="380" cy="522" rx="300" ry="238" fill="none" stroke="#39342d" stroke-width="1.1" stroke-dasharray="3 10" opacity=".5"/>'+
- '<ellipse cx="380" cy="522" rx="252" ry="200" fill="none" stroke="#39342d" stroke-width=".8" opacity=".3"/>';
+const orbit='<ellipse cx="380" cy="522" rx="300" ry="238" fill="none" stroke="#39342d" stroke-width="1.1" stroke-dasharray="3 10" opacity=".45"/>'+
+ '<ellipse cx="380" cy="522" rx="252" ry="200" fill="none" stroke="#39342d" stroke-width=".8" opacity=".28"/>';
 
 /* ---- moon phases along the arch ---- */
 let phases='';
@@ -439,22 +440,25 @@ for(let i=0;i<7;i++){
 /* ---- symbols in the four corners ---- */
 const picks=PICK[kind]||PICK.atm;
 const symLayer=
- '<g transform="translate(126 250) scale(.9)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[0])+'</g>'+
- '<g transform="translate(634 250) scale(.9)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[1])+'</g>'+
- '<g transform="translate(126 812) scale(.62)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".38">'+sym(picks[1])+'</g>'+
- '<g transform="translate(634 812) scale(.62)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".38">'+sym(picks[0])+'</g>';
+ '<g transform="translate(196 236) scale(.95)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[0])+'</g>'+
+ '<g transform="translate(564 236) scale(.95)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[1])+'</g>'+
+ '<g transform="translate(156 848) scale(.6)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".4">'+sym(picks[1])+'</g>'+
+ '<g transform="translate(604 848) scale(.6)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".4">'+sym(picks[0])+'</g>';
 
 /* ---- woodcut hatching under the scene ---- */
-let hatch='';for(let i=0;i<34;i++)hatch+='<path d="M'+(52+i*20)+' 852l-24 5" stroke="#39342d" opacity=".4" stroke-width="1"/>';
+let hatch='';for(let i=0;i<26;i++)hatch+='<path d="M'+(72+i*24)+' 872l-22 4" stroke="#39342d" opacity=".33" stroke-width="1"/>';
 
 return '<svg xmlns="http://www.w3.org/2000/svg" width="760" height="940" viewBox="0 0 760 940">'+
  '<defs><pattern id="ink" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#27251f"/><path d="M0 5L5 0" stroke="#d9cdb3" stroke-width=".7"/></pattern>'+
  '<pattern id="pale" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 7L7 0" stroke="#736b5b" stroke-width=".5"/></pattern>'+
- '<radialGradient id="glow" cx="50%" cy="52%" r="50%"><stop offset="0%" stop-color="#fff8e2" stop-opacity=".95"/><stop offset="60%" stop-color="#fff8e2" stop-opacity=".35"/><stop offset="100%" stop-color="#fff8e2" stop-opacity="0"/></radialGradient></defs>'+
- '<ellipse cx="380" cy="520" rx="250" ry="210" fill="url(#glow)"/>'+
- halo+orbit+frame+orn+phases+
- '<g stroke="#26231e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(40 152) scale(1.48)">'+art+'</g></g>'+
- symLayer+hatch+
+ '<radialGradient id="glow" cx="50%" cy="52%" r="50%"><stop offset="0%" stop-color="#fff8e2" stop-opacity=".95"/><stop offset="58%" stop-color="#fff8e2" stop-opacity=".4"/><stop offset="100%" stop-color="#fff8e2" stop-opacity="0"/></radialGradient>'+
+ '<clipPath id="plate"><path d="'+PLATE+'"/></clipPath></defs>'+
+ '<g clip-path="url(#plate)">'+
+ '<ellipse cx="380" cy="520" rx="310" ry="250" fill="url(#glow)"/>'+
+ halo+orbit+phases+
+ '<g stroke="#26231e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(136 292) scale(1.06)">'+art+'</g></g>'+
+ hatch+'</g>'+
+ frame+orn+symLayer+
  '</svg>'}
 /* ===== PURE LOGIC (no DOM) ===== */
 const WT=[1,1.1,1.2,1.3,1.45];
@@ -536,7 +540,8 @@ function mismatch(h,d){let best=null;
  return {round:best.r,sent:best.o.c,wanted:best.m.c,intent:best.o.intent,signal:best.o.signal,cat:best.m.cat,kind:best.kind,reversed:best.kind!==''&&best.kind!=='rest-close',why:whyMap[best.kind],short:shortMap[best.kind]}}
 function metricsOf(h){const f=featureProfile(h);return [{k:'concede',label:'을 지수',value:f.concede},{k:'direct',label:'선 긋기',value:f.direct},{k:'distance',label:'거리 두기',value:f.distance}]}
 function headlineOf(f,s){if(!s||!s.head)return '';const vals=Object.keys(f).map(function(k){return f[k]}).sort(function(a,b){return b-a});
- if(!vals.length||vals[0]<55||vals[0]-(vals[1]||0)<12)return '';return s.head}
+ if(!vals.length||vals[0]<65)return '';let rest=0;for(let i=1;i<vals.length;i++)rest+=vals[i];
+ rest=rest/(vals.length-1);return (vals[0]-rest)>=28?s.head:''}
 function repeatLine(h){const ch=h.map(function(a,i){return ROUNDS[i].options[a.choice]});
  const counts={distance:0,concede:0,confirm:0,direct:0,indirect:0,retaliate:0,care:0,repair:0};
  ch.forEach(function(o){for(const k in o.f)counts[k]+=(o.f[k]>=2?1:0.4)});
