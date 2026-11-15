@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>파트너 정기 인사평가서 · PARTNER HR</title>
+<meta name="theme-color" content="#224fc5">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" crossorigin="anonymous" defer></script>
+<style>
+:root{
+  color-scheme:light;
+  --ink:#141f32; --muted:#4f6077; --blue:#224fc5; --blue-d:#173a94; --blue-l:#e8eefc;
+  --line:#dce4ef; --wash:#f2f6fe; --bg:#f5f7fb;
+  --red:#c62828; --amber:#a15a00; --green:#1d6b4f;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:14px}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:400 16px/1.65 "Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  letter-spacing:-.02em;word-break:keep-all;overflow-wrap:anywhere;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,p,figure,dl,dd{margin:0}
+button{font:inherit;color:inherit;letter-spacing:inherit}
+[hidden]{display:none!important}
+::selection{background:#cfdcff}
+
+/* ---------- LOCK ---------- */
+#lock{
+  position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;
+  padding:16px;background:linear-gradient(165deg,#0d1b3a 0%,#173a94 55%,#224fc5 100%);
+  overflow:auto;
+}
+#lock::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:34px 34px;mask-image:radial-gradient(120% 90% at 50% 20%,#000 25%,transparent 78%);
+}
+.lock-card{
+  position:relative;width:100%;max-width:352px;background:#fff;border-radius:22px;
+  padding:26px 20px 20px;box-shadow:0 30px 70px -30px rgba(0,0,0,.65),0 2px 0 rgba(255,255,255,.5) inset;
+}
+.lock-mark{
+  width:52px;height:52px;border-radius:14px;background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 14px;
+  box-shadow:0 8px 20px -10px rgba(34,79,197,.9);
+}
+.lock-mark svg{width:24px;height:24px}
+.kicker{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--blue);text-align:center}
+.lock-card h1{font-size:21px;font-weight:800;letter-spacing:-.045em;text-align:center;margin:7px 0 6px}
+.lock-sub{font-size:13px;line-height:1.6;color:var(--muted);text-align:center;margin:0 auto 18px;max-width:250px}
+.dots{display:flex;justify-content:center;gap:13px;margin:0 0 8px}
+.dots i{
+  width:14px;height:14px;border-radius:50%;border:1.6px solid #a8b9d4;
+  transition:background .12s,border-color .12s,transform .12s;
+}
+.dots i.on{background:var(--blue);border-color:var(--blue);transform:scale(1.08)}
+.err{
+  height:19px;text-align:center;font-size:12px;font-weight:700;color:var(--red);
+  opacity:0;transition:opacity .15s;
+}
+.err.show{opacity:1}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:4px 0 10px}
+.keypad button{
+  height:52px;border:1px solid var(--line);background:#fbfcff;border-radius:13px;
+  font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;cursor:pointer;
+  transition:transform .08s,background .12s,border-color .12s;
+}
+.keypad button:active{background:var(--blue-l);border-color:#b7c8f0;transform:scale(.97)}
+.keypad button.fn{font-size:12.5px;font-weight:750;color:var(--muted);background:#fff;display:flex;align-items:center;justify-content:center}
+.lock-foot{font-size:11px;color:#8794a8;text-align:center;margin-top:4px;letter-spacing:0}
+.shake{animation:shake .42s cubic-bezier(.36,.07,.19,.97)}
+@keyframes shake{
+  10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}
+  30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}
+}
+.bad{animation:bad .5s}
+@keyframes bad{0%,100%{border-color:var(--line)}50%{border-color:#e7a3a3;background:#fff5f5}}
+
+/* ---------- APP SHELL ---------- */
+.top{
+  position:sticky;top:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.top-in{
+  max-width:720px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;gap:10px;
+}
+.brand{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;letter-spacing:.05em;color:var(--blue)}
+.brand .dot{width:8px;height:8px;border-radius:2px;background:var(--blue)}
+.top .spacer{flex:1}
+.tbtn{
+  border:1px solid var(--line);background:#fff;border-radius:9px;padding:6px 11px;
+  font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;
+}
+.tbtn:active{background:var(--wash)}
+.wrap{width:100%;max-width:600px;margin:0 auto;padding:18px 17px 46px}
+@media(min-width:760px){.wrap{max-width:720px}}
+
+/* ---------- WIZARD ---------- */
+.prog{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.prog .bar{flex:1;height:5px;border-radius:99px;background:#e2e8f4;overflow:hidden}
+.prog .bar span{display:block;height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .28s ease}
+.prog .n{font-size:11.5px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:0 1px 2px rgba(20,31,50,.03),0 14px 34px -30px rgba(20,31,50,.5)}
+.sec-label{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--blue);margin-bottom:9px;display:block}
+.step-title{font-size:21px;font-weight:800;letter-spacing:-.045em;line-height:1.32}
+.step-sub{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.55}
+.field{margin-top:18px}
+.field label{display:block;font-size:12.5px;font-weight:750;color:#3a4a63;margin-bottom:7px}
+.field label .opt{font-weight:600;color:#93a0b5;font-size:11px;margin-left:3px}
+input[type=text],textarea{
+  width:100%;border:1px solid #d3dded;background:#fbfcff;border-radius:11px;padding:12px 13px;
+  font:inherit;font-size:15px;color:var(--ink);letter-spacing:-.01em;outline:none;
+  transition:border-color .15s,box-shadow .15s,background .15s;
+}
+input[type=text]::placeholder,textarea::placeholder{color:#9aa7ba}
+input[type=text]:focus,textarea:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(34,79,197,.11)}
+textarea{resize:vertical;min-height:70px;line-height:1.55}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chips button{
+  border:1px solid #d3dded;background:#fff;border-radius:99px;padding:9px 14px;
+  font-size:13.5px;font-weight:700;color:#44536b;cursor:pointer;transition:.14s;
+}
+.chips button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 6px 14px -9px rgba(34,79,197,.9)}
+.hint{font-size:11.5px;color:#93a0b5;margin-top:6px}
+.warn{font-size:12px;font-weight:700;color:var(--red);margin-top:8px;display:none}
+.warn.show{display:block}
+
+.stepnav{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;margin-top:20px}
+.stepnav.single{grid-template-columns:minmax(0,1fr)}
+.btn{
+  border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 16px;
+  font-size:14.5px;font-weight:750;cursor:pointer;transition:.14s;display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 10px 22px -14px rgba(34,79,197,.95)}
+.btn.primary:active{background:var(--blue-d)}
+.btn.ghost{color:var(--muted);padding:14px 14px;font-size:14px;white-space:nowrap}
+.btn.grow{flex:1}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+/* question */
+.qtop{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.qarea{
+  font-size:11px;font-weight:800;color:var(--blue);background:var(--blue-l);
+  border-radius:6px;padding:4px 8px;letter-spacing:.02em;
+}
+.qidx{margin-left:auto;font-size:11.5px;font-weight:800;color:#93a0b5;font-variant-numeric:tabular-nums}
+.qtxt{font-size:19px;font-weight:800;line-height:1.4;letter-spacing:-.04em;margin:2px 0 4px}
+.opts{display:grid;gap:8px;margin-top:16px}
+.opt-btn{
+  display:flex;align-items:center;gap:11px;text-align:left;width:100%;
+  border:1px solid #d7e0ee;background:#fcfdff;border-radius:12px;padding:13px 13px;
+  font-size:14.5px;font-weight:650;line-height:1.42;cursor:pointer;transition:.13s;color:#22314a;
+}
+.opt-btn .k{
+  flex:0 0 auto;width:22px;height:22px;border-radius:6px;background:#eef2f9;color:#7c8ba3;
+  font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;
+}
+.opt-btn:active{border-color:#9fb4e6;background:var(--wash)}
+.opt-btn[aria-pressed=true]{border-color:var(--blue);background:var(--blue-l);color:#12307a}
+.opt-btn[aria-pressed=true] .k{background:var(--blue);color:#fff}
+.qfoot{margin-top:14px;display:flex;gap:9px;align-items:center}
+.qfoot .note{font-size:11.5px;color:#93a0b5}
+
+/* heat */
+.heatcard{display:grid;gap:9px;margin-top:16px}
+.heat-opt{
+  display:grid;grid-template-columns:auto 1fr;gap:11px;align-items:start;text-align:left;
+  border:1px solid #d7e0ee;background:#fcfdff;border-radius:13px;padding:13px;cursor:pointer;transition:.14s;
+}
+.heat-opt .em{font-size:20px;line-height:1.2}
+.heat-opt b{display:block;font-size:14.5px;font-weight:800;letter-spacing:-.03em}
+.heat-opt span.d{display:block;font-size:12px;color:var(--muted);margin-top:3px;line-height:1.45}
+.heat-opt[aria-pressed=true]{border-color:var(--blue);background:var(--blue-l);box-shadow:0 0 0 1px var(--blue) inset}
+.heat-opt[aria-pressed=true] b{color:#12307a}
+
+/* ---------- REPORT ---------- */
+.sheet{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 20px 50px -38px rgba(20,31,50,.55)}
+.doc-head{padding:18px 18px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff, #fafcff)}
+.doc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;font-size:10.5px;letter-spacing:.06em;color:#8493a8;font-weight:700}
+.doc-top .conf{color:var(--red);letter-spacing:.12em}
+.doc-head h1{font-size:25px;font-weight:830;letter-spacing:-.06em;line-height:1.2;margin:11px 0 5px}
+.doc-head .sub{font-size:12.5px;color:var(--muted)}
+.meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-top:15px}
+.meta-grid div{background:#fff;padding:9px 11px}
+.meta-grid dt{font-size:10.5px;font-weight:750;color:#8493a8;letter-spacing:.02em}
+.meta-grid dd{font-size:13px;font-weight:750;margin-top:2px;letter-spacing:-.02em}
+
+.hero{padding:20px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;border-bottom:1px solid var(--line)}
+.scorebox .lab{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--blue)}
+.scorebig{display:flex;align-items:baseline;gap:6px;margin-top:2px}
+.scorebig b{font-size:52px;font-weight:850;line-height:1;letter-spacing:-.07em;font-variant-numeric:tabular-nums;color:var(--blue)}
+.scorebig span{font-size:13px;font-weight:700;color:var(--muted)}
+.grade{
+  display:inline-flex;align-items:center;gap:6px;margin-top:9px;border-radius:8px;padding:4px 9px;
+  font-size:12.5px;font-weight:800;letter-spacing:.01em;
+}
+.stampline{margin-top:11px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.stampline b{color:var(--ink);font-weight:800}
+.stamp{
+  width:112px;height:112px;border-radius:50%;display:grid;place-items:center;text-align:center;
+  border:2.5px double #c0392b;color:#c0392b;transform:rotate(-11deg);opacity:.93;
+  padding:10px;overflow:hidden;
+  background:radial-gradient(circle at 30% 25%,rgba(192,57,43,.07),transparent 62%);
+  box-shadow:0 0 0 1px rgba(192,57,43,.12) inset;
+}
+.stamp .st-in{display:grid;justify-items:center;gap:3px;max-width:88px}
+.stamp small{font-size:7.5px;letter-spacing:.1em;font-weight:800;opacity:.8;line-height:1.1}
+.stamp .st-main{font-size:11px;font-weight:850;line-height:1.24;letter-spacing:-.03em;word-break:keep-all;max-width:88px}
+
+.summary{padding:16px 18px;background:var(--wash);border-bottom:1px solid var(--line)}
+.summary .ttl{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--blue);margin-bottom:6px}
+.summary p{font-size:14px;line-height:1.62;letter-spacing:-.025em}
+.summary .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.tag{font-size:11px;font-weight:800;border-radius:6px;padding:4px 8px;background:#fff;border:1px solid var(--line);color:#3c4c66}
+.tag.keep{border-color:#bcd9cc;background:#f0f8f4;color:var(--green)}
+.tag.fix{border-color:#f0cfbd;background:#fdf4ef;color:#a8471a}
+
+.pad{padding:18px}
+.doc-sec{padding:18px;border-bottom:1px solid var(--line)}
+.doc-sec:last-of-type{border-bottom:0}
+.sec-no{
+  font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--blue);
+  display:flex;align-items:center;gap:7px;margin-bottom:7px;
+}
+.sec-no::after{content:"";flex:1;height:1px;background:var(--line)}
+.doc-sec h2{font-size:16px;font-weight:820;letter-spacing:-.04em;line-height:1.35}
+.doc-sec .desc{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* feelscale */
+.feelscale{display:flex;align-items:center;gap:13px;margin-top:2px}
+.feelscale output{
+  font-size:22px;font-weight:850;color:var(--blue);font-variant-numeric:tabular-nums;
+  min-width:50px;text-align:right;letter-spacing:-.04em;
+}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;flex:1;height:7px;border-radius:99px;outline:none;
+  background:linear-gradient(90deg,var(--blue) 0%,var(--blue) var(--fill,50%),#e2e8f4 var(--fill,50%),#e2e8f4 100%);
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;
+  border:3px solid var(--blue);box-shadow:0 3px 10px -2px rgba(34,79,197,.5);cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--blue);cursor:pointer;
+}
+.feelends{display:flex;justify-content:space-between;font-size:10.5px;font-weight:700;color:#9aa7ba;margin-top:5px;padding-left:2px;padding-right:52px}
+
+/* blinder (콩깍지 보정) */
+.blinder{padding:16px 18px 17px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcff,#fff)}
+.blinder .bhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.blinder .bt{font-size:10.5px;font-weight:800;letter-spacing:.12em;color:var(--blue)}
+.bpill{margin-left:auto;font-size:10.5px;font-weight:800;padding:4px 9px;border-radius:99px;white-space:nowrap;letter-spacing:-.01em}
+.bpill.cut{background:#fdecea;color:#a8231b;border:1px solid #f3c8c4}
+.bpill.up{background:#eef8f2;color:#1d6b4f;border:1px solid #c3e3d3}
+.bpill.even{background:var(--blue-l);color:var(--blue);border:1px solid #c9d8f6}
+.bnum{display:flex;align-items:flex-end;gap:9px;margin-top:9px;flex-wrap:wrap}
+.bnum .cell{display:flex;flex-direction:column;gap:1px}
+.bnum .cell span{font-size:10px;font-weight:750;color:#8493a8;letter-spacing:.02em}
+.bnum .cell b{font-size:26px;font-weight:850;line-height:1.05;letter-spacing:-.055em;font-variant-numeric:tabular-nums;color:#5c6a80}
+.bnum .cell b.f{color:var(--blue)}
+.bnum .arr{font-style:normal;font-size:15px;color:#a9b5c7;padding-bottom:4px}
+.bbar{margin-top:10px;display:grid;gap:5px}
+.bbar .r{display:grid;grid-template-columns:34px minmax(0,1fr) 30px;gap:8px;align-items:center;font-size:10px;font-weight:800;color:#8493a8}
+.bbar .t{height:6px;border-radius:99px;background:#e6ecf7;overflow:hidden}
+.bbar .t i{display:block;height:100%;border-radius:99px;background:#b9c6da}
+.bbar .r.blue .t i{background:var(--blue)}
+.bbar .r .v{text-align:right;font-variant-numeric:tabular-nums;font-size:10.5px;color:#5c6a80}
+.bbar .r.blue .v{color:var(--blue)}
+.bcomment{margin-top:10px;font-size:12.5px;line-height:1.6;color:#3a4b64;letter-spacing:-.02em}
+.bcomment b{color:var(--ink);font-weight:800}
+
+/* radar */
+.radar-wrap{display:grid;place-items:center;margin:14px 0 6px}
+svg.radar{width:100%;max-width:330px;height:auto;overflow:visible}
+.radar .grid{fill:none;stroke:#dfe6f2;stroke-width:1}
+.radar .axis{stroke:#e4eaf4;stroke-width:1}
+.radar .shape{fill:rgba(34,79,197,.16);stroke:var(--blue);stroke-width:2;stroke-linejoin:round}
+.radar .pt{fill:#fff;stroke:var(--blue);stroke-width:2}
+.radar .lb{font-size:10.5px;font-weight:800;fill:#3c4c66;letter-spacing:-.02em}
+.radar .lb.k{fill:var(--blue)}
+.radar .vl{font-size:9.5px;font-weight:750;fill:#8493a8}
+
+.bars{margin-top:6px}
+.barrow{display:grid;grid-template-columns:minmax(96px,1.25fr) minmax(40px,2fr) 34px;gap:9px;align-items:center;font-size:12.5px;font-weight:700;padding:5px 0}
+.barrow .nm{color:#3c4c66;letter-spacing:-.03em}
+.rail{height:6px;border-radius:99px;background:#e6ecf7;overflow:hidden}
+.rail i{display:block;height:100%;border-radius:99px;background:var(--blue);width:0;transition:width .5s ease}
+.barrow .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--blue);font-weight:800;font-size:12px}
+
+/* verdict */
+.verdict{
+  border:1px solid #d6e0f6;border-left:3px solid var(--blue);background:#f7faff;
+  border-radius:0 12px 12px 0;padding:14px 15px;margin-top:12px;
+}
+.verdict .lbl{font-size:10.5px;font-weight:800;letter-spacing:.11em;color:var(--blue);margin-bottom:5px}
+.verdict p{font-size:14px;line-height:1.68;letter-spacing:-.025em}
+.verdict.hot{border-left-color:#d9480f;background:#fff8f3;border-color:#f3d3bf}
+.verdict.hot .lbl{color:#c2410c}
+.verdict.mild{border-left-color:#2f9e6b;background:#f5fbf8;border-color:#c7e6d7}
+.verdict.mild .lbl{color:#1d6b4f}
+
+/* facts accordion */
+.acc{
+  border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:9px;overflow:hidden;
+}
+.acc summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:12px 13px;
+  background:#fbfcff;
+}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .no{font-size:10.5px;font-weight:800;color:#9aa7ba;font-variant-numeric:tabular-nums}
+.acc summary .nm{font-size:13.5px;font-weight:800;letter-spacing:-.03em;flex:1}
+.acc summary .sc{font-size:12px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums}
+.acc summary .cv{
+  width:16px;height:16px;border-radius:50%;border:1.5px solid #c3cfdf;display:grid;place-items:center;
+  font-size:10px;color:#8493a8;transition:.2s;flex:0 0 auto;
+}
+.acc[open] summary{border-bottom:1px solid var(--line)}
+.acc[open] summary .cv{transform:rotate(180deg);background:var(--blue);border-color:var(--blue);color:#fff}
+.acc-body{padding:12px 13px 14px}
+.acc-comment{font-size:12.5px;color:var(--muted);line-height:1.6;padding-bottom:10px;border-bottom:1px dashed #e2e9f4}
+.fact{padding-top:10px}
+.fact + .fact{border-top:1px dashed #eaf0f8}
+.fact .picked{font-size:12.5px;font-weight:750;color:#22314a;letter-spacing:-.02em}
+.fact .picked::before{content:"선택 ";font-size:10px;font-weight:800;color:#93a0b5;letter-spacing:.04em}
+.fact .ev{font-size:12.5px;color:#41526c;line-height:1.62;margin-top:4px;padding-left:11px;position:relative}
+.fact .ev::before{content:"";position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:var(--blue)}
+.fact .ev.risk{color:#9c2b1e}
+.fact .ev.risk::before{background:var(--red)}
+
+/* keep fix okr */
+.two{display:grid;gap:9px;margin-top:12px}
+@media(min-width:560px){.two{grid-template-columns:1fr 1fr}}
+.mini{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:#fbfcff}
+.mini .h{font-size:11px;font-weight:800;letter-spacing:.1em;margin-bottom:6px}
+.mini.keep .h{color:var(--green)}
+.mini.fix .h{color:#a8471a}
+.mini ul{list-style:none;margin:0;padding:0}
+.mini li{font-size:12.5px;line-height:1.55;color:#33445e;padding-left:12px;position:relative;margin-top:4px;letter-spacing:-.02em}
+.mini li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:#b7c6dd}
+.mini.keep li::before{background:#7fc3a4}
+.mini.fix li::before{background:#e8a582}
+
+.okr{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:12px}
+.okr .oh{background:var(--blue);color:#fff;padding:9px 13px;font-size:12px;font-weight:800;letter-spacing:.02em;display:flex;justify-content:space-between;gap:8px}
+.okr .oh span{opacity:.72;font-weight:700;letter-spacing:.08em;font-size:10.5px}
+.okr .ob{padding:12px 13px;display:grid;gap:9px}
+.kr{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start}
+.kr b{
+  font-size:10px;font-weight:800;color:var(--blue);background:var(--blue-l);border-radius:5px;
+  padding:3px 6px;letter-spacing:.03em;white-space:nowrap;
+}
+.kr p{font-size:12.5px;line-height:1.55;letter-spacing:-.02em;color:#2f4058;font-weight:650}
+
+.memo{
+  margin-top:12px;border:1px dashed #c9d6ea;border-radius:11px;padding:11px 13px;background:#fcfdff;
+}
+.memo .h{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:#8493a8}
+.memo p{font-size:13px;line-height:1.6;margin-top:4px;color:#31425b}
+
+.riskbox{border:1px solid #f0cbc3;background:#fffafa;border-radius:12px;padding:12px 13px;margin-top:12px}
+.riskbox .h{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--red);margin-bottom:6px}
+.riskbox ul{list-style:none;margin:0;padding:0}
+.riskbox li{font-size:12.5px;line-height:1.58;color:#7d2a1e;padding-left:14px;position:relative;margin-top:3px}
+.riskbox li::before{content:"!";position:absolute;left:0;top:0;font-weight:900;font-size:11px;color:var(--red)}
+
+.doc-foot{padding:14px 18px 16px;background:#fafcff;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:flex-end}
+.sign{font-size:10.5px;color:#8493a8;line-height:1.6}
+.sign b{color:#41526c;font-weight:800;display:block;font-size:12px;letter-spacing:.02em}
+.seal{
+  width:56px;height:56px;border-radius:10px;border:2px solid rgba(192,57,43,.55);color:#c0392b;
+  display:grid;place-items:center;font-size:9px;font-weight:850;text-align:center;line-height:1.2;
+  transform:rotate(-6deg);letter-spacing:.02em;
+}
+
+.actions{display:grid;gap:8px;grid-template-columns:1fr 1fr;margin-top:14px}
+.actions .btn{padding:13px 10px;font-size:13.5px}
+.actions .btn.wide{grid-column:1 / -1}
+.actions .btn.primary{grid-column:1 / -1}
+.disclaimer{font-size:11px;color:#93a0b5;line-height:1.6;text-align:center;margin-top:14px;padding:0 6px}
+
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);z-index:80;
+  background:#141f32;color:#fff;font-size:12.5px;font-weight:700;padding:11px 16px;border-radius:11px;
+  box-shadow:0 18px 40px -20px rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:.22s;max-width:88vw;text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- PRINT ---------- */
+@media print{
+  @page{size:A4;margin:11mm}
+  html,body{background:#fff!important}
+  .no-print,.top{display:none!important}
+  .wrap{max-width:none;width:auto;margin:0;padding:0}
+  .sheet{border:0;border-radius:0;box-shadow:none}
+  .doc-sec,.hero,.summary,.doc-head,.acc,.mini,.okr,.verdict,.riskbox,.doc-foot,.blinder{break-inside:avoid}
+  .acc-body{display:block!important}
+  .acc .cv{display:none}
+  .facts{column-count:2;column-gap:7mm}
+  .facts .acc{margin-top:0;margin-bottom:3mm}
+  .doc-head h1{font-size:19pt}
+  .scorebig b{font-size:32pt}
+  .stamp{width:80px;height:80px}
+  .stamp .st-main{font-size:9.5px}
+  .sec-no::after{background:#d4dbe6}
+  .verdict,.summary,.riskbox,.tag,.mini,.okr .oh,.rail i,.grade,.stamp,.acc summary,.blinder{
+    print-color-adjust:exact;-webkit-print-color-adjust:exact;
+  }
+  .doc-sec{padding:9pt 0}
+  .doc-head,.hero,.summary{padding:10pt 0}
+  .blinder{padding:9pt 0}
+  .pad{padding:0}
+  .radar-wrap{margin:6pt 0 0}
+  svg.radar{max-width:240px}
+}
+@media(max-width:400px){
+  .wrap{padding:14px 16px 40px}
+  .scorebig b{font-size:46px}
+  .doc-head h1{font-size:22px}
+  .hero{gap:8px;padding:17px 15px}
+  .stamp{width:98px;height:98px;font-size:11px}
+  .doc-sec{padding:16px 15px}
+  .doc-head{padding:16px 15px 14px}
+  .summary{padding:14px 15px}
+  .doc-foot{padding:13px 15px}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LOCK ================= -->
+<div id="lock">
+  <div class="lock-card" id="lockCard">
+    <div class="lock-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="10.5" width="16" height="10.5" rx="2.4"></rect>
+        <path d="M8 10.5V7.6a4 4 0 0 1 8 0v2.9"></path>
+        <circle cx="12" cy="15.6" r="1.15" fill="currentColor" stroke="none"></circle>
+      </svg>
+    </div>
+    <p class="kicker">PARTNER HR · CONFIDENTIAL</p>
+    <h1>보안 접속</h1>
+    <p class="lock-sub">파트너 정기 인사평가 시스템입니다.<br>4자리 사번 PIN을 입력하세요.</p>
+    <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div>
+    <p class="err" id="lockErr" role="status" aria-live="polite"></p>
+    <div class="keypad" id="keypad">
+      <button type="button" data-k="1">1</button>
+      <button type="button" data-k="2">2</button>
+      <button type="button" data-k="3">3</button>
+      <button type="button" data-k="4">4</button>
+      <button type="button" data-k="5">5</button>
+      <button type="button" data-k="6">6</button>
+      <button type="button" data-k="7">7</button>
+      <button type="button" data-k="8">8</button>
+      <button type="button" data-k="9">9</button>
+      <button type="button" class="fn" data-k="clear">전체삭제</button>
+      <button type="button" data-k="0">0</button>
+      <button type="button" class="fn" data-k="del" aria-label="한 자리 지우기"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 5h11a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 19.5 19h-11L2 12z"></path><path d="M11.5 9.5l5 5M16.5 9.5l-5 5"></path></svg></button>
+    </div>
+    <p class="lock-foot">권한 없는 접근 시도는 기록됩니다 · v1.0</p>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" hidden>
+  <header class="top">
+    <div class="top-in">
+      <div class="brand"><span class="dot"></span>PARTNER HR</div>
+      <div class="spacer"></div>
+      <button type="button" class="tbtn" id="btnRelock">잠금</button>
+      <button type="button" class="tbtn" id="btnRestart" hidden>새 평가</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- step: info -->
+    <section id="step-info">
+      <div class="prog"><div class="bar"><span id="pInfo"></span></div><span class="n" id="pInfoN">01 / 14</span></div>
+      <div class="card">
+        <span class="sec-label">EVALUATION SETUP</span>
+        <h2 class="step-title">누구를 평가할까요?</h2>
+        <p class="step-sub">기본 정보 4개만 적으면 12문항이 이어집니다. 1분이면 끝나요.</p>
+
+        <div class="field">
+          <label for="fName">평가 대상 <span class="opt">필수</span></label>
+          <input type="text" id="fName" placeholder="이름 또는 닉네임 (예: 경준, 썸남A)" maxlength="18" autocomplete="off" enterkeyhint="next">
+        </div>
+
+        <div class="field">
+          <label>관계 유형 <span class="opt">필수</span></label>
+          <div class="chips" id="relChips">
+            <button type="button" data-rel="썸" aria-pressed="false">썸</button>
+            <button type="button" data-rel="초반연애" aria-pressed="false">초반연애</button>
+            <button type="button" data-rel="안정기" aria-pressed="false">안정기</button>
+            <button type="button" data-rel="장기연애" aria-pressed="false">장기연애</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="fPeriod">교제·알고 지낸 기간 <span class="opt">선택</span></label>
+          <input type="text" id="fPeriod" placeholder="예: 7개월 / 2년 3개월" maxlength="24" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="fMemo">평가자 메모 <span class="opt">선택</span></label>
+          <textarea id="fMemo" placeholder="최근 서운했거나 고마웠던 일 한 줄 (예: 지난주에 약속 30분 늦고 연락 없었음)" maxlength="120"></textarea>
+          <p class="hint">적으면 평가서에 '평가자 메모'로 그대로 실립니다.</p>
+        </div>
+
+        <p class="warn" id="infoWarn">이름과 관계 유형을 입력해 주세요.</p>
+        <div class="stepnav single">
+          <button type="button" class="btn primary" id="btnInfoNext">12문항 시작하기 →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- step: question -->
+    <section id="step-q" hidden>
+      <div class="prog"><div class="bar"><span id="pQ"></span></div><span class="n" id="pQN"></span></div>
+      <div class="card" id="qCard"></div>
+    </section>
+
+    <!-- step: heat -->
+    <section id="step-heat" hidden>
+      <div class="prog"><div class="bar"><span style="width:100%"></span></div><span class="n">13 / 14</span></div>
+      <div class="card">
+        <span class="sec-label">TONE OF REVIEW</span>
+        <h2 class="step-title">총평의 매운맛을 고르세요</h2>
+        <p class="step-sub">점수와 등급은 똑같고, <b>문장의 살기</b>만 달라집니다.</p>
+
+        <div class="field" style="margin-top:18px">
+          <label for="fFeel">내 체감 점수 <span class="opt">1.0 ~ 5.0</span></label>
+          <div class="feelscale">
+            <input type="range" id="fFeel" min="1" max="5" step="0.1" value="4" aria-label="내 체감 점수">
+            <output id="feelOut" for="fFeel">4.0</output>
+          </div>
+          <div class="feelends"><span>1 · 손절각</span><span>5 · 완벽함</span></div>
+          <p class="hint">지금 마음속 점수예요. 12문항 팩트 점수와 비교해 <b>콩깍지 보정</b>을 계산합니다.</p>
+        </div>
+
+        <div class="heatcard" id="heatCards">
+          <button type="button" class="heat-opt" data-heat="mild" aria-pressed="false">
+            <span class="em">🍚</span>
+            <span><b>순한맛</b><span class="d">사람 좋은 HR 선배 톤. 지적은 하는데 마지막에 꼭 안아줌.</span></span>
+          </button>
+          <button type="button" class="heat-opt" data-heat="hr" aria-pressed="true">
+            <span class="em">🗂️</span>
+            <span><b>HR 팩폭 기본</b><span class="d">감정 없는 공문서 톤. 사실만 적는데 더 아픔.</span></span>
+          </button>
+          <button type="button" class="heat-opt" data-heat="hot" aria-pressed="false">
+            <span class="em">🔥</span>
+            <span><b>핵불닭 매운맛</b><span class="d">읽다가 물 마시게 되는 버전. 각오하세요.</span></span>
+          </button>
+        </div>
+        <div class="stepnav">
+          <button type="button" class="btn ghost" id="btnHeatBack">←</button>
+          <button type="button" class="btn primary" id="btnIssue">평가서 발행 💼</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- step: report -->
+    <section id="step-report" hidden>
+      <div id="reportOut"></div>
+      <div class="actions no-print">
+        <button type="button" class="btn primary" id="btnPng">이미지(PNG) 저장</button>
+        <button type="button" class="btn" id="btnPdf">PDF 저장 / 인쇄</button>
+        <button type="button" class="btn" id="btnCopy">텍스트 요약 복사</button>
+        <button type="button" class="btn" id="btnAgain">다시 평가하기</button>
+      </div>
+      <p class="disclaimer no-print">본 평가서는 재미를 위한 자기만족용 문서로, 실제 인사 효력이나 법적 효력이 없습니다. 사랑은 서류로 판결되지 않습니다. (아마도)</p>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   PIN LOCK
+   ========================================================= */
+var PIN = "0201";
+var pin = "", tries = 0;
+var lock = document.getElementById("lock");
+var lockCard = document.getElementById("lockCard");
+var dots = document.querySelectorAll("#dots i");
+var lockErr = document.getElementById("lockErr");
+
+function paintDots(){
+  for (var i=0;i<dots.length;i++) dots[i].className = i < pin.length ? "on" : "";
+}
+function lockMessage(msg){
+  lockErr.textContent = msg;
+  lockErr.classList.add("show");
+  lockCard.classList.add("shake");
+  setTimeout(function(){ lockCard.classList.remove("shake"); }, 460);
+}
+function checkPin(){
+  if (pin === PIN){
+    try { sessionStorage.setItem("pr.auth","1"); } catch(e){}
+    lock.hidden = true;
+    document.body.style.overflow = "";
+    enterApp();
+  } else {
+    tries++;
+    lockMessage("PIN이 일치하지 않습니다 · " + tries + "회 실패");
+    lockCard.classList.add("bad");
+    setTimeout(function(){ lockCard.classList.remove("bad"); }, 520);
+    pin = ""; paintDots();
+  }
+}
+function pressPin(k){
+  if (k === "del") pin = pin.slice(0,-1);
+  else if (k === "clear") pin = "";
+  else if (pin.length < 4) pin += k;
+  paintDots();
+  if (pin.length === 4) setTimeout(checkPin, 170);
+}
+document.getElementById("keypad").addEventListener("click", function(e){
+  var b = e.target.closest("button[data-k]");
+  if (b) pressPin(b.dataset.k);
+});
+document.addEventListener("keydown", function(e){
+  if (lock.hidden) return;
+  if (/^[0-9]$/.test(e.key)) pressPin(e.key);
+  else if (e.key === "Backspace"){ e.preventDefault(); pressPin("del"); }
+});
+lockErr.classList.remove("show");
+
+var authed = false;
+try { authed = sessionStorage.getItem("pr.auth") === "1"; } catch(e){}
+if (authed){ lock.hidden = true; }
+else { document.body.style.overflow = "hidden"; }
+
+/* =========================================================
+   DATA
+   ========================================================= */
+var AREAS = [
+  { id:"contact",   name:"연락·응답 성실도", short:"연락·응답",
+    keep:"답장·일정 공유가 끊기지 않음", fix:"읽씹·잠수 없는 응답 루틴",
+    okr:["읽고 3시간 내 1차 회신 (주 5일 중 4일 이상)","잠수 대신 ‘이따 답할게’ 한 줄 알림 (주 5회)"] },
+  { id:"care",      name:"일상 배려·매너", short:"일상 배려",
+    keep:"약속 시간과 말투가 안정적", fix:"예민할 때 말투·태도 관리",
+    okr:["약속 10분 전 도착 4회 이상","예민할 땐 말투 점검 + 30분 쿨다운 지키기"] },
+  { id:"conflict",  name:"갈등·대화 주도성", short:"갈등·대화",
+    keep:"다툰 뒤 대화로 돌아오는 힘", fix:"먼저 손 내미는 주도성",
+    okr:["다툰 당일 24시간 내 대화 착수 (월 4회 이상)","‘자연스러운 무마’ 0건 · 결론 한 줄 남기기"] },
+  { id:"trust",     name:"신뢰·일관성", short:"신뢰·일관",
+    keep:"말한 것을 지키는 일관성", fix:"사후 통보·모호한 설명 정리",
+    okr:["말한 일정 지킨 비율 직접 체크해 공유 (월 1회)","이성 친구 동선·약속 사전 공유 (월 2회)"] },
+  { id:"affection", name:"애정·센스", short:"애정·센스",
+    keep:"표현과 디테일을 챙기는 감각", fix:"애정 표현의 상시 가동",
+    okr:["먼저 표현하기 주 7회 (말·스킨십·연락 중 하나)","좋아하는 것·싫어하는 것 메모 3건 이상"] },
+  { id:"life",      name:"생활·경제관", short:"생활·경제",
+    keep:"생활 리듬과 비용 감각", fix:"비용·생활 루틴의 균형",
+    okr:["데이트 비용 번갈아 정산 4회","생활 루틴(수면·운동) 2주 연속 유지"] }
+];
+
+var QUESTIONS = [
+  /* 1. 연락·응답 */
+  { a:"contact", q:"연락 오면 보통 얼마나 걸려서 답장하나요?",
+    opts:[
+      { t:"거의 바로, 늦어도 10분", s:5,
+        f:"메시지 응답 지연이 사실상 없어 실시간 커뮤니케이션 채널이 안정적으로 유지됨.",
+        h:"응답 속도만큼은 상위 5%. 이 사람 폰은 손에서 떨어지지 않음." },
+      { t:"한두 시간 안에, 여유 될 때", s:4,
+        f:"업무·일상 중 응답은 다소 지연되나 당일 내 회신 루틴이 확립되어 있음.",
+        h:"한두 시간 지연은 정상 범위. 다만 ‘여유 될 때’의 기준은 본인이 정한다는 점." },
+      { t:"반나절~하루, 읽고 나서 나중에", s:3,
+        f:"읽음 표시 이후 회신까지 반나절 이상 소요되는 지연 패턴이 관측됨.",
+        h:"확인은 했는데 답은 안 하는, 가장 애매한 지연 유형. 기다리는 쪽은 그 사이에 혼자 다 상상함." },
+      { t:"읽씹·잠수가 종종, 다음날 답장", s:1,
+        f:"[주요 리스크] 읽씹·잠수 후 다음날 자연스럽게 복귀하는 패턴이 반복 감지됨.",
+        h:"읽씹 후 다음날 ‘자느라 ㅎㅎ’. 이 패턴이 반복되면 상대는 매번 혼자 추론하며 밤을 새움." }
+    ]},
+  { a:"contact", q:"늦거나 일정이 바뀔 때, 먼저 말해주는 편인가요?",
+    opts:[
+      { t:"바뀌는 즉시 먼저 알려줌", s:5,
+        f:"일정 변동 시 사전 공유가 습관화되어 불확실성 관리 역량이 우수함.",
+        h:"바뀌는 즉시 보고. 이건 진짜 잘함. 인정." },
+      { t:"대체로 먼저 말하는 편", s:4,
+        f:"대부분의 일정 변동을 사전에 공유하며, 예외는 경미한 수준임.",
+        h:"대체로 먼저 말함. 가끔 빠지는 건 봐줄 만한 수준." },
+      { t:"물어보면 그때 설명", s:3,
+        f:"일정 변동을 상대가 물어본 뒤에야 공유하는 수동적 보고 체계가 확인됨.",
+        h:"물어보면 그때 설명. 그럼 그 전까지는 상대가 눈치로 살라는 뜻인가요." },
+      { t:"연락 없이 늦고 나서야 알게 됨", s:1,
+        f:"[주요 리스크] 일정 변동을 사후에 통보하는 방식으로 신뢰 비용이 반복 발생함.",
+        h:"연락 없이 늦고 도착해서 ‘미안 ㅎㅎ’. 미안은 사후 통보가 아니라 사전 통보에서 나옴." }
+    ]},
+
+  /* 2. 일상 배려 */
+  { a:"care", q:"약속 시간, 실제로 어떤 편인가요?",
+    opts:[
+      { t:"10분 전 도착, 절대 안 늦음", s:5,
+        f:"약속 시간 준수가 습관화되어 있고, 상대의 시간을 비용으로 계산하지 않는 태도가 확인됨.",
+        h:"10분 전 도착. 이 정도면 시간 개념이 인격에 새겨진 케이스." },
+      { t:"가끔 5~10분 늦지만 미리 연락", s:4,
+        f:"경미한 지각이 있으나 사전 연락으로 보완되어 실제 대기 불편은 크지 않음.",
+        h:"5~10분 지각은 미리 알려주면 거의 안 깎임. 문제는 다음 항목." },
+      { t:"자주 늦는 편 (10~20분)", s:3,
+        f:"지각이 반복되는 패턴이나, 사후 사과와 만회 행동이 관측됨.",
+        h:"10~20분 지각은 ‘습관’이라 부르는 게 맞음. 상대는 늘 그만큼 일찍 나와서 기다림." },
+      { t:"기본 30분, 늘 ‘금방 도착’", s:1,
+        f:"[주요 리스크] 30분 이상의 상습 지각으로 평가자의 대기 시간이 구조적으로 발생함.",
+        h:"‘금방 도착’의 사전적 의미가 이 사람 안에서만 다름. 상대 시간은 무료로 인식되는 중." }
+    ]},
+  { a:"care", q:"피곤하거나 예민할 때, 태도가 어떻게 변하나요?",
+    opts:[
+      { t:"힘들어도 말투는 유지, 먼저 말해줌", s:5,
+        f:"컨디션 저하 시에도 말투를 유지하고 상태를 먼저 공유해 감정 전이를 차단함.",
+        h:"힘들어도 말투 유지하고 먼저 알려줌. 이게 성인이고 이게 애정임." },
+      { t:"티는 나지만 크게 달라지진 않음", s:4,
+        f:"피로 신호가 표면적으로 드러나나 관계 태도로 이어지지는 않음.",
+        h:"티는 나는데 큰 피해는 없음. 정상 범위의 사람 냄새." },
+      { t:"말수가 확 줄고 답이 딱딱해짐", s:3,
+        f:"예민한 상태에서 응답이 단답형으로 변하며 상대가 눈치를 보게 되는 구간이 있음.",
+        h:"예민하면 단답 모드. 그때 상대는 ‘내가 뭐 잘못했나’를 혼자 검색함." },
+      { t:"예민할 때 말이 거칠어지고 화풀이성 발언", s:1,
+        f:"[주요 리스크] 컨디션 저하 시 감정이 상대에게 전이되는 화풀이성 발언이 관측됨.",
+        h:"예민할 때 말이 거칠어짐. ‘원래 이런 사람이야’로 포장되는 그 유형." }
+    ]},
+
+  /* 3. 갈등·대화 */
+  { a:"conflict", q:"다툰 다음, 보통 어떻게 풀리나요?",
+    opts:[
+      { t:"당일에 대화로 풀고 결론을 남김", s:5,
+        f:"갈등 당일 대화로 복귀하여 원인·합의점을 남기는 회복 절차가 정착되어 있음.",
+        h:"당일 대화로 정리. 이건 진짜 상위 10%만 하는 행동임." },
+      { t:"하루 정도 식었다가 먼저 말 걺", s:4,
+        f:"감정 정리 시간을 거친 뒤 대화를 재개하며, 회복 절차가 기능적으로 작동함.",
+        h:"하루 식히고 먼저 말 검. 시간은 걸려도 방향은 맞음." },
+      { t:"연락 두절 후 시간이 지나면 자연스럽게 무마", s:3,
+        f:"[주요 리스크] 갈등 시 연락 두절 후 시간 경과에 따른 자연 무마 패턴이 감지됨. 원인 미해결.",
+        h:"연락 두절 후 시간이 지나면 ‘그때 그 얘기?’ 하며 넘어감. 해결이 아니라 리셋이고, 같은 일이 또 옴." },
+      { t:"회피·잠수, 다음에 또 같은 문제 반복", s:1,
+        f:"[주요 리스크] 갈등 회피·잠수가 반복되고 동일 쟁점이 재발하는 미해결 루프가 확인됨.",
+        h:"회피·잠수 후 같은 문제 재방송. 시즌제로 계속 돌아오는 콘텐츠임." }
+    ]},
+  { a:"conflict", q:"먼저 손 내미는 쪽은 주로 누구인가요?",
+    opts:[
+      { t:"거의 항상 본인이 먼저", s:5,
+        f:"갈등 후 대화 재개를 자발적으로 제안하는 주도성이 지속적으로 확인됨.",
+        h:"먼저 손 내미는 쪽이 거의 이 사람. 희귀 등급임." },
+      { t:"번갈아 가며", s:4,
+        f:"대화 재개 주도권이 양측에 분산되어 역할 편중이 크지 않음.",
+        h:"번갈아 함. 건강한 편중 없음." },
+      { t:"주로 내가 먼저 (상대는 기다림)", s:2,
+        f:"[주요 리스크] 대화 재개 역할이 평가자에게 편중되고 상대는 대기하는 구조가 반복됨.",
+        h:"먼저 말 거는 쪽이 늘 나. 이 사람은 화해조차 대기로 처리함." },
+      { t:"절대 먼저 안 함, 내가 다 해야 함", s:1,
+        f:"[주요 리스크] 갈등 후 접촉 재개를 전적으로 평가자가 부담하는 구조가 고착되어 있음.",
+        h:"절대 먼저 안 함. 이건 화해가 아니라 상대의 인내심 테스트임." }
+    ]},
+
+  /* 4. 신뢰·일관성 */
+  { a:"trust", q:"말과 행동은 얼마나 일치하나요?",
+    opts:[
+      { t:"말한 건 기한 안에 꼭 지킴", s:5,
+        f:"약속한 사항의 이행률이 높고 기한 준수가 관찰 기간 내 일관되게 유지됨.",
+        h:"말한 건 지킴. 이게 되는 사람이 생각보다 드묾." },
+      { t:"대부분 지키지만 가끔 흐지부지", s:4,
+        f:"주요 약속은 이행되나 일부 사소한 사항에서 이행이 흐지부지되는 경우가 있음.",
+        h:"대부분 지키는데 사소한 건 흐지부지. 큰 문제는 아님." },
+      { t:"계획은 잘 말하지만 실행이 자주 밀림", s:3,
+        f:"계획 진술은 구체적이나 실행 단계에서 지연·취소가 반복되는 간극이 확인됨.",
+        h:"계획 발표는 화려한데 실행이 밀림. 발표회만 열고 프로젝트는 안 도는 팀." },
+      { t:"말만 앞서고 실제로는 반복 어긋남", s:1,
+        f:"[주요 리스크] 진술과 실제 행동의 불일치가 반복되어 신뢰 자산이 지속적으로 소모됨.",
+        h:"말과 행동이 계속 어긋남. 이건 서프라이즈가 아니라 예측 가능한 실망임." }
+    ]},
+  { a:"trust", q:"이성 관계·투명성은 어떤 편인가요?",
+    opts:[
+      { t:"동선·약속을 먼저 공유, 숨기는 게 없음", s:5,
+        f:"이성 교류 상황을 사전에 공유하여 불필요한 오해 소지를 선제적으로 제거함.",
+        h:"굳이 물어보기 전에 먼저 말함. 이게 신뢰의 실체임." },
+      { t:"물어보면 다 말하고 문제 없음", s:4,
+        f:"질문 시 투명하게 답하며 확인된 사실과 설명 간 불일치는 없음.",
+        h:"물어보면 다 말함. 다만 ‘물어봐야 아는’ 구조라는 점은 남음." },
+      { t:"굳이 말 안 하는 편, 나중에 알게 됨", s:3,
+        f:"비밀은 아니나 사후에 인지하게 되는 정보 비대칭이 발생한 사례가 있음.",
+        h:"안 물어봐서 몰랐던 일이 몇 번 있음. 나중에 알게 되는 그 기분 알죠." },
+      { t:"숨기거나 말이 달라져 불안을 만든 적 있음", s:1,
+        f:"[주요 리스크] 설명의 시점·내용이 달라져 평가자의 신뢰 회복 비용이 발생한 이력이 있음.",
+        h:"숨긴 게 나중에 드러남. 그 뒤로는 모든 평범한 말에도 검색을 걸게 됨." }
+    ]},
+
+  /* 5. 애정·센스 */
+  { a:"affection", q:"애정 표현(말·스킨십·연락)은 어느 정도인가요?",
+    opts:[
+      { t:"매일 먼저 표현, 부족함 못 느낌", s:5,
+        f:"표현의 빈도와 자발성이 모두 높아 평가자가 관계 내에서 인정받는다고 느끼는 수준임.",
+        h:"매일 먼저 표현. 이 사람은 애정을 아끼지 않음. 이건 재능." },
+      { t:"자주는 아니어도 필요할 때 확실히", s:4,
+        f:"상시적이진 않으나 결정적인 순간의 표현이 정확해 관계 만족도를 유지함.",
+        h:"평소엔 담백한데 필요할 때 확실함. 취향 차이로 봐줄 만함." },
+      { t:"초반엔 했는데 요즘은 거의 없음", s:3,
+        f:"관계 초기 대비 표현 빈도가 감소했고, 평가자가 이를 아쉬움으로 인식하고 있음.",
+        h:"초반엔 했는데 요즘 없음. 열정이 아니라 유지비를 아끼는 중." },
+      { t:"표현 자체가 없어 확인이 필요함", s:1,
+        f:"[주요 리스크] 애정 표현이 관측되지 않아 관계 상태를 평가자가 추론해야 하는 상황이 반복됨.",
+        h:"표현이 없어서 좋아하는지 확인이 필요함. 연애인지 탐정 놀이인지 모를 지경." }
+    ]},
+  { a:"affection", q:"기념일·취향 같은 디테일 기억력은?",
+    opts:[
+      { t:"좋아하는 것·싫어하는 것까지 기억", s:5,
+        f:"취향·비호감 요소·기념일을 정확히 기억하고 행동에 반영하는 관찰력이 확인됨.",
+        h:"좋아하는 것까지 기억. 이건 관심의 증거이고, 관심은 돈보다 비쌈." },
+      { t:"큰 날은 챙기고 취향은 대체로 앎", s:4,
+        f:"주요 기념일은 챙기며 취향 파악도 대체로 정확한 수준임.",
+        h:"큰 날은 챙김. 이 정도면 합격선." },
+      { t:"기념일은 알림에 의존", s:3,
+        f:"기념일 인지가 외부 알림에 의존하고 있어 자발적 기억으로 보기 어려운 측면이 있음.",
+        h:"생일은 캘린더 알림이 챙겨줌. 즉 기념일을 기억하는 건 폰임." },
+      { t:"좋아하는 것 물어보면 헷갈려 함", s:1,
+        f:"[주요 리스크] 기본 취향 정보조차 정확히 인지하지 못해 관심의 깊이에 의문이 제기됨.",
+        h:"좋아하는 것 물어보면 헷갈림. 6개월 넘게 만났는데 그건 좀." }
+    ]},
+
+  /* 6. 생활·경제 */
+  { a:"life", q:"데이트 비용·소비 습관은 어떤가요?",
+    opts:[
+      { t:"번갈아 내고 계산으로 서운한 적 없음", s:5,
+        f:"비용 분담이 균형 있게 운영되어 경제적 갈등 요인이 관측되지 않음.",
+        h:"번갈아 내고 계산 문제 없음. 이게 되면 관계 리스크 절반이 사라짐." },
+      { t:"대체로 균형, 가끔 내가 더 냄", s:4,
+        f:"전반적 균형은 유지되나 일부 상황에서 평가자 부담이 더 발생함.",
+        h:"대체로 균형. 가끔 더 내는 건 서로 애정이면 넘어갈 수 있는 선." },
+      { t:"내가 내는 비율이 확실히 높음", s:3,
+        f:"비용 부담이 평가자에게 편중되는 경향이 있고, 이에 대한 조정 논의가 부족함.",
+        h:"내가 내는 비율이 확실히 높음. 이건 습관이 굳으면 5년 뒤에도 똑같음." },
+      { t:"비용은 내가 다 부담, 언급하면 예민", s:1,
+        f:"[주요 리스크] 비용 부담이 일방적으로 고정되어 있고 논의 자체가 회피되는 구조임.",
+        h:"비용은 내가 다 부담, 말 꺼내면 예민. 이건 데이트가 아니라 후원." }
+    ]},
+  { a:"life", q:"자기관리·생활 책임감은?",
+    opts:[
+      { t:"일·건강·약속 다 챙기고 생활이 정돈됨", s:5,
+        f:"업무·건강·생활 루틴이 안정적으로 유지되어 파트너십의 기반이 견고함.",
+        h:"일·건강·생활 다 챙김. 같이 살면 이 사람 루틴에 얹혀살 수 있음." },
+      { t:"대체로 성실, 가끔 무리함", s:4,
+        f:"전반적으로 성실하나 과로·무리로 생활 리듬이 흔들리는 구간이 있음.",
+        h:"대체로 성실, 가끔 무리함. 사람이 원래 그럼." },
+      { t:"생활 리듬이 불규칙, 잔소리가 늘어남", s:3,
+        f:"생활 리듬의 불규칙이 반복되어 평가자의 관리·발언 부담이 증가하는 양상임.",
+        h:"생활 리듬 불규칙, 잔소리 증가. 언젠가 연애가 아니라 생활지도가 됨." },
+      { t:"중요한 일을 자주 미루고 뒷수습이 필요", s:1,
+        f:"[주요 리스크] 주요 사안의 처리가 지연되어 결과적으로 평가자가 수습을 담당하는 구조임.",
+        h:"중요한 일 미루고 뒷수습은 내 몫. 이건 파트너가 아니라 프로젝트 매니저 고용임." }
+    ]}
+];
+
+var GRADES = [
+  { min:95, g:"S",  stamp:"무기한 정규직 전환 확정", color:"#224fc5" },
+  { min:88, g:"A+", stamp:"우수 파트너 승급",         color:"#224fc5" },
+  { min:80, g:"A",  stamp:"정규직 전환 확정",          color:"#2f6fd0" },
+  { min:73, g:"B+", stamp:"계약 연장 승인",            color:"#2b6b57" },
+  { min:66, g:"B",  stamp:"관찰 대상 · 재계약 유보",   color:"#a15a00" },
+  { min:56, g:"C",  stamp:"수습 기간 연장",            color:"#c0561b" },
+  { min:0,  g:"D",  stamp:"시말서 징구 · 권고사직 검토", color:"#c62828" }
+];
+
+var REL_META = {
+  "썸":      { hr:"채용 전 면접(인턴) 단계", period:"알고 지낸 지" },
+  "초반연애": { hr:"수습 기간 · 3개월 이내",  period:"교제" },
+  "안정기":  { hr:"정규직 1년차",            period:"교제" },
+  "장기연애": { hr:"무기계약 장기 근속",      period:"교제" }
+};
+
+var STATE = { name:"", rel:"", period:"", memo:"", heat:"hr", feel:4.0, answers:[], q:0 };
+
+/* feel slider */
+(function(){
+  var sl = $("fFeel"), out = $("feelOut");
+  function paint(){
+    var v = parseFloat(sl.value);
+    STATE.feel = v;
+    out.textContent = v.toFixed(1);
+    sl.style.setProperty("--fill", ((v - 1) / 4 * 100) + "%");
+  }
+  sl.addEventListener("input", paint);
+  paint();
+})();
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function $(id){ return document.getElementById(id); }
+function esc(s){
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function pad2(n){ return n<10 ? "0"+n : ""+n; }
+function hasBatchim(str){
+  var s = String(str).replace(/[\s’'"”]+$/, "");
+  if (!s) return false;
+  var c = s.charCodeAt(s.length-1);
+  if (c >= 0xAC00 && c <= 0xD7A3) return ((c - 0xAC00) % 28) !== 0;
+  return false;
+}
+function josa(str, pair){ return hasBatchim(str) ? pair[0] : pair[1]; }
+function todayStr(){
+  var d = new Date();
+  return d.getFullYear() + "년 " + (d.getMonth()+1) + "월 " + d.getDate() + "일";
+}
+function docNo(){
+  var d = new Date();
+  return "HR-PR-" + d.getFullYear() + pad2(d.getMonth()+1) + pad2(d.getDate()) + "-" + pad2(Math.floor(Math.random()*90)+10);
+}
+var toastTimer;
+function toast(msg){
+  var t = $("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2400);
+}
+
+/* =========================================================
+   WIZARD
+   ========================================================= */
+function enterApp(){ $("app").hidden = false; showInfo(); }
+
+function setStep(id){
+  ["step-info","step-q","step-heat","step-report"].forEach(function(s){
+    $(s).hidden = (s !== id);
+  });
+  window.scrollTo({ top:0, behavior:"instant" in window ? "instant" : "auto" });
+}
+
+function showInfo(){
+  setStep("step-info");
+  $("btnRestart").hidden = true;
+  $("pInfo").style.width = "7%";
+  $("fName").value = STATE.name || "";
+  $("fPeriod").value = STATE.period || "";
+  $("fMemo").value = STATE.memo || "";
+  document.querySelectorAll("#relChips button").forEach(function(b){
+    b.setAttribute("aria-pressed", b.dataset.rel === STATE.rel ? "true" : "false");
+  });
+}
+document.querySelectorAll("#relChips button").forEach(function(b){
+  b.addEventListener("click", function(){
+    STATE.rel = b.dataset.rel;
+    document.querySelectorAll("#relChips button").forEach(function(x){
+      x.setAttribute("aria-pressed", x === b ? "true" : "false");
+    });
+    $("infoWarn").classList.remove("show");
+  });
+});
+
+$("btnInfoNext").addEventListener("click", function(){
+  var n = $("fName").value.trim();
+  if (!n || !STATE.rel){
+    $("infoWarn").textContent = !n ? "평가 대상 이름을 입력해 주세요." : "관계 유형을 선택해 주세요.";
+    $("infoWarn").classList.add("show");
+    if (!n) $("fName").focus();
+    return;
+  }
+  $("infoWarn").classList.remove("show");
+  STATE.name = n;
+  STATE.period = $("fPeriod").value.trim();
+  STATE.memo = $("fMemo").value.trim();
+  STATE.q = 0;
+  STATE.answers = new Array(QUESTIONS.length).fill(null);
+  showQuestion(0);
+});
+
+function showQuestion(i){
+  setStep("step-q");
+  STATE.q = i;
+  var q = QUESTIONS[i];
+  var area = AREAS.filter(function(a){ return a.id === q.a; })[0];
+  var done = STATE.answers.filter(function(x){ return x !== null; }).length;
+  $("pQ").style.width = Math.round((done / QUESTIONS.length) * 100) + "%";
+  $("pQN").textContent = "Q" + (i+1) + " / " + QUESTIONS.length;
+
+  var keys = ["A","B","C","D","E"];
+  var html = ''
+    + '<div class="qtop"><span class="qarea">' + esc(area.name) + '</span>'
+    + '</div>'
+    + '<h2 class="qtxt">' + esc(q.q) + '</h2>'
+    + '<p class="step-sub">가장 가까운 걸 하나만 고르세요.</p>'
+    + '<div class="opts" role="group">';
+  q.opts.forEach(function(o, oi){
+    var on = STATE.answers[i] === oi ? "true" : "false";
+    html += '<button type="button" class="opt-btn" data-oi="' + oi + '" aria-pressed="' + on + '">'
+         + '<span class="k">' + keys[oi] + '</span><span>' + esc(o.t) + '</span></button>';
+  });
+  html += '</div>'
+    + '<div class="qfoot">'
+    + '<button type="button" class="btn ghost" id="qBack">←</button>'
+    + '<span class="note">' + (i === 0 ? "1분이면 끝나요" : "이전 문항도 다시 볼 수 있어요") + '</span>'
+    + '</div>';
+
+  var card = $("qCard");
+  card.innerHTML = html;
+  card.querySelectorAll(".opt-btn").forEach(function(b){
+    b.addEventListener("click", function(){
+      var oi = parseInt(b.dataset.oi, 10);
+      STATE.answers[i] = oi;
+      card.querySelectorAll(".opt-btn").forEach(function(x){
+        x.setAttribute("aria-pressed", x === b ? "true" : "false");
+      });
+      var doneNow = STATE.answers.filter(function(x){ return x !== null; }).length;
+      $("pQ").style.width = Math.round((doneNow / QUESTIONS.length) * 100) + "%";
+      setTimeout(function(){
+        if (i < QUESTIONS.length - 1) showQuestion(i + 1);
+        else showHeat();
+      }, 210);
+    });
+  });
+  card.querySelector("#qBack").addEventListener("click", function(){
+    if (i === 0) showInfo(); else showQuestion(i - 1);
+  });
+}
+
+function showHeat(){
+  setStep("step-heat");
+  $("pQ").style.width = "100%";
+  document.querySelectorAll("#heatCards .heat-opt").forEach(function(b){
+    b.setAttribute("aria-pressed", b.dataset.heat === STATE.heat ? "true" : "false");
+  });
+}
+document.querySelectorAll("#heatCards .heat-opt").forEach(function(b){
+  b.addEventListener("click", function(){
+    STATE.heat = b.dataset.heat;
+    document.querySelectorAll("#heatCards .heat-opt").forEach(function(x){
+      x.setAttribute("aria-pressed", x === b ? "true" : "false");
+    });
+  });
+});
+$("btnHeatBack").addEventListener("click", function(){ showQuestion(QUESTIONS.length - 1); });
+$("btnIssue").addEventListener("click", function(){ buildReport(); });
+
+/* =========================================================
+   SCORING
+   ========================================================= */
+function compute(){
+  var byArea = {}, facts = {}, risks = [], scores = [];
+  AREAS.forEach(function(a){ byArea[a.id] = []; facts[a.id] = []; });
+
+  QUESTIONS.forEach(function(q, i){
+    var oi = STATE.answers[i];
+    var o = q.opts[oi];
+    byArea[q.a].push(o.s);
+    scores.push(o.s);
+    var risk = o.s <= 2;
+    var text = (STATE.heat === "hot" && o.h) ? o.h : o.f;
+    if (risk && STATE.heat === "hot" && o.h) text = o.h;
+    else if (risk) text = o.f.replace(/^\[주요 리스크\]\s*/, "");
+    facts[q.a].push({ q:q.q, pick:o.t, ev:text, risk:risk });
+    if (risk) risks.push(o.f.replace(/^\[주요 리스크\]\s*/, ""));
+  });
+
+  var totalRaw = scores.reduce(function(a,b){ return a+b; }, 0);
+  var factAvg = totalRaw / QUESTIONS.length;
+  var feel = STATE.feel;
+  var diff = factAvg - feel;
+  var blind = diff <= -0.3 ? "cut" : (diff >= 0.3 ? "up" : "even");
+  var pct = Math.round((totalRaw / (QUESTIONS.length * 5)) * 100);
+  var grade = GRADES.filter(function(g){ return pct >= g.min; })[0];
+
+  var areaList = AREAS.map(function(a){
+    var arr = byArea[a.id];
+    var avg = arr.reduce(function(x,y){ return x+y; }, 0) / arr.length;
+    return { id:a.id, name:a.name, short:a.short, avg:avg };
+  });
+  var sorted = areaList.slice().sort(function(x,y){ return y.avg - x.avg; });
+  return {
+    pct:pct, grade:grade, areaList:areaList, facts:facts, risks:risks,
+    top:sorted[0], top2:sorted[1], low:sorted[sorted.length-1], low2:sorted[sorted.length-2],
+    totalRaw:totalRaw, factAvg:factAvg, feel:feel, diff:diff, blind:blind
+  };
+}
+
+function areaComment(avg){
+  if (avg >= 4.5) return "업계 최고 수준. 타 파트너가 벤치마킹해야 할 수행으로 판단됨.";
+  if (avg >= 3.8) return "기준선을 안정적으로 상회. 특별한 개입 없이 유지 가능한 구간임.";
+  if (avg >= 3.0) return "평균 수준. 개선 여지는 있으나 관계 유지에 지장은 없는 범위임.";
+  if (avg >= 2.0) return "반복 지적 사항으로, 개선 계획 제출이 필요한 구간임.";
+  return "구조적 개선 없이는 다음 평가에서도 동일 판정이 예상되는 위험 구간임.";
+}
+
+function verdictText(r){
+  var t = r.pct, heat = STATE.heat;
+  var tier = t >= 88 ? "top" : t >= 73 ? "good" : t >= 60 ? "mid" : "low";
+  var base = {
+    top: {
+      mild:"전반적으로 아주 안정적인 파트너십이 유지되고 있어요. 이 정도면 주변에 자랑해도 되는 수준이에요.",
+      hr:"6대 영역 전반에서 기준선을 웃도는 수행이 확인됨. 현 계약 유지에 별도의 개입이 필요하지 않은 구간.",
+      hot:"솔직히 이 정도면 ‘왜 아직 안 잡았냐’는 소리 듣는 등급임. 흠 잡을 데를 찾는 게 더 어려움."
+    },
+    good: {
+      mild:"전체적으로 좋은 파트너예요. 몇 가지만 잡으면 훨씬 편안해져요.",
+      hr:"전 영역에서 양호한 수행. 일부 항목의 편차 관리가 차기 과제로 남음.",
+      hot:"평균 이상은 확실한데, 결정적인 순간에 한 칸씩 비는 게 아쉬움. ‘좋은 사람’에서 ‘든든한 사람’으로 넘어가는 구간임."
+    },
+    mid: {
+      mild:"노력은 보이는데 아직 손이 필요한 부분이 있어요. 같이 맞춰가면 좋겠어요.",
+      hr:"기준선 부근의 수행. 반복 지적되는 항목에 대한 개선 계획이 요구됨.",
+      hot:"딱 ‘그럭저럭’ 구간임. 이대로면 3년 뒤에도 똑같은 얘기 하고 있을 확률이 높음."
+    },
+    low: {
+      mild:"지금은 많이 지쳐 보이는 구간이에요. 무리하지 말고 하나씩 맞춰봐요.",
+      hr:"전반적 재검토가 필요한 구간. 개선이 없을 경우 계약 유지 판단이 어려움.",
+      hot:"이건 평가서가 아니라 민원 접수증에 가까움. 각성 필요."
+    }
+  }[tier][heat];
+
+  var lowA = r.low, topA = r.top, part2;
+  if (lowA.avg >= 3.8){
+    part2 = {
+      mild:"6개 영역 모두 고르게 좋아요. 굳이 하나를 꼽자면 " + lowA.name + josa(lowA.name,"은는") + " 조금 더 챙기면 완벽해요.",
+      hr:"전 영역이 기준 이상으로, 상대적 최저 항목(‘" + lowA.name + "’)조차 양호한 수준임.",
+      hot:"최저가 ‘" + lowA.name + "’이라는 건, 나머지가 다 잘한다는 뜻임. 이 정도면 트집 잡는 게 더 이상함."
+    }[heat];
+  } else if (lowA.avg >= 3.0){
+    part2 = {
+      mild:"다만 " + lowA.name + josa(lowA.name,"은는") + " 조금만 더 신경 쓰면 훨씬 좋아질 부분이에요.",
+      hr:"‘" + lowA.name + "’ 항목은 개선 여지가 남아 있는 것으로 판단됨.",
+      hot:"‘" + lowA.name + "’" + josa(lowA.name,"은는") + " 딱 중간. 선만 안 넘으면 평생 중간으로 살 수 있음. 그게 싫으면 바꿔야 함."
+    }[heat];
+  } else {
+    part2 = {
+      mild:"특히 " + lowA.name + " 부분은 조금 불편했던 것 같아요. 한 번 이야기해 보면 좋겠어요.",
+      hr:"특히 ‘" + lowA.name + "’ 영역은 개선 계획 제출이 필요한 수준으로 판단됨.",
+      hot:"특히 ‘" + lowA.name + "’" + josa(lowA.name,"은는") + " 이대로면 다음 평가에서도 같은 판정임. 여기서 안 고치면 계속 여기임."
+    }[heat];
+  }
+
+  var part3 = {
+    mild:"반대로 " + topA.name + josa(topA.name,"은는") + " 확실한 강점이에요. 그건 잃지 마세요.",
+    hr:"‘" + topA.name + "’" + josa(topA.name,"은는") + " 기준 이상의 수행이 확인되어 유지가 권고됨.",
+    hot:"‘" + topA.name + "’" + josa(topA.name,"은는") + " 인정. 이건 진짜 잘함. 나머지가 문제지."
+  }[heat];
+
+  return base + " " + part2 + " " + part3;
+}
+
+/* =========================================================
+   BLINDER (체감 vs 팩트)
+   ========================================================= */
+function blindComment(r){
+  var heat = STATE.heat, d = Math.abs(r.diff).toFixed(1);
+  var set = {
+    cut: {
+      mild: "마음이 조금 앞서서 후하게 채점하신 것 같아요. 실제 기록은 " + r.factAvg.toFixed(1) + "점이에요. 그 마음은 예쁜데, " + d + "점만큼은 눈을 감으신 셈이에요.",
+      hr: "체감과 실측 간 " + d + "점의 격차는 감정 가산점으로 판정됨. HR은 느낌이 아니라 기록을 기준으로 산정함.",
+      hot: "콩깍지가 " + d + "점어치 끼어 있음. 눈이 아니라 마음으로 채점하신 듯. 안과 갈 일은 아니고, 한 번 뜯어보면 됨."
+    },
+    up: {
+      mild: "본인이 생각하는 것보다 실제로 더 잘해주고 있어요. " + d + "점만큼은 칭찬받아 마땅해요.",
+      hr: "실측이 체감을 " + d + "점 상회함. 기대 수준이 높거나 호의를 과소 인식하는 경향으로 판단됨.",
+      hot: "본인이 깎아서 봤는데 팩트는 더 높음. 칭찬인데, 문제는 이 사람이 그걸 모른다는 거임."
+    },
+    even: {
+      mild: "느끼는 것과 실제가 거의 같아요. 스스로를 잘 알고 계세요.",
+      hr: "체감과 실측의 편차가 허용 범위 내. 자기 인식 정확도가 높은 평가자임.",
+      hot: "체감과 팩트가 일치. 자기 객관화 상위 10%의 무서운 사람임."
+    }
+  };
+  return set[r.blind][heat];
+}
+function blindPill(r){
+  if (r.blind === "cut") return "감정 가산점 −" + Math.abs(r.diff).toFixed(1) + "점 삭감!";
+  if (r.blind === "up")  return "과소평가 보정 +" + Math.abs(r.diff).toFixed(1) + "점 상향!";
+  return "보정 " + Math.abs(r.diff).toFixed(1) + "점 · 자기 인식 정확";
+}
+function blinderHTML(r){
+  return ''
+  + '<div class="blinder">'
+  +   '<div class="bhead"><span class="bt">콩깍지 보정 리포트 · FEEL vs FACT</span>'
+  +     '<span class="bpill ' + r.blind + '">' + esc(blindPill(r)) + '</span></div>'
+  +   '<div class="bnum">'
+  +     '<span class="cell"><span>본인 체감</span><b>' + r.feel.toFixed(1) + '</b></span>'
+  +     '<i class="arr">→</i>'
+  +     '<span class="cell"><span>HR 팩트 교정</span><b class="f">' + r.factAvg.toFixed(1) + '</b></span>'
+  +   '</div>'
+  +   '<div class="bbar">'
+  +     '<div class="r"><span>체감</span><span class="t"><i style="width:' + (r.feel/5*100).toFixed(1) + '%"></i></span><span class="v">' + r.feel.toFixed(1) + '</span></div>'
+  +     '<div class="r blue"><span>팩트</span><span class="t"><i style="width:' + (r.factAvg/5*100).toFixed(1) + '%"></i></span><span class="v">' + r.factAvg.toFixed(1) + '</span></div>'
+  +   '</div>'
+  +   '<p class="bcomment">' + esc(blindComment(r)) + '</p>'
+  + '</div>';
+}
+
+/* =========================================================
+   RADAR
+   ========================================================= */
+function radarSVG(areaList){
+  var cx = 170, cy = 165, R = 100;
+  var n = areaList.length;
+  function pt(i, val){
+    var ang = (-90 + i * (360/n)) * Math.PI/180;
+    return [cx + Math.cos(ang) * R * val, cy + Math.sin(ang) * R * val];
+  }
+  var s = '<svg class="radar" viewBox="0 0 340 330" role="img" aria-label="6대 영역 밸런스 레이더 차트">';
+  for (var ring = 5; ring >= 1; ring--){
+    var pts = [];
+    for (var i=0;i<n;i++){ var p = pt(i, ring/5); pts.push(p[0].toFixed(1) + "," + p[1].toFixed(1)); }
+    s += '<polygon class="grid" points="' + pts.join(" ") + '"></polygon>';
+  }
+  for (var j=0;j<n;j++){
+    var e = pt(j, 1);
+    s += '<line class="axis" x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) + '"></line>';
+  }
+  var shape = [], dots = "";
+  areaList.forEach(function(a, k){
+    var p = pt(k, Math.max(a.avg, 0.06)/5);
+    shape.push(p[0].toFixed(1) + "," + p[1].toFixed(1));
+    dots += '<circle class="pt" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.2"></circle>';
+  });
+  s += '<polygon class="shape" points="' + shape.join(" ") + '"></polygon>' + dots;
+
+  areaList.forEach(function(a, k){
+    var ang = (-90 + k * (360/n)) * Math.PI/180;
+    var lx = cx + Math.cos(ang) * (R + 34);
+    var ly = cy + Math.sin(ang) * (R + 30);
+    var anchor = Math.abs(Math.cos(ang)) < 0.25 ? "middle" : (Math.cos(ang) > 0 ? "start" : "end");
+    var dy = Math.sin(ang) < -0.5 ? -6 : (Math.sin(ang) > 0.5 ? 8 : 3);
+    s += '<text class="lb' + (a.avg >= 4 ? " k" : "") + '" x="' + lx.toFixed(1) + '" y="' + (ly+dy).toFixed(1) + '" text-anchor="' + anchor + '">' + esc(a.short) + '</text>';
+    s += '<text class="vl" x="' + lx.toFixed(1) + '" y="' + (ly+dy+12).toFixed(1) + '" text-anchor="' + anchor + '">' + a.avg.toFixed(1) + '</text>';
+  });
+  s += '</svg>';
+  return s;
+}
+
+/* =========================================================
+   REPORT
+   ========================================================= */
+var LAST = null;
+var FILE_NO = "";
+
+function buildReport(){
+  if (STATE.answers.some(function(a){ return a === null; })) {
+    toast("아직 답하지 않은 문항이 있어요.");
+    return;
+  }
+  var r = compute();
+  LAST = r;
+  var rel = REL_META[STATE.rel] || { hr:"", period:"교제" };
+  var heatLabel = { mild:"순한맛", hr:"HR 팩폭 기본", hot:"핵불닭 매운맛" }[STATE.heat];
+  var verdict = verdictText(r);
+  var no = docNo();
+  FILE_NO = no;
+
+  var factsHTML = "";
+  r.areaList.forEach(function(a, idx){
+    var list = r.facts[a.id];
+    var body = '<p class="acc-comment">' + esc(areaComment(a.avg)) + '</p>';
+    list.forEach(function(f){
+      body += '<div class="fact">'
+        + '<p class="picked">' + esc(f.pick) + '</p>'
+        + '<p class="ev' + (f.risk ? " risk" : "") + '">' + esc(f.ev) + '</p>'
+        + '</div>';
+    });
+    factsHTML += '<details class="acc"' + (idx === 0 ? " open" : "") + '>'
+      + '<summary><span class="no">' + pad2(idx+1) + '</span>'
+      + '<span class="nm">' + esc(a.name) + '</span>'
+      + '<span class="sc">' + a.avg.toFixed(1) + ' / 5</span>'
+      + '<span class="cv">▾</span></summary>'
+      + '<div class="acc-body">' + body + '</div>'
+      + '</details>';
+  });
+
+  var barsHTML = r.areaList.map(function(a){
+    return '<div class="barrow"><span class="nm">' + esc(a.short) + '</span>'
+      + '<span class="rail"><i data-w="' + Math.round(a.avg/5*100) + '"></i></span>'
+      + '<span class="v">' + a.avg.toFixed(1) + '</span></div>';
+  }).join("");
+
+  var riskHTML = "";
+  if (r.risks.length){
+    riskHTML = '<div class="riskbox"><p class="h">HR 리스크 플래그 · ' + r.risks.length + '건</p><ul>'
+      + r.risks.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("")
+      + '</ul></div>';
+  }
+
+  function areaMeta(a){ return AREAS.filter(function(x){ return x.id === a.id; })[0] || {}; }
+  var keepAreas = r.areaList.slice().sort(function(x,y){ return y.avg - x.avg; })
+                    .filter(function(a){ return a.avg >= 3.2; }).slice(0,2);
+  var fixAreas = r.areaList.slice().sort(function(x,y){ return x.avg - y.avg; })
+                    .filter(function(a){ return a.avg < 4.3; }).slice(0,2);
+  var keepHTML = keepAreas.length
+    ? keepAreas.map(function(a){ return '<li>' + esc(a.name) + ' — ' + esc(areaMeta(a).keep || "") + '</li>'; }).join("")
+    : '<li>이번 평가에서는 유지할 만한 강점 영역이 확인되지 않았습니다. 전 영역 개선이 필요합니다.</li>';
+  var fixHTML = fixAreas.length
+    ? fixAreas.map(function(a){ return '<li>' + esc(a.name) + ' — ' + esc(areaMeta(a).fix || "") + '</li>'; }).join("")
+    : '<li>뚜렷한 보완 과제가 없습니다. 현 상태 유지가 권고됩니다.</li>';
+
+  var lowArea = AREAS.filter(function(a){ return a.id === r.low.id; })[0];
+  var okrHTML = '<div class="kr"><b>KR1</b><p>' + esc(lowArea.okr[0]) + '</p></div>'
+    + '<div class="kr"><b>KR2</b><p>' + esc(lowArea.okr[1]) + '</p></div>';
+
+  var memoHTML = "";
+  if (STATE.memo){
+    memoHTML = '<div class="memo"><p class="h">평가자 메모 · 원문 반영</p><p>“' + esc(STATE.memo) + '”</p></div>';
+  }
+
+  var summaryLine = (r.pct >= 80)
+    ? "일상 수행은 상위권, 큰 문제 없이 유지 가능한 파트너"
+    : (r.pct >= 66)
+      ? "생활 궁합은 괜찮고, 특정 영역에서 편차가 큰 파트너"
+      : "개선 계획 없이는 재계약이 어려운 파트너";
+
+  var heatClass = STATE.heat === "hot" ? " hot" : (STATE.heat === "mild" ? " mild" : "");
+
+  var out = ''
+  + '<div class="sheet" id="reportSheet">'
+  +   '<div class="doc-head">'
+  +     '<div class="doc-top"><span>' + esc(no) + '</span><span class="conf">CONFIDENTIAL</span></div>'
+  +     '<h1>2026 파트너 정기 인사평가서</h1>'
+  +     '<p class="sub">' + esc(todayStr()) + ' 발행 · 평가 주기: 분기 1회 · 열람 등급: 기밀(대외비)</p>'
+  +     '<dl class="meta-grid">'
+  +       '<div><dt>평가 대상</dt><dd>' + esc(STATE.name) + '</dd></div>'
+  +       '<div><dt>관계 유형</dt><dd>' + esc(STATE.rel) + ' · ' + esc(rel.hr) + '</dd></div>'
+  +       '<div><dt>기간</dt><dd>' + esc(rel.period) + ' ' + (STATE.period ? esc(STATE.period) : "—") + '</dd></div>'
+  +       '<div><dt>평가 방식</dt><dd>6개 영역 · 12문항</dd></div>'
+  +     '</dl>'
+  +   '</div>'
+  +   '<div class="hero">'
+  +     '<div class="scorebox">'
+  +       '<p class="lab">종합 점수</p>'
+  +       '<div class="scorebig"><b>' + r.pct + '</b><span>/ 100</span></div>'
+  +       '<p class="grade" style="color:#fff;background:' + r.grade.color + '">등급 ' + r.grade.g + ' · ' + esc(heatLabel) + '</p>'
+  +       '<p class="stampline">최종 처분 · <b>' + esc(r.grade.stamp) + '</b></p>'
+  +     '</div>'
+  +     '<div class="stamp"><div class="st-in"><small>PARTNER HR</small>'
+  +       '<span class="st-main">' + esc(r.grade.stamp).replace(" · ", "<br>") + '</span>'
+  +       '<small>2026 REVIEW</small></div></div>'
+  +   '</div>'
+  +   '<div class="summary">'
+  +     '<p class="ttl">핵심 요약</p>'
+  +     '<p>' + esc(summaryLine) + '. ' + esc(r.top.name) + josa(r.top.name,"은는") + ' 상대 강점, ' + esc(r.low.name) + josa(r.low.name,"은는") + ' 개선 과제로 판정됨.</p>'
+  +     '<div class="tags">'
+  +       (r.top.avg >= 3.6 ? '<span class="tag keep">강점 · ' + esc(r.top.short) + ' ' + r.top.avg.toFixed(1) + '</span>' : '')
+  +       (r.top2.avg >= 3.6 ? '<span class="tag keep">강점 · ' + esc(r.top2.short) + ' ' + r.top2.avg.toFixed(1) + '</span>' : '')
+  +       (r.top.avg < 3.6 ? '<span class="tag fix">전 영역 보완 필요 · 최고 ' + r.top.avg.toFixed(1) + '</span>' : '')
+  +       '<span class="tag fix">보완 · ' + esc(r.low.short) + ' ' + r.low.avg.toFixed(1) + '</span>'
+  +     '</div>'
+  +   '</div>'
+
+  +   blinderHTML(r)
+
+  +   '<div class="doc-sec">'
+  +     '<p class="sec-no">01</p>'
+  +     '<h2>6대 영역 밸런스</h2>'
+  +     '<p class="desc">점선은 5점 만점 기준선. 안쪽으로 파인 축이 이번 분기의 개선 과제입니다.</p>'
+  +     '<div class="radar-wrap">' + radarSVG(r.areaList) + '</div>'
+  +     '<div class="bars">' + barsHTML + '</div>'
+  +   '</div>'
+
+  +   '<div class="doc-sec">'
+  +     '<p class="sec-no">02</p>'
+  +     '<h2>매운맛 총평 · ' + esc(heatLabel) + '</h2>'
+  +     '<div class="verdict' + heatClass + '">'
+  +       '<p class="lbl">HR 심사 의견</p>'
+  +       '<p>' + esc(verdict) + '</p>'
+  +     '</div>'
+  +     riskHTML
+  +   '</div>'
+
+  +   '<div class="doc-sec">'
+  +     '<p class="sec-no">03</p>'
+  +     '<h2>평가 근거 · 팩트</h2>'
+  +     '<p class="desc">고른 항목이 그대로 근거 문장이 됩니다. 항목을 눌러 펼쳐 보세요.</p>'
+  +     '<div class="facts">' + factsHTML + '</div>'
+  +   '</div>'
+
+  +   '<div class="doc-sec">'
+  +     '<p class="sec-no">04</p>'
+  +     '<h2>유지(Keep) · 보완(Fix)</h2>'
+  +     '<div class="two">'
+  +       '<div class="mini keep"><p class="h">KEEP · 유지</p><ul>' + keepHTML + '</ul></div>'
+  +       '<div class="mini fix"><p class="h">FIX · 보완</p><ul>' + fixHTML + '</ul></div>'
+  +     '</div>'
+  +   '</div>'
+
+  +   '<div class="doc-sec">'
+  +     '<p class="sec-no">05</p>'
+  +     '<h2>다음 분기 OKR</h2>'
+  +     '<p class="desc">가장 낮은 영역 1개에 집중합니다. 두 줄이면 충분합니다.</p>'
+  +     '<div class="okr">'
+  +       '<div class="oh"><b>O · ' + esc(r.low.name) + ' 개선</b><span>NEXT Q</span></div>'
+  +       '<div class="ob">' + okrHTML + '</div>'
+  +     '</div>'
+  +     memoHTML
+  +   '</div>'
+
+  +   '<div class="doc-foot">'
+  +     '<div class="sign"><b>평가자 서명</b>본 평가서는 12문항 자기보고 방식으로 작성되었으며,<br>제출 시점의 경험에 근거합니다.<br>' + esc(no) + '</div>'
+  +     '<div class="seal">PARTNER<br>HR<br>SEAL</div>'
+  +   '</div>'
+  + '</div>';
+
+  var container = $("reportOut");
+  container.innerHTML = out;
+  setStep("step-report");
+  $("btnRestart").hidden = false;
+  requestAnimationFrame(function(){
+    container.querySelectorAll(".rail i").forEach(function(i){ i.style.width = i.dataset.w + "%"; });
+  });
+}
+
+/* =========================================================
+   EXPORT
+   ========================================================= */
+function fileName(ext){
+  var d = new Date();
+  var nm = (STATE.name || "partner").replace(/[\\/:*?"<>|\s]/g, "");
+  return "파트너-인사평가서-" + nm + "-" + d.getFullYear() + pad2(d.getMonth()+1) + pad2(d.getDate()) + "." + ext;
+}
+function downloadURL(url, name){
+  var a = document.createElement("a");
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ document.body.removeChild(a); }, 300);
+}
+function openAllDetails(open){
+  document.querySelectorAll("#reportSheet details").forEach(function(d){
+    if (open) d.setAttribute("open","");
+    else d.removeAttribute("open");
+  });
+}
+
+$("btnPng").addEventListener("click", async function(){
+  var node = $("reportSheet");
+  if (!node) return;
+  var btn = this;
+  btn.disabled = true; btn.textContent = "이미지 만드는 중…";
+  try {
+    if (window.html2canvas){
+      var ch = Math.max(1, node.scrollHeight || 2000);
+      var canvas = await window.html2canvas(node, {
+        scale: Math.max(0.9, Math.min(2, 3800 / ch)),
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        logging: false,
+        windowWidth: document.documentElement.clientWidth
+      });
+      var url = canvas.toDataURL("image/png");
+      var name = fileName("png");
+      if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        var w = window.open();
+        if (w) { w.document.write('<title>' + name + '</title><meta name="viewport" content="width=device-width"><body style="margin:0;background:#111"><p style="color:#fff;font:14px -apple-system;padding:14px;text-align:center">이미지를 길게 눌러 ‘사진에 저장’ 하세요</p><img src="' + url + '" style="width:100%;display:block">'); }
+        else downloadURL(url, name);
+        toast("이미지를 길게 눌러 저장하세요");
+      } else {
+        downloadURL(url, name);
+        toast("PNG 저장 완료 · " + name);
+      }
+    } else {
+      fallbackPNG();
+    }
+  } catch(e){
+    console.warn("html2canvas failed, using fallback", e);
+    try { fallbackPNG(); } catch(e2){ toast("이미지 저장 실패 · PDF 저장을 이용해 주세요"); }
+  } finally {
+    btn.disabled = false; btn.textContent = "이미지(PNG) 저장";
+  }
+});
+
+function fallbackPNG(){
+  if (!LAST) return;
+  var r = LAST, W = 1000, PAD = 60, CW = W - PAD*2, y = 0;
+  var c = document.createElement("canvas");
+  c.width = W; c.height = 3200;
+  var ctx = c.getContext("2d");
+  function F(w, sz){ return w + " " + sz + "px Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"; }
+  function px(f){ var m = /(\d+(?:\.\d+)?)px/.exec(f); return m ? parseFloat(m[1]) : 16; }
+  function wrapText(t, maxW, f){
+    ctx.font = f;
+    var lines = [], line = "", chars = String(t).split("");
+    for (var i=0;i<chars.length;i++){
+      var test = line + chars[i];
+      if (ctx.measureText(test).width > maxW && line){ lines.push(line); line = chars[i]; }
+      else line = test;
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+  function draw(t, x, yy, f, color, maxW, lh){
+    var LH = lh || Math.round(px(f) * 1.5);
+    ctx.font = f; ctx.fillStyle = color;
+    if (!maxW){ ctx.fillText(t, x, yy); return LH; }
+    var lines = wrapText(t, maxW, f);
+    for (var i=0;i<lines.length;i++) ctx.fillText(lines[i], x, yy + i*LH);
+    return lines.length * LH;
+  }
+  function textH(t, f, maxW, lh){
+    var LH = lh || Math.round(px(f) * 1.5);
+    ctx.font = f;
+    return wrapText(t, maxW, f).length * LH;
+  }
+
+  ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, W, 3200);
+
+  /* header */
+  ctx.fillStyle = "#224fc5"; ctx.fillRect(0, 0, W, 12);
+  y = 58;
+  draw("PARTNER HR · CONFIDENTIAL", PAD, y, F(800, 17), "#224fc5"); y += 44;
+  y += draw("2026 파트너 정기 인사평가서", PAD, y, F(800, 40), "#141f32", CW) + 6;
+  var rel = REL_META[STATE.rel] || { period:"교제" };
+  y += draw(todayStr() + " 발행 · " + STATE.name + " · " + STATE.rel + (STATE.period ? " " + STATE.period : ""), PAD, y, F(500, 18), "#4f6077", CW) + 26;
+
+  /* score panel */
+  ctx.fillStyle = "#f2f6fe"; ctx.fillRect(PAD, y, CW, 148);
+  draw("종합 점수", PAD + 26, y + 38, F(800, 15), "#224fc5");
+  draw(String(r.pct), PAD + 26, y + 116, F(800, 62), "#224fc5");
+  ctx.font = F(800, 62);
+  var nw = ctx.measureText(String(r.pct)).width;
+  draw("/ 100", PAD + 34 + nw, y + 116, F(700, 19), "#4f6077");
+  draw("등급 " + r.grade.g + " · " + ({ mild:"순한맛", hr:"HR 팩폭 기본", hot:"핵불닭 매운맛" }[STATE.heat] || ""), PAD + 330, y + 62, F(800, 21), r.grade.color);
+  draw("최종 처분 · " + r.grade.stamp, PAD + 330, y + 96, F(800, 23), "#141f32", CW - 340, 32);
+  y += 148 + 26;
+
+  /* blinder */
+  ctx.fillStyle = "#f7faff"; ctx.fillRect(PAD, y, CW, 104);
+  ctx.fillStyle = r.blind === "cut" ? "#c62828" : (r.blind === "up" ? "#1d6b4f" : "#224fc5");
+  ctx.fillRect(PAD, y, 4, 104);
+  draw("콩깍지 보정 · 체감 " + r.feel.toFixed(1) + " → 팩트 " + r.factAvg.toFixed(1), PAD + 20, y + 34, F(800, 18), "#224fc5");
+  draw(blindPill(r) + " — " + blindComment(r), PAD + 20, y + 64, F(600, 16), "#3a4b64", CW - 44, 24);
+  y += 104 + 30;
+
+  /* areas */
+  draw("6대 영역", PAD, y, F(800, 17), "#224fc5"); y += 32;
+  r.areaList.forEach(function(a){
+    draw(a.short, PAD, y + 14, F(700, 17), "#3c4c66");
+    ctx.fillStyle = "#e6ecf7"; ctx.fillRect(PAD + 230, y + 3, 540, 12);
+    ctx.fillStyle = "#224fc5"; ctx.fillRect(PAD + 230, y + 3, Math.round(540 * (a.avg/5)), 12);
+    draw(a.avg.toFixed(1), PAD + 790, y + 14, F(800, 16), "#224fc5");
+    y += 36;
+  });
+  y += 26;
+
+  /* verdict */
+  draw("HR 심사 의견", PAD, y, F(800, 17), "#224fc5"); y += 32;
+  y += draw(verdictText(r), PAD, y, F(600, 18), "#22314a", CW, 28) + 24;
+
+  /* keep / fix */
+  var halfW = (CW - 40) / 2;
+  var keepTxt = r.areaList.slice().sort(function(a,b){ return b.avg - a.avg; }).slice(0,2)
+      .map(function(a){ return a.name + " " + a.avg.toFixed(1); }).join("  ·  ");
+  var fixTxt = r.areaList.slice().sort(function(a,b){ return a.avg - b.avg; }).slice(0,2)
+      .map(function(a){ return a.name + " " + a.avg.toFixed(1); }).join("  ·  ");
+  draw("KEEP · 유지", PAD, y, F(800, 15), "#1d6b4f");
+  draw("FIX · 보완", PAD + halfW + 40, y, F(800, 15), "#a8471a");
+  y += 26;
+  var h1 = textH(keepTxt, F(600, 17), halfW);
+  var h2 = textH(fixTxt, F(600, 17), halfW);
+  draw(keepTxt, PAD, y, F(600, 17), "#2f4058", halfW, 26);
+  draw(fixTxt, PAD + halfW + 40, y, F(600, 17), "#2f4058", halfW, 26);
+  y += Math.max(h1, h2) + 32;
+
+  /* OKR */
+  var lowA = AREAS.filter(function(a){ return a.id === r.low.id; })[0];
+  draw("다음 분기 OKR · " + r.low.name, PAD, y, F(800, 16), "#224fc5"); y += 32;
+  y += draw("KR1 · " + lowA.okr[0], PAD, y, F(600, 17), "#2f4058", CW, 26) + 6;
+  y += draw("KR2 · " + lowA.okr[1], PAD, y, F(600, 17), "#2f4058", CW, 26) + 24;
+
+  if (STATE.memo){
+    draw("평가자 메모 · “" + STATE.memo + "”", PAD, y, F(500, 16), "#4f6077", CW, 26);
+    y += 26 + 22;
+  }
+
+  ctx.strokeStyle = "#dce4ef"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(PAD, y); ctx.lineTo(W - PAD, y); ctx.stroke();
+  y += 30;
+  y += draw("본 평가서는 재미를 위한 자기만족용 문서로 실제 인사 효력이 없습니다. · " + FILE_NO, PAD, y, F(500, 14), "#93a0b5", CW, 21);
+
+  var out = document.createElement("canvas");
+  out.width = W; out.height = Math.ceil(y + 56);
+  var octx = out.getContext("2d");
+  octx.fillStyle = "#ffffff"; octx.fillRect(0, 0, out.width, out.height);
+  octx.drawImage(c, 0, 0);
+
+  var url = out.toDataURL("image/png");
+  var name = fileName("png");
+  if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    var w = window.open();
+    if (w) { w.document.write('<title>' + name + '</title><meta name="viewport" content="width=device-width"><body style="margin:0;background:#111"><p style="color:#fff;font:14px -apple-system;padding:14px;text-align:center">이미지를 길게 눌러 ‘사진에 저장’ 하세요</p><img src="' + url + '" style="width:100%;display:block">'); }
+    else downloadURL(url, name);
+    toast("이미지를 길게 눌러 저장하세요");
+  } else {
+    downloadURL(url, name);
+    toast("PNG 저장 완료 · " + name);
+  }
+}
+
+$("btnPdf").addEventListener("click", function(){
+  var wasOpen = [];
+  document.querySelectorAll("#reportSheet details").forEach(function(d, i){ wasOpen[i] = d.open; d.open = true; });
+  setTimeout(function(){ window.print(); }, 90);
+  window.setTimeout(function(){
+    document.querySelectorAll("#reportSheet details").forEach(function(d, i){ d.open = !!wasOpen[i]; });
+  }, 1200);
+});
+
+function summaryText(){
+  var r = LAST;
+  if (!r) return "";
+  var lowA = AREAS.filter(function(a){ return a.id === r.low.id; })[0];
+  var heatLabel = { mild:"순한맛", hr:"HR 팩폭 기본", hot:"핵불닭" }[STATE.heat];
+  var lines = [];
+  lines.push("【2026 파트너 정기 인사평가서】");
+  lines.push("대상: " + STATE.name + " (" + STATE.rel + (STATE.period ? " · " + STATE.period : "") + ")");
+  lines.push("종합: " + r.pct + "점 / 100 · 등급 " + r.grade.g);
+  lines.push("처분: " + r.grade.stamp);
+  lines.push("");
+  lines.push("· 콩깍지 보정: 체감 " + r.feel.toFixed(1) + " → 팩트 " + r.factAvg.toFixed(1) + " (" + blindPill(r) + ")");
+  lines.push("· 강점: " + r.top.name + " " + r.top.avg.toFixed(1) + " / " + r.top2.name + " " + r.top2.avg.toFixed(1));
+  lines.push("· 보완: " + r.low.name + " " + r.low.avg.toFixed(1) + " / " + r.low2.name + " " + r.low2.avg.toFixed(1));
+  lines.push("· 총평(" + heatLabel + "): " + verdictText(r));
+  lines.push("· 다음 분기 OKR");
+  lines.push("  KR1 · " + lowA.okr[0]);
+  lines.push("  KR2 · " + lowA.okr[1]);
+  if (STATE.memo) lines.push("· 메모: " + STATE.memo);
+  lines.push("");
+  lines.push("(재미용 평가서 · 실제 효력 없음)");
+  return lines.join("\n");
+}
+
+$("btnCopy").addEventListener("click", async function(){
+  var txt = summaryText();
+  if (!txt) return;
+  try {
+    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(txt);
+    else {
+      var ta = document.createElement("textarea");
+      ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+    }
+    toast("텍스트 요약 복사 완료 · 단톡방에 붙여넣으세요");
+  } catch(e){
+    toast("복사가 막혔어요. 길게 눌러 직접 복사해 주세요.");
+  }
+});
+
+$("btnAgain").addEventListener("click", function(){
+  STATE.q = 0;
+  STATE.answers = [];
+  STATE.memo = "";
+  LAST = null;
+  $("reportOut").innerHTML = "";
+  showInfo();
+});
+
+$("btnRelock").addEventListener("click", function(){
+  try { sessionStorage.removeItem("pr.auth"); } catch(e){}
+  pin = ""; paintDots();
+  lockErr.classList.remove("show");
+  lock.hidden = false;
+  document.body.style.overflow = "hidden";
+});
+$("btnRestart").addEventListener("click", function(){ $("btnAgain").click(); });
+
+/* open all details while printing */
+window.addEventListener("beforeprint", function(){
+  document.querySelectorAll("#reportSheet details").forEach(function(d){ d.setAttribute("open",""); });
+});
+
+if (authed) enterApp();
+
+})();
+</script>
+</body>
+</html>
