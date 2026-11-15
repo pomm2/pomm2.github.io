@@ -440,13 +440,13 @@ for(let i=0;i<7;i++){
 /* ---- symbols in the four corners ---- */
 const picks=PICK[kind]||PICK.atm;
 const symLayer=
- '<g transform="translate(196 236) scale(.95)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[0])+'</g>'+
- '<g transform="translate(564 236) scale(.95)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[1])+'</g>'+
- '<g transform="translate(156 848) scale(.6)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".4">'+sym(picks[1])+'</g>'+
- '<g transform="translate(604 848) scale(.6)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".4">'+sym(picks[0])+'</g>';
+ '<g transform="translate(186 210) scale(.9)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[0])+'</g>'+
+ '<g transform="translate(574 210) scale(.9)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[1])+'</g>'+
+ '<g transform="translate(142 862) scale(.52)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".4">'+sym(picks[1])+'</g>'+
+ '<g transform="translate(618 862) scale(.52)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".4">'+sym(picks[0])+'</g>';
 
 /* ---- woodcut hatching under the scene ---- */
-let hatch='';for(let i=0;i<26;i++)hatch+='<path d="M'+(72+i*24)+' 872l-22 4" stroke="#39342d" opacity=".33" stroke-width="1"/>';
+let hatch='';for(let i=0;i<26;i++)hatch+='<path d="M'+(72+i*24)+' 866l-22 4" stroke="#39342d" opacity=".33" stroke-width="1"/>';
 
 return '<svg xmlns="http://www.w3.org/2000/svg" width="760" height="940" viewBox="0 0 760 940">'+
  '<defs><pattern id="ink" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#27251f"/><path d="M0 5L5 0" stroke="#d9cdb3" stroke-width=".7"/></pattern>'+
@@ -456,7 +456,7 @@ return '<svg xmlns="http://www.w3.org/2000/svg" width="760" height="940" viewBox
  '<g clip-path="url(#plate)">'+
  '<ellipse cx="380" cy="520" rx="310" ry="250" fill="url(#glow)"/>'+
  halo+orbit+phases+
- '<g stroke="#26231e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(136 292) scale(1.06)">'+art+'</g></g>'+
+ '<g stroke="#26231e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(108 262) scale(1.18)">'+art+'</g></g>'+
  hatch+'</g>'+
  frame+orn+symLayer+
  '</svg>'}
