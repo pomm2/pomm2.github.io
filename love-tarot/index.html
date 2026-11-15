@@ -720,7 +720,7 @@ function result(){state.phase='result';const h=state.history,d=state.desires,an=
  '<p class="ed-lede">ROUND '+(an.contrast.round+1)+' / 상대에게 보이지 않은 답</p>'+
  '<div class="ed-pair"><div class="ed-pair-col"><span class="ed-pair-label">내가 보낸 말풍선</span><div class="ed-bubble sent">'+esc(an.contrast.sent)+'</div></div>'+
  '<div class="ed-pair-col"><span class="ed-pair-label">속으로 바랐던 말풍선</span><div class="ed-bubble wanted">'+esc(an.contrast.wanted)+'</div></div></div>'+
- '<p class="ed-body">'+(mm?esc(mm.why):'보낸 말과 바란 말 사이에 간격이 있어. 상대는 보낸 말만 읽을 수 있어.')+'</p></section>'+
+ '<p class="ed-body">'+(mm&&mm.kind?esc(mm.why):'같은 밤에 두 마음이 따로 움직였어. 보낸 말과 바란 말 사이에 그만큼 거리가 있었던 거야.')+'</p></section>'+
  '<section class="ed-sec ed-quad"><p class="ed-num"><b>02</b> TWO AXES</p><h2>불안과 거리, 이번 밤 내 자리</h2>'+
  '<div class="ed-quad-wrap">'+quadrantSvg(an)+'</div>'+
  '<div class="ed-quad-meta"><b>'+esc(an.type)+'</b><span>'+esc(an.tag)+'</span></div>'+
