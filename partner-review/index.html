@@ -1328,7 +1328,6 @@ function recommendText(r){
 }
 
 /* =========================================================
-   BLINDER (내 체감 vs 실제 점수)/* =========================================================
    BLINDER (내 체감 vs 실제 점수)
    ========================================================= */
 function blindComment(r){
@@ -1872,7 +1871,7 @@ function summaryText(){
   return lines.join("\n");
 }
 
-$("btnCopy").addEventListener$("btnCopy").addEventListener("click", async function(){
+$("btnCopy").addEventListener("click", async function(){
   var txt = summaryText();
   if (!txt) return;
   try {
