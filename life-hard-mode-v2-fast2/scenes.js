@@ -190,7 +190,7 @@ var SCENES = {
     stamp: '결혼식 D-2 · 오전 9:40',
     type: 'scene',
     img: 'sc-23',
-    caption: ['전화를 받지 않았다. 네 번 울리고 끊겼다.'],
+    caption: ['전화를 받지 않았다. 네 번 울리고 끊겼다.', '곧 음성 메시지가 왔다.'],
     speaker: '수빈',
     lines: [
       '안 받는 거 봐.',
