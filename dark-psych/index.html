@@ -67,7 +67,8 @@ h1 em{font-style:normal;color:var(--bone);border-bottom:1px solid var(--red);pad
 .docline span:first-child{text-align:left}
 .docline span:last-child{text-align:right;border-right:0}
 .intro-note{margin:18px 0 0;font-size:12.5px;line-height:1.7;color:var(--dim)}
-.intro-foot{padding-top:22px;margin-top:auto}
+.intro-foot{padding-top:0;margin-top:34px}
+.intro-end{margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline}
 
 /* ---------- buttons ---------- */
 .btn{
@@ -689,7 +690,9 @@ function intro(){
   +'<div class="intro-foot">'
   +'<button class="btn pri" data-act="start"><span>기록 열기</span><span>start</span></button>'
   +'<p class="tiny">재미로 보는 테스트입니다. 심리 진단이 아닙니다.</p>'
-  +'</div></div>';
+  +'</div>'
+  +'<div class="intro-end"><span class="mono">FILE 07</span><span class="mono">본인 열람용</span></div>'
+  +'</div>';
 }
 
 /* ---------- case ---------- */
