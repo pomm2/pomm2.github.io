@@ -392,6 +392,56 @@ svg.radar{width:100%;max-width:330px;height:auto;overflow:visible}
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+/* ---------- SHARE ---------- */
+#shareLock{
+  position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;
+  padding:16px;overflow:auto;background:linear-gradient(168deg,#0a1730 0%,#12246b 48%,#2a3fb0 100%);
+}
+#shareLock::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:34px 34px;mask-image:radial-gradient(120% 90% at 50% 20%,#000 25%,transparent 78%);
+}
+.lock-mark.shared{background:#0f2a6b;box-shadow:0 8px 20px -10px rgba(10,23,48,.95)}
+.share-tag{
+  display:flex;width:max-content;align-items:center;gap:5px;margin:0 auto 10px;
+  font-size:9.5px;font-weight:800;letter-spacing:.1em;color:#173a94;
+  background:#e8eefc;border:1px solid #c9d8f6;border-radius:99px;padding:3px 9px;
+}
+.lock-sub b{color:var(--ink);font-weight:800}
+.share-note{
+  display:flex;gap:9px;align-items:flex-start;
+  border:1px solid #c9d8f6;background:var(--blue-l);border-radius:12px;
+  padding:10px 12px;margin-bottom:12px;font-size:12px;color:var(--blue-d);line-height:1.5;
+}
+.share-note b{font-weight:850}
+.share-note .x{display:block;font-weight:600;color:#4f6291;margin-top:2px}
+.btn.share{border-color:#b7c8f0;background:var(--blue-l);color:var(--blue-d)}
+.btn.share:active{background:#dbe5fb}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal-back{position:absolute;inset:0;background:rgba(10,20,42,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.modal-card{
+  position:relative;width:100%;max-width:358px;max-height:88vh;overflow:auto;
+  background:#fff;border-radius:18px;padding:20px 18px 18px;
+  box-shadow:0 30px 70px -28px rgba(0,0,0,.65);
+}
+.modal-card h2{font-size:19px;font-weight:830;letter-spacing:-.045em}
+.modal-sub{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:6px}
+.modal-lab{display:block;font-size:12px;font-weight:750;color:#3a4a63;margin:15px 0 7px}
+.modal-card input[type=text]{width:100%}
+.modal-card #smPin{
+  font-size:23px;font-weight:800;text-align:center;letter-spacing:.4em;text-indent:.4em;
+  font-variant-numeric:tabular-nums;padding:11px 8px;
+}
+.modal-actions{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;margin-top:16px}
+.modal-actions .btn{padding:12px 14px}
+.modal-actions .btn.primary:disabled{opacity:.55}
+.modal-note{font-size:11px;color:#93a0b5;line-height:1.6;margin-top:11px}
+.urlbox{margin-top:14px;border-top:1px dashed var(--line);padding-top:13px}
+.urlbox input{font-size:11.5px;color:#41526c;background:#f7faff}
+
 /* ---------- PRINT ---------- */
 @media print{
   @page{size:A4;margin:11mm}
@@ -468,7 +518,40 @@ svg.radar{width:100%;max-width:330px;height:auto;overflow:visible}
 </div>
 
 <!-- ================= APP ================= -->
-<div id="app" hidden>
+<!-- ================= SHARE LOCK ================= -->
+<div id="shareLock" hidden>
+  <div class="lock-card" id="shareCard">
+    <div class="lock-mark shared" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13.4a3.9 3.9 0 0 0 5.6 0l2.8-2.8a3.9 3.9 0 0 0-5.5-5.5l-1.5 1.4"></path>
+        <path d="M14 10.6a3.9 3.9 0 0 0-5.6 0l-2.8 2.8a3.9 3.9 0 0 0 5.5 5.5l1.5-1.4"></path>
+      </svg>
+    </div>
+    <p class="share-tag">SHARED REPORT · 열람 전용</p>
+    <p class="kicker">PARTNER HR · CONFIDENTIAL</p>
+    <h1>공유된 인사평가서 열람</h1>
+    <p class="lock-sub">링크를 보낸 사람이 정한 <b>4자리 비밀번호</b>를 입력하면<br>평가서가 그대로 열립니다.</p>
+    <div class="dots" id="sDots"><i></i><i></i><i></i><i></i></div>
+    <p class="err" id="shareErr" role="status" aria-live="polite"></p>
+    <div class="keypad" id="shareKeypad">
+      <button type="button" data-k="1">1</button>
+      <button type="button" data-k="2">2</button>
+      <button type="button" data-k="3">3</button>
+      <button type="button" data-k="4">4</button>
+      <button type="button" data-k="5">5</button>
+      <button type="button" data-k="6">6</button>
+      <button type="button" data-k="7">7</button>
+      <button type="button" data-k="8">8</button>
+      <button type="button" data-k="9">9</button>
+      <button type="button" class="fn" data-k="clear">전체삭제</button>
+      <button type="button" data-k="0">0</button>
+      <button type="button" class="fn" data-k="del" aria-label="한 자리 지우기"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 5h11a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 19.5 19h-11L2 12z"></path><path d="M11.5 9.5l5 5M16.5 9.5l-5 5"></path></svg></button>
+    </div>
+    <p class="lock-foot" id="shareFoot">비밀번호는 링크 안에만 쓰이고 서버에 저장되지 않습니다 · v1.0</p>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
   <header class="top">
     <div class="top-in">
       <div class="brand"><span class="dot"></span>PARTNER HR</div>
@@ -567,16 +650,41 @@ svg.radar{width:100%;max-width:330px;height:auto;overflow:visible}
 
     <!-- step: report -->
     <section id="step-report" hidden>
+      <div class="share-note no-print" id="shareNote" hidden>
+        <span aria-hidden="true">🔗</span>
+        <span><b>공유 링크로 열람 중</b> · 열람 전용이라 수정은 되지 않습니다.<span class="x">발행 정보는 원본 그대로 보존됩니다.</span></span>
+      </div>
       <div id="reportOut"></div>
       <div class="actions no-print">
         <button type="button" class="btn primary" id="btnPng">이미지(PNG) 저장</button>
         <button type="button" class="btn" id="btnPdf">PDF 저장 / 인쇄</button>
         <button type="button" class="btn" id="btnCopy">텍스트 요약 복사</button>
-        <button type="button" class="btn" id="btnAgain">다시 평가하기</button>
+        <button type="button" class="btn share" id="btnShare">🔗 결과 링크 복사</button>
+        <button type="button" class="btn wide" id="btnAgain">다시 평가하기</button>
       </div>
       <p class="disclaimer no-print">본 평가서는 재미를 위한 자기만족용 문서로, 실제 인사 효력이나 법적 효력이 없습니다. 사랑은 서류로 판결되지 않습니다. (아마도)</p>
     </section>
   </main>
+</div>
+
+<div class="modal" id="shareModal" hidden>
+  <div class="modal-back" id="smBack"></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="smTitle">
+    <h2 id="smTitle">결과 링크 만들기</h2>
+    <p class="modal-sub">링크를 받는 사람에게 알려줄 <b>4자리 비밀번호</b>를 정하세요. 그 번호를 넣어야 평가서가 열립니다.</p>
+    <label class="modal-lab" for="smPin">공유 비밀번호</label>
+    <input type="text" id="smPin" inputmode="numeric" pattern="[0-9]*" maxlength="4" value="0201" autocomplete="off" aria-describedby="smNote">
+    <p class="warn" id="smWarn">숫자 4자리를 입력해 주세요.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn ghost" id="smCancel">취소</button>
+      <button type="button" class="btn primary" id="smOk">링크 만들기</button>
+    </div>
+    <p class="modal-note" id="smNote">이름·메모·12문항 답변이 모두 암호화되어 링크 뒤에 붙습니다. 서버에는 아무것도 저장되지 않아요.</p>
+    <div class="urlbox" id="smResult" hidden>
+      <label class="modal-lab" for="smUrl" style="margin-top:0">링크 (길게 눌러 복사)</label>
+      <input type="text" id="smUrl" readonly>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -638,7 +746,16 @@ lockErr.classList.remove("show");
 
 var authed = false;
 try { authed = sessionStorage.getItem("pr.auth") === "1"; } catch(e){}
-if (authed){ lock.hidden = true; }
+
+/* shared-report hash (#share=...)?  → skip the authoring PIN entirely */
+var SHARE_RAW = (function(){
+  var m = /^#share=([A-Za-z0-9_-]+)$/.exec(location.hash || "");
+  return m ? m[1] : null;
+})();
+var SHARE_BROKEN = /^#share=/.test(location.hash || "") && !SHARE_RAW;
+
+if (SHARE_RAW || SHARE_BROKEN){ lock.hidden = true; document.body.style.overflow = "hidden"; }
+else if (authed){ lock.hidden = true; }
 else { document.body.style.overflow = "hidden"; }
 
 /* =========================================================
@@ -876,7 +993,7 @@ var REL_META = {
   "장기연애": { hr:"무기계약 장기 근속",      period:"교제" }
 };
 
-var STATE = { name:"", rel:"", period:"", memo:"", heat:"hr", feel:4.0, answers:[], q:0 };
+var STATE = { name:"", rel:"", period:"", memo:"", heat:"hr", feel:4.0, answers:[], q:0, docNo:"", issue:"" };
 
 /* feel slider */
 (function(){
@@ -910,6 +1027,15 @@ function josa(str, pair){ return hasBatchim(str) ? pair[0] : pair[1]; }
 function todayStr(){
   var d = new Date();
   return d.getFullYear() + "년 " + (d.getMonth()+1) + "월 " + d.getDate() + "일";
+}
+function isoToday(){
+  var d = new Date();
+  return d.getFullYear() + "-" + pad2(d.getMonth()+1) + "-" + pad2(d.getDate());
+}
+function reportDateText(){
+  var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(STATE.issue || "");
+  if (m) return m[1] + "년 " + parseInt(m[2],10) + "월 " + parseInt(m[3],10) + "일";
+  return todayStr();
 }
 function docNo(){
   var d = new Date();
@@ -1249,7 +1375,8 @@ function buildReport(){
   var rel = REL_META[STATE.rel] || { hr:"", period:"교제" };
   var heatLabel = { mild:"순한맛", hr:"HR 팩폭 기본", hot:"핵불닭 매운맛" }[STATE.heat];
   var verdict = verdictText(r);
-  var no = docNo();
+  if (!STATE.issue) STATE.issue = isoToday();
+  var no = STATE.docNo || (STATE.docNo = docNo());
   FILE_NO = no;
 
   var factsHTML = "";
@@ -1318,7 +1445,7 @@ function buildReport(){
   +   '<div class="doc-head">'
   +     '<div class="doc-top"><span>' + esc(no) + '</span><span class="conf">CONFIDENTIAL</span></div>'
   +     '<h1>2026 파트너 정기 인사평가서</h1>'
-  +     '<p class="sub">' + esc(todayStr()) + ' 발행 · 평가 주기: 분기 1회 · 열람 등급: 기밀(대외비)</p>'
+  +     '<p class="sub">' + esc(reportDateText()) + ' 발행 · 평가 주기: 분기 1회 · 열람 등급: 기밀(대외비)</p>'
   +     '<dl class="meta-grid">'
   +       '<div><dt>평가 대상</dt><dd>' + esc(STATE.name) + '</dd></div>'
   +       '<div><dt>관계 유형</dt><dd>' + esc(STATE.rel) + ' · ' + esc(rel.hr) + '</dd></div>'
@@ -1404,10 +1531,19 @@ function buildReport(){
   var container = $("reportOut");
   container.innerHTML = out;
   setStep("step-report");
-  $("btnRestart").hidden = false;
+  applyReportMode();
   requestAnimationFrame(function(){
     container.querySelectorAll(".rail i").forEach(function(i){ i.style.width = i.dataset.w + "%"; });
   });
+}
+
+function applyReportMode(){
+  $("btnShare").hidden = SHARED_VIEW;
+  $("shareNote").hidden = !SHARED_VIEW;
+  $("btnAgain").textContent = SHARED_VIEW ? "나도 평가서 새로 만들기" : "다시 평가하기";
+  $("btnRestart").hidden = SHARED_VIEW;
+  $("btnRelock").hidden = false;
+  $("btnCopy").style.gridColumn = SHARED_VIEW ? "1 / -1" : "";
 }
 
 /* =========================================================
@@ -1509,7 +1645,7 @@ function fallbackPNG(){
   draw("PARTNER HR · CONFIDENTIAL", PAD, y, F(800, 17), "#224fc5"); y += 44;
   y += draw("2026 파트너 정기 인사평가서", PAD, y, F(800, 40), "#141f32", CW) + 6;
   var rel = REL_META[STATE.rel] || { period:"교제" };
-  y += draw(todayStr() + " 발행 · " + STATE.name + " · " + STATE.rel + (STATE.period ? " " + STATE.period : ""), PAD, y, F(500, 18), "#4f6077", CW) + 26;
+  y += draw(reportDateText() + " 발행 · " + STATE.name + " · " + STATE.rel + (STATE.period ? " " + STATE.period : ""), PAD, y, F(500, 18), "#4f6077", CW) + 26;
 
   /* score panel */
   ctx.fillStyle = "#f2f6fe"; ctx.fillRect(PAD, y, CW, 148);
@@ -1645,15 +1781,26 @@ $("btnCopy").addEventListener("click", async function(){
 });
 
 $("btnAgain").addEventListener("click", function(){
+  if (SHARED_VIEW){ startOwnSheet(); return; }
   STATE.q = 0;
   STATE.answers = [];
   STATE.memo = "";
+  STATE.docNo = "";
+  STATE.issue = "";
   LAST = null;
   $("reportOut").innerHTML = "";
   showInfo();
 });
 
 $("btnRelock").addEventListener("click", function(){
+  if (SHARED_VIEW){
+    SHARE.pin = ""; paintShareDots();
+    shareErr.classList.remove("show");
+    $("app").hidden = true;
+    shareLock.hidden = false;
+    document.body.style.overflow = "hidden";
+    return;
+  }
   try { sessionStorage.removeItem("pr.auth"); } catch(e){}
   pin = ""; paintDots();
   lockErr.classList.remove("show");
@@ -1667,7 +1814,427 @@ window.addEventListener("beforeprint", function(){
   document.querySelectorAll("#reportSheet details").forEach(function(d){ d.setAttribute("open",""); });
 });
 
-if (authed) enterApp();
+/* =========================================================
+   SHARE LINK · 4자리 비밀번호 암호화 공유
+   ========================================================= */
+var SHARED_VIEW = false;
+var SHARE = { raw: SHARE_RAW, pin:"", busy:false, tries:0, dead:false };
+var SALT_LEN = 16, IV_LEN = 12, TAG_LEN = 16;
+var ITER_WEB = 120000, ITER_JS = 6000;
+var ALG_GCM = 1, ALG_JS = 2;
+var SEP = "\u001f";
+var FORCE_JS = /[?&]alg=js(&|$)/.test(location.search || "");
+var shareLock = $("shareLock"), shareCard = $("shareCard");
+var shareErr = $("shareErr"), sDots = document.querySelectorAll("#sDots i");
+
+function rnd(n){ return crypto.getRandomValues(new Uint8Array(n)); }
+function cat(a, b){ var o = new Uint8Array(a.length + b.length); o.set(a,0); o.set(b,a.length); return o; }
+function enc(s){ return new TextEncoder().encode(s); }
+function dec(b){ return new TextDecoder().decode(b); }
+function b64u(bytes){
+  var s = "";
+  for (var i=0;i<bytes.length;i+=4096){
+    s += String.fromCharCode.apply(null, bytes.subarray(i, Math.min(i+4096, bytes.length)));
+  }
+  return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+}
+function unb64u(str){
+  var s = String(str).replace(/-/g,"+").replace(/_/g,"/");
+  while (s.length % 4) s += "=";
+  var bin = atob(s), out = new Uint8Array(bin.length);
+  for (var i=0;i<bin.length;i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+function hasWebCrypto(){ return !FORCE_JS && !!(window.crypto && window.crypto.subtle && window.crypto.subtle.encrypt && window.crypto.subtle.deriveKey); }
+function shareBaseUrl(){
+  var u = location.href.split("#")[0].split("?")[0];
+  return u.replace(/index\.html$/i, "");
+}
+
+/* ---- SHA-256 / HMAC / PBKDF2 (subtle 없는 환경용 fallback) ---- */
+var SHA256 = (function(){
+  var K = new Uint32Array([
+    0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+  ]);
+  function rotr(x,n){ return (x>>>n) | (x<<(32-n)); }
+  return function(bytes){
+    var l = bytes.length, bitLen = l * 8;
+    var total = ((l + 9 + 63) >> 6) << 6;
+    var m = new Uint8Array(total);
+    m.set(bytes); m[l] = 0x80;
+    m[total-4] = (bitLen >>> 24) & 255; m[total-3] = (bitLen >>> 16) & 255;
+    m[total-2] = (bitLen >>> 8) & 255;  m[total-1] = bitLen & 255;
+    var H = new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+    var W = new Uint32Array(64);
+    for (var i=0;i<total;i+=64){
+      var t, s0, s1;
+      for (t=0;t<16;t++) W[t] = (m[i+t*4]<<24) | (m[i+t*4+1]<<16) | (m[i+t*4+2]<<8) | m[i+t*4+3];
+      for (t=16;t<64;t++){
+        s0 = rotr(W[t-15],7) ^ rotr(W[t-15],18) ^ (W[t-15]>>>3);
+        s1 = rotr(W[t-2],17) ^ rotr(W[t-2],19) ^ (W[t-2]>>>10);
+        W[t] = (W[t-16] + s0 + W[t-7] + s1) | 0;
+      }
+      var a=H[0],b=H[1],c=H[2],d=H[3],e=H[4],f=H[5],g=H[6],h=H[7];
+      for (t=0;t<64;t++){
+        var S1 = rotr(e,6) ^ rotr(e,11) ^ rotr(e,25);
+        var ch = (e & f) ^ (~e & g);
+        var t1 = (h + S1 + ch + K[t] + W[t]) | 0;
+        var S0 = rotr(a,2) ^ rotr(a,13) ^ rotr(a,22);
+        var maj = (a & b) ^ (a & c) ^ (b & c);
+        var t2 = (S0 + maj) | 0;
+        h=g; g=f; f=e; e=(d+t1)|0; d=c; c=b; b=a; a=(t1+t2)|0;
+      }
+      H[0]=(H[0]+a)|0; H[1]=(H[1]+b)|0; H[2]=(H[2]+c)|0; H[3]=(H[3]+d)|0;
+      H[4]=(H[4]+e)|0; H[5]=(H[5]+f)|0; H[6]=(H[6]+g)|0; H[7]=(H[7]+h)|0;
+    }
+    var out = new Uint8Array(32);
+    for (var k=0;k<8;k++){ out[k*4]=H[k]>>>24; out[k*4+1]=H[k]>>>16; out[k*4+2]=H[k]>>>8; out[k*4+3]=H[k]; }
+    return out;
+  };
+})();
+function hmac256(key, msg){
+  var k = key.length > 64 ? SHA256(key) : key;
+  var ipad = new Uint8Array(64), opad = new Uint8Array(64);
+  for (var i=0;i<64;i++){
+    var kb = i < k.length ? k[i] : 0;
+    ipad[i] = kb ^ 0x36; opad[i] = kb ^ 0x5c;
+  }
+  return SHA256(cat(opad, SHA256(cat(ipad, msg))));
+}
+function pbkdf2js(pw, salt, iters, dkLen){
+  var out = new Uint8Array(dkLen), pos = 0, block = 1;
+  while (pos < dkLen){
+    var m = new Uint8Array(salt.length + 4);
+    m.set(salt, 0);
+    m[salt.length]   = (block >>> 24) & 255;
+    m[salt.length+1] = (block >>> 16) & 255;
+    m[salt.length+2] = (block >>> 8) & 255;
+    m[salt.length+3] = block & 255;
+    var u = hmac256(pw, m), t = u.slice();
+    for (var i=1;i<iters;i++){
+      u = hmac256(pw, u);
+      for (var j=0;j<32;j++) t[j] ^= u[j];
+    }
+    out.set(t.subarray(0, Math.min(32, dkLen - pos)), pos);
+    pos += 32; block++;
+  }
+  return out;
+}
+function xorStream(key, iv, data){
+  var out = new Uint8Array(data.length), pos = 0, ctr = 0;
+  while (pos < data.length){
+    var blk = new Uint8Array(iv.length + 4);
+    blk.set(iv, 0);
+    blk[iv.length]   = (ctr >>> 24) & 255;
+    blk[iv.length+1] = (ctr >>> 16) & 255;
+    blk[iv.length+2] = (ctr >>> 8) & 255;
+    blk[iv.length+3] = ctr & 255;
+    var ks = hmac256(key, blk);
+    for (var i=0;i<ks.length && pos<data.length;i++,pos++) out[pos] = data[pos] ^ ks[i];
+    ctr++;
+  }
+  return out;
+}
+function tagFor(key, iv, ct){
+  return hmac256(key, cat(cat(iv, ct), enc("PRHTAG"))).subarray(0, TAG_LEN);
+}
+function sameBytes(a, b){
+  if (a.length !== b.length) return false;
+  var d = 0;
+  for (var i=0;i<a.length;i++) d |= a[i] ^ b[i];
+  return d === 0;
+}
+
+/* ---- AES-GCM (https 우선) ---- */
+async function deriveGcm(code, salt){
+  var base = await crypto.subtle.importKey("raw", enc(code), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name:"PBKDF2", salt:salt, iterations:ITER_WEB, hash:"SHA-256" },
+    base, { name:"AES-GCM", length:256 }, false, ["encrypt","decrypt"]
+  );
+}
+function packEnv(alg, salt, iv, body){
+  var out = new Uint8Array(2 + SALT_LEN + IV_LEN + body.length);
+  out[0] = 1; out[1] = alg;
+  out.set(salt, 2);
+  out.set(iv, 2 + SALT_LEN);
+  out.set(body, 2 + SALT_LEN + IV_LEN);
+  return b64u(out);
+}
+async function encryptShare(code, text){
+  var salt = rnd(SALT_LEN), iv = rnd(IV_LEN), data = enc(text);
+  if (hasWebCrypto()){
+    var key = await deriveGcm(code, salt);
+    var ct = new Uint8Array(await crypto.subtle.encrypt({ name:"AES-GCM", iv:iv, tagLength:128 }, key, data));
+    return packEnv(ALG_GCM, salt, iv, ct);
+  }
+  var k = pbkdf2js(enc(code), salt, ITER_JS, 32);
+  var body = xorStream(k, iv, data);
+  return packEnv(ALG_JS, salt, iv, cat(body, tagFor(k, iv, body)));
+}
+async function decryptShare(code, b64){
+  var env = unb64u(b64);
+  if (env.length < 2 + SALT_LEN + IV_LEN + 1) throw new Error("short");
+  if (env[0] !== 1) throw new Error("version");
+  var alg = env[1];
+  var salt = env.subarray(2, 2 + SALT_LEN);
+  var iv = env.subarray(2 + SALT_LEN, 2 + SALT_LEN + IV_LEN);
+  var body = env.subarray(2 + SALT_LEN + IV_LEN);
+  if (alg === ALG_GCM){
+    if (!hasWebCrypto()) throw new Error("nosubtle");
+    var key = await deriveGcm(code, salt);
+    var pt = await crypto.subtle.decrypt({ name:"AES-GCM", iv:iv, tagLength:128 }, key, body);
+    return dec(new Uint8Array(pt));
+  }
+  if (alg === ALG_JS){
+    if (body.length <= TAG_LEN) throw new Error("short");
+    var k2 = pbkdf2js(enc(code), salt, ITER_JS, 32);
+    var ct = body.subarray(0, body.length - TAG_LEN);
+    if (!sameBytes(body.subarray(body.length - TAG_LEN), tagFor(k2, iv, ct))) throw new Error("tag");
+    return dec(xorStream(k2, iv, ct));
+  }
+  throw new Error("alg");
+}
+
+/* ---- 리포트 상태 직렬화 (구분자 포맷 · URL 길이 최소화) ---- */
+function packState(){
+  function clean(s, n){ return String(s || "").replace(/[\u0000-\u001f]/g, " ").slice(0, n); }
+  return [
+    "PRS1",
+    clean(STATE.name, 18),
+    STATE.rel,
+    clean(STATE.period, 24),
+    clean(STATE.memo, 120),
+    STATE.heat,
+    STATE.feel.toFixed(1),
+    STATE.answers.map(function(v){ return String(v); }).join(""),
+    clean(STATE.docNo, 24),
+    STATE.issue
+  ].join(SEP);
+}
+function unpackState(text){
+  var p = String(text).split(SEP);
+  if (p.length !== 10 || p[0] !== "PRS1") throw new Error("format");
+  if (!REL_META[p[2]]) throw new Error("rel");
+  if (p[5] !== "mild" && p[5] !== "hr" && p[5] !== "hot") throw new Error("heat");
+  var ans = p[7].split("").map(function(c){ return parseInt(c, 10); });
+  if (ans.length !== QUESTIONS.length) throw new Error("answers");
+  for (var i=0;i<ans.length;i++){
+    if (!(ans[i] >= 0 && ans[i] < QUESTIONS[i].opts.length)) throw new Error("answer");
+  }
+  var feel = parseFloat(p[6]);
+  if (!(feel >= 1 && feel <= 5)) throw new Error("feel");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(p[9])) throw new Error("date");
+  return { n:p[1], rel:p[2], p:p[3], m:p[4], h:p[5], f:feel, a:ans, c:p[8], d:p[9] };
+}
+
+/* ---- 복사 ---- */
+async function copyText(t){
+  try {
+    if (navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(t);
+      return true;
+    }
+  } catch(e){}
+  try {
+    var ta = document.createElement("textarea");
+    ta.value = t; ta.setAttribute("readonly", "");
+    ta.style.position = "fixed"; ta.style.top = "-1000px"; ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select(); ta.setSelectionRange(0, t.length);
+    var ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch(e){ return false; }
+}
+
+/* ---- 공유 링크 만들기 모달 ---- */
+var shareModal = $("shareModal"), smPin = $("smPin"), smWarn = $("smWarn");
+var smUrl = $("smUrl"), smResult = $("smResult"), smOk = $("smOk");
+var smBusy = false;
+
+function openShareModal(){
+  smPin.value = "0201";
+  smWarn.classList.remove("show");
+  smResult.hidden = true;
+  smUrl.value = "";
+  smOk.disabled = false; smOk.textContent = "링크 만들기";
+  shareModal.hidden = false;
+  document.body.style.overflow = "hidden";
+  setTimeout(function(){ try { smPin.focus(); smPin.select(); } catch(e){} }, 80);
+}
+function closeShareModal(){
+  shareModal.hidden = true;
+  document.body.style.overflow = "";
+}
+smPin.addEventListener("input", function(){
+  var v = smPin.value.replace(/[^0-9]/g, "").slice(0, 4);
+  if (v !== smPin.value) smPin.value = v;
+  smWarn.classList.remove("show");
+});
+smPin.addEventListener("keydown", function(e){
+  if (e.key === "Enter"){ e.preventDefault(); makeShareLink(); }
+});
+$("smCancel").addEventListener("click", function(){ if (!smBusy) closeShareModal(); });
+$("smBack").addEventListener("click", function(){ if (!smBusy) closeShareModal(); });
+smOk.addEventListener("click", makeShareLink);
+
+async function makeShareLink(){
+  if (smBusy) return;
+  var code = smPin.value;
+  if (!/^\d{4}$/.test(code)){
+    smWarn.textContent = "숫자 4자리를 입력해 주세요.";
+    smWarn.classList.add("show");
+    try { smPin.focus(); } catch(e){}
+    return;
+  }
+  if (!LAST) return;
+  smBusy = true;
+  smOk.disabled = true; smOk.textContent = "링크 만드는 중…";
+  var url = "";
+  try {
+    var payload = await encryptShare(code, packState());
+    url = shareBaseUrl() + "#share=" + payload;
+  } catch(e){
+    smBusy = false;
+    smOk.disabled = false; smOk.textContent = "링크 만들기";
+    toast("링크를 만들지 못했어요 · 잠시 후 다시 시도해 주세요");
+    return;
+  }
+  smBusy = false;
+  smOk.disabled = false; smOk.textContent = "링크 만들기";
+  var ok = await copyText(url);
+  if (ok){
+    closeShareModal();
+    toast("공유 링크 복사 완료 · 비밀번호 " + code);
+  } else {
+    smResult.hidden = false;
+    smUrl.value = url;
+    try { smUrl.focus(); smUrl.select(); smUrl.setSelectionRange(0, url.length); } catch(e){}
+    toast("자동 복사가 막혔어요 · 링크를 길게 눌러 복사해 주세요");
+  }
+}
+
+/* ---- 공유 링크 열람 화면 ---- */
+function paintShareDots(){
+  for (var i=0;i<sDots.length;i++) sDots[i].className = i < SHARE.pin.length ? "on" : "";
+}
+function pressSharePin(k){
+  if (SHARE.dead || SHARE.busy) return;
+  if (k === "del") SHARE.pin = SHARE.pin.slice(0, -1);
+  else if (k === "clear") SHARE.pin = "";
+  else if (SHARE.pin.length < 4) SHARE.pin += k;
+  paintShareDots();
+  if (SHARE.pin.length === 4) setTimeout(submitSharePin, 160);
+}
+function shareFail(msg){
+  if (!msg) msg = "비밀번호가 일치하지 않습니다 · " + SHARE.tries + "회 실패";
+  shareErr.textContent = msg;
+  shareErr.classList.add("show");
+  shareCard.classList.add("shake");
+  shareCard.classList.add("bad");
+  setTimeout(function(){ shareCard.classList.remove("shake"); }, 470);
+  setTimeout(function(){ shareCard.classList.remove("bad"); }, 540);
+  SHARE.pin = ""; paintShareDots();
+}
+async function submitSharePin(){
+  if (SHARE.busy || SHARE.dead) return;
+  if (SHARE.pin.length !== 4) return;
+  SHARE.busy = true;
+  shareFootBusy(true);
+  var text = null, err = null;
+  try { text = await decryptShare(SHARE.pin, SHARE.raw); }
+  catch(e){ err = e; text = null; }
+  shareFootBusy(false);
+  SHARE.busy = false;
+
+  if (err && err.message === "nosubtle"){
+    SHARE.dead = true;
+    shareFail("이 브라우저에서는 공유 링크를 열 수 없습니다 · 최신 브라우저로 열어 주세요");
+    return;
+  }
+  if (!text){
+    SHARE.tries++;
+    shareFail();
+    return;
+  }
+  var obj = null;
+  try { obj = unpackState(text); } catch(e){ obj = null; }
+  if (!obj){
+    shareFail("평가서를 해석할 수 없습니다 · 공유한 사람에게 다시 요청해 주세요");
+    return;
+  }
+  shareErr.classList.remove("show");
+  openSharedReport(obj);
+}
+function shareFootBusy(on){
+  var f = $("shareFoot");
+  if (on){ f.dataset.prev = f.textContent; f.textContent = "비밀번호 확인 중…"; }
+  else if (f.dataset.prev){ f.textContent = f.dataset.prev; }
+}
+function openSharedReport(o){
+  SHARED_VIEW = true;
+  SHARE.pin = ""; paintShareDots();
+  STATE.name = o.n;
+  STATE.rel = o.rel;
+  STATE.period = o.p;
+  STATE.memo = o.m;
+  STATE.heat = o.h;
+  STATE.feel = o.f;
+  STATE.answers = o.a.slice();
+  STATE.docNo = o.c;
+  STATE.issue = o.d;
+  STATE.q = 0;
+  shareLock.hidden = true;
+  document.body.style.overflow = "";
+  $("app").hidden = false;
+  buildReport();
+  toast("확인 완료 · 공유된 평가서를 열었습니다");
+}
+function startOwnSheet(){
+  try { sessionStorage.setItem("pr.auth", "1"); } catch(e){}
+  try { history.replaceState(null, "", shareBaseUrl()); } catch(e){}
+  location.reload();
+}
+
+function initShareView(){
+  document.body.style.overflow = "hidden";
+  lock.hidden = true;
+  shareLock.hidden = false;
+  paintShareDots();
+  if (SHARE_BROKEN){
+    SHARE.dead = true;
+    shareErr.textContent = "링크가 올바르지 않습니다 · 주소가 잘리지 않았는지 확인해 주세요";
+    shareErr.classList.add("show");
+  }
+  $("shareKeypad").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-k]");
+    if (b) pressSharePin(b.dataset.k);
+  });
+  document.addEventListener("keydown", function(e){
+    if (shareLock.hidden) return;
+    if (/^[0-9]$/.test(e.key)) pressSharePin(e.key);
+    else if (e.key === "Backspace"){ e.preventDefault(); pressSharePin("del"); }
+  });
+}
+
+$("btnShare").addEventListener("click", openShareModal);
+window.addEventListener("hashchange", function(){
+  if (!SHARED_VIEW) location.reload();
+});
+
+/* 개발용 검증 훅 (URL에 ?alg=js 붙였을 때만) */
+if (FORCE_JS) window.__prShare = { sha256:SHA256, hmac256:hmac256, pbkdf2:pbkdf2js, encrypt:encryptShare, decrypt:decryptShare, pack:packState, unpack:unpackState };
+
+if (SHARE_RAW || SHARE_BROKEN) initShareView();
+else if (authed) enterApp();
 
 })();
 </script>
