@@ -746,7 +746,7 @@ function play(){
 function radarSvg(axes){
   var S=320,cx=160,cy=152,R=100,SCALE=40;
   var pt=function(i,r){var a=-Math.PI/2+Math.PI*2*i/6;return [cx+Math.cos(a)*r,cy+Math.sin(a)*r];};
-  var out='<svg class="radar" viewBox="0 0 320 300" role="img" aria-label="다크심리학 사용 성분 육각 그래프">';
+  var out='<svg class="radar" viewBox="-46 -10 412 334" role="img" aria-label="다크심리학 사용 성분 육각 그래프">';
   [1,.72,.44].forEach(function(k,j){
     out+='<polygon class="grid" points="';
     for(var i=0;i<6;i++){var p=pt(i,R*k);out+=(i?' ':'')+p[0].toFixed(1)+','+p[1].toFixed(1);}
