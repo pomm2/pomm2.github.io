@@ -1216,7 +1216,7 @@ async function storyBlob(){const an=analysis(state.history,state.desires),e=an.c
  /* 마스트헤드 + TYPE 히어로 */
  spText(x,'READ AT 01:30',84,96,18,3.2,'sans-serif',MUTED);
  spText(x,'LOVE TAROT',996,96,18,3.2,'sans-serif',MUTED,'right');
- if(an.reversed)spText(x,'REVERSED · 보낸 말과 바란 말이 어긋난 카드',540,128,17,1.8,'sans-serif',BRICK,'center');
+ if(an.reversed)spText(x,'REVERSED · 역방향',540,96,17,1.8,'sans-serif',BRICK,'center');
  x.textAlign='center';x.fillStyle=INK;x.font='112px LoveSerif,serif';x.fillText(an.type,540,236);
  const subSize=fitLines(x,an.tag,880,27,19,'LoveSerif,serif').size;
  x.fillStyle=BODY;x.font=subSize+'px LoveSerif,serif';x.fillText(an.tag,540,288);
@@ -1224,7 +1224,7 @@ async function storyBlob(){const an=analysis(state.history,state.desires),e=an.c
  const CW=480,CH=Math.round(CW*1600/900),CX=540-CW/2,CY=344;
  const u=URL.createObjectURL(await cardBlob(null,null,'story'));
  try{const img=new Image();await new Promise(function(res,rej){img.onload=res;img.onerror=rej;img.src=u});
-  x.save();x.shadowColor='rgba(40,28,10,.20)';x.shadowBlur=26;x.shadowOffsetY=12;
+  x.save();x.shadowColor='rgba(40,28,10,.16)';x.shadowBlur=20;x.shadowOffsetY=9;
   x.drawImage(img,CX,CY,CW,CH);x.restore()}finally{URL.revokeObjectURL(u)}
  /* 3대 지표 미니 스탯 라인 */
  const MB_T=1220,MB_B=1314;
