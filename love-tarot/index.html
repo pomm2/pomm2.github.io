@@ -371,7 +371,7 @@ const STRAT={
   line:'애매한 걸 못 참아서 결론부터 딱 정해버려.',
   tensionTitle:'결론은 빨리 나는데 상대는 숨이 막혀',
   tension:'결론은 빨리 나는데 상대한테는 결론보다 압박이 먼저 와. 정리는 됐는데 앞으로 뭘 하기로 했는지는 말로 안 남았지.',
-  predTitle1:'같은 일이 또 생기면',pred1:'또 그 자리에서 정리하려고 해. 대화는 짧아지고 결론만 남아.',
+  predTitle1:'또 정리하려고 들면',pred1:'그 자리에서 또 결론을 내려고 해. 대화는 짧아지고 결론만 남아.',
   predTitle2:'상대가 설명하면',pred2:'그 설명을 “이해 못 했다”로 받아들여. 그러면 다음엔 설명이 아니라 확인만 하게 돼.',
   actTitle:'정리를 하루 미루기',act:'정리하고 싶을 때 “지금은 여기까지만 하고 내일 마저 얘기하자”로 한 번 끊어봐. 끊는 것도 정리야.'},
  wave:{card:7,title:'물러났다가 다시 나오는 쪽',
@@ -867,7 +867,7 @@ function curveSvg(an){const c=an.curve;if(!c.length)return '';
  g+'<path d="'+line('a')+'" fill="none" stroke="#d8f983" stroke-width="2"/>'+
  '<path d="'+line('v')+'" fill="none" stroke="#e0b07a" stroke-width="2" stroke-dasharray="0"/>'+
  dots('a','#d8f983')+dots('v','#e0b07a')+ring+labels+
- '<text x="40" y="'+(y1+22)+'" fill="#5f5c54" font-size="7.5" font-family="Helvetica,Arial,sans-serif">라운드</text></svg>'}
+ '</svg>'}
 
 function altBubbles(an){return '<div class="ed-alt"><p class="ed-alt-label">ROUND '+(an.alt.round+1)+'에서 네가 보낸 말</p><div class="ed-bubble sent small">'+esc(an.alt.sent)+'</div>'+
  '<p class="ed-alt-label">같은 상황에서 다시 보낸다면</p>'+
@@ -1086,6 +1086,10 @@ function cardBlob(h,d){h=h||state.history;d=d||state.desires;const key=JSON.stri
  if(pngCache.has(key))return pngCache.get(key);
  const promise=makeCard(h,d);pngCache.set(key,promise);
  return promise.catch(function(e){pngCache.delete(key);throw e})}
+function wrapWords(ctx,text,x,y,max,line){const words=String(text).split(' ');let row='';
+ for(const w of words){const test=row?row+' '+w:w;
+  if(ctx.measureText(test).width>max&&row){ctx.fillText(row,x,y);y+=line;row=w}else row=test}
+ if(row)ctx.fillText(row,x,y);return y}
 function wrap(ctx,text,x,y,max,line){let row='';for(const ch of text){if(ctx.measureText(row+ch).width>max&&!/[.,!?。…]/.test(ch)){ctx.fillText(row,x,y);row=ch;y+=line}else row+=ch}ctx.fillText(row,x,y);return y}
 async function makeCard(h,d){const an=analysis(h,d),e=an.card;await document.fonts.ready;
  const canvas=document.createElement('canvas');canvas.width=900;canvas.height=1600;const x=canvas.getContext('2d');
@@ -1200,10 +1204,10 @@ async function storyBlob(){const an=analysis(state.history,state.desires),e=an.c
  x.strokeStyle='#8d8168';x.lineWidth=1;x.beginPath();x.moveTo(60,896);x.lineTo(1020,896);x.stroke();
  x.fillStyle='#5f7a3c';x.font='16px sans-serif';x.fillText('장점',60,950);
  x.fillStyle='#24211c';x.font='30px LoveSerif,serif';
- const py=wrap(x,an.pro,150,952,860,41);
+ const py=wrapWords(x,an.pro,150,952,860,41);
  x.fillStyle='#8c3f36';x.font='16px sans-serif';x.fillText('단점',60,py+58);
  x.fillStyle='#24211c';x.font='30px LoveSerif,serif';
- const cy2=wrap(x,an.con,150,py+60,860,41);
+ const cy2=wrapWords(x,an.con,150,py+60,860,41);
  /* charts */
  x.fillStyle='#8d8168';x.font='15px sans-serif';
  x.fillText('FIVE SIDES / 성향 다섯 축',60,1162);
