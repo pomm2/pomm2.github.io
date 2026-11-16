@@ -204,8 +204,8 @@ body.results{background:#0c0e0f;color:#e9e5d9;overflow-x:hidden}
 </style></head><body><div id="app"></div><script>/* ===== DATA ===== */
 const KEY='love-tarot-v3.9';
 const ROUNDS=[
-{who:'지우',status:'8시간 만에 온 카톡',time:'금요일 오전 1:30',title:'읽은 건 봤는데',
- context:'사귄 지 두 달. 어제 다섯 시에 보낸 “오늘 저녁 뭐 해?”는 바로 읽혔어. 그런데 답장은 여덟 시간 뒤. 지우 엄마가 오늘 재검을 받는 날이었던 건 방금 알았어.',
+{who:'연인',status:'8시간 만에 온 카톡',time:'금요일 오전 1:30',title:'읽은 건 봤는데',
+ context:'사귄 지 두 달. 어제 다섯 시에 보낸 “오늘 저녁 뭐 해?”는 바로 읽혔어. 그런데 답장은 여덟 시간 뒤. 연인의 엄마가 오늘 재검을 받는 날이었던 건 방금 알았어.',
  messages:['미안 이제 봄ㅋㅋ','엄마 재검 결과 기다리느라 하루 종일 폰이 손에 안 잡혔어..','자기 자는 거 아니지?'],
  options:[
   {k:'care',c:'안 자고 있었어. 엄마는 괜찮대? 진짜 많이 걱정했겠다',intent:'엄마부터 걱정돼서',signal:'엄마가 먼저구나',a:50,v:37,f:{concede:2,care:2,confirm:1},
@@ -216,17 +216,17 @@ const ROUNDS=[
    note:'전화는 안 됐어. 대신 미안하다는 말이 먼저 왔지.'},
   {k:'ask',c:'기다리는 동안 한 줄만 보내줄 수 있었잖아. 나도 걱정됐단 말이야',intent:'다음엔 한 줄이라도 남겨줬으면 해서',signal:'나를 탓하는 것 같아',a:42,v:30,f:{direct:3,care:1},
    replies:['아.. 그건 미안해. 하루 종일 엄마 생각에 정신이 없어서','다음엔 한 줄이라도 남길게. 근데 지금 그 얘기까지 하면 나도 좀 힘들어ㅠ'],
-   note:'할 말은 했어. 근데 지우는 “지금 그 얘기까지 하면 나도 힘들어”라고 했지.'},
+   note:'할 말은 했어. 근데 연인은 “지금 그 얘기까지 하면 나도 힘들어”라고 했지.'},
   {k:'exit',c:'그렇구나. 나는 먼저 잘게. 내일 연락해',intent:'오늘은 그냥 자고 싶어서',signal:'화났거나 마음이 식었구나',a:16,v:98,f:{distance:3},
    replies:['응 자. 미안 오늘은 진짜 힘들었어','내일 연락할게'],
    note:'너가 자고 나서야 미안하다는 카톡이 왔어. 그땐 이미 늦었지.'}]},
-{who:'지우',status:'데이트 2시간 전',time:'토요일 낮 12:00',title:'비워둔 토요일',
- context:'오늘 두 시 약속. 일주일 전에 잡았고 식당은 너가 예약했어. 그런데 지우 친구 다현이가 오늘만 한국에 있대.',
+{who:'연인',status:'데이트 2시간 전',time:'토요일 낮 12:00',title:'비워둔 토요일',
+ context:'오늘 두 시 약속. 일주일 전에 잡았고 식당은 너가 예약했어. 그런데 연인의 친구 다현이가 오늘만 한국에 있대.',
  messages:['자기 미안.. 다현이가 오늘만 한국에 있대ㅠㅠ','우리 내일 보면 안 될까? 내일은 하루 종일 비워둘게'],
  options:[
   {k:'hold',c:'오늘은 우리 약속이 먼저였으면 해. 다현이랑은 내일 볼 수 있게 해줄래?',intent:'오늘 약속은 지키고 싶어서',signal:'친구랑 나 중에 하나 고르라는 거구나',a:39,v:19,f:{direct:3,care:1},
    replies:['다현이 진짜 오늘만 있는데.. 내가 양해를 구해볼게','미안, 대신 다음 주는 내가 다 준비할게'],
-   note:'지우가 다현이한테 양해를 구해본대. 아직 결정은 아니고.'},
+   note:'연인이 다현이한테 양해를 구해본대. 아직 결정은 아니고.'},
   {k:'trade',c:'그래, 오랜만인데 봐야지ㅎㅎ 대신 내일은 내가 가고 싶은 데 가자',intent:'양보하는 대신 내일 하나 받아내려고',signal:'이해는 해주는데 다음에 갚아야 하는 거구나',a:30,v:41,f:{concede:2,direct:1,indirect:1},
    replies:['응!! 내일 내가 사도 되지ㅎㅎ','다현이한테 잘 얘기할게, 고마워ㅠㅠ'],
    note:'고맙다고는 했는데, 너가 비워둔 오늘은 그냥 넘어갔어.'},
@@ -236,8 +236,8 @@ const ROUNDS=[
   {k:'rule',c:'알겠어. 나도 다른 일 잡을게. 다음에 갑자기 바뀌면 하루 전엔 말해줘',intent:'오늘은 넘기고 다음엔 미리 말해달라고',signal:'괜찮다면서 선은 그어두네',a:25,v:59,f:{concede:2,direct:2,distance:1},
    replies:['응 미안. 다음엔 미리 말할게','자기 다른 일 잡으면 뭐 하는지도 알려줘ㅎㅎ'],
    note:'오늘은 각자 보내기로 했고, 다음엔 하루 전에 말하기로 했어.'}]},
-{who:'지우',status:'새 스토리 / 1분 전',time:'수요일 오전 1:12',title:'스토리에서 먼저 본 밤',
- context:'지우가 올린 스토리. 대학 동기 남자랑 나란히 앉아 있어. 저녁에 연락할 땐 모임 얘기 하나도 없었어. 그런데 카톡이 왔어.',
+{who:'연인',status:'새 스토리 / 1분 전',time:'수요일 오전 1:12',title:'스토리에서 먼저 본 밤',
+ context:'연인이 올린 스토리. 이성 친구랑 나란히 앉아 있어. 저녁에 연락할 땐 모임 얘기 하나도 없었어. 그런데 카톡이 왔어.',
  messages:['자기 아직 안 자? 나 친구들이랑 조금 마시는 중ㅎㅎ'],
  options:[
   {k:'probe',c:'스토리 봤어. 옆에 앉은 사람 누구야?',intent:'누군지 알고 싶어서',signal:'스토리까지 보고 있구나',a:67,v:34,f:{confirm:2,direct:1},
@@ -245,15 +245,15 @@ const ROUNDS=[
    note:'누구인지는 들었어. 왜 미리 말 안 했는지는 안 물어봤지.'},
   {k:'echo',c:'아 재밌겠다ㅎㅎ 나도 친구 만나서 늦게 들어갈게',intent:'같이 해보면 알겠지 싶어서',signal:'쿨한 척하는 견제구나',a:75,v:70,f:{retaliate:3,indirect:2},
    replies:['어디서 마셔? 누구랑?ㅎㅎ','지금 내 스토리 보고 그러는 거지ㅋㅋ'],
-   note:'너도 나간다고 한 거, 지우가 바로 알아챘어.'},
+   note:'너도 나간다고 한 거, 연인이 바로 알아챘어.'},
   {k:'cool',c:'응 재밌게 놀다 와ㅎㅎ 나는 먼저 잘게',intent:'혼자 있고 싶어서 닫으려고',signal:'서운한데 말은 안 하겠다는 거구나',a:22,v:98,f:{distance:3,indirect:1},
    replies:['응ㅎㅎ 자기 자','집 가면 톡할게'],
-   note:'“잘 자”로 끝났어. 지우는 집 가면 연락한댔고.'},
+   note:'“잘 자”로 끝났어. 연인은 집 가면 연락한댔고.'},
   {k:'ask2',c:'안 자. 몇 시쯤 끝나? 누구랑 있는지는 이따가 얘기해줘',intent:'누구랑 있는지, 몇 시에 끝나는지만 알고 싶어서',signal:'확인하려는 마음이 반쯤은 통제야',a:39,v:23,f:{direct:3,confirm:1},
    replies:['동아리 선배들이야! 두 명 더 있어','한 시쯤 끝날 것 같아. 끝나면 톡할게'],
    note:'누구랑 있는지, 몇 시에 끝나는지는 들었어. 다음부터 미리 말할지는 안 물어봤고.'}]},
-{who:'지우',status:'모임 끝나고 온 카톡',time:'금요일 오후 11:09',title:'웃어준 걸 허락으로',
- context:'이틀 뒤 금요일 밤. 친구 다섯 명이 모인 자리에서 지우가 너 얘기를 꺼냈어. “얘는 연락 한 번 안 오면 세 시간 동안 카톡 폭탄이야ㅋㅋ” 다들 웃었고 너도 웃었어. 집에 오니까 카톡이 왔어.',
+{who:'연인',status:'모임 끝나고 온 카톡',time:'금요일 오후 11:09',title:'웃어준 걸 허락으로',
+ context:'이틀 뒤 금요일 밤. 친구 다섯 명이 모인 자리에서 연인이 너 얘기를 꺼냈어. “얘는 연락 한 번 안 오면 세 시간 동안 카톡 폭탄이야ㅋㅋ” 다들 웃었고 너도 웃었어. 집에 오니까 카톡이 왔어.',
  messages:['아까 표정이 좀 굳어 보여서','농담인 거 알지? 너무 진지하게 받으면 나 더 당황해ㅋㅋ'],
  options:[
   {k:'clear',c:'그 얘기 친구들 앞에서 하는 건 좀 불편했어. 웃은 건 그냥 분위기 때문이고',intent:'불편했다는 말은 해두려고',signal:'그때 말 안 하고 이제 와서 그러네',a:30,v:16,f:{direct:3,care:1},
@@ -268,8 +268,8 @@ const ROUNDS=[
   {k:'swallow',c:'ㅋㅋㅋ 미안 내가 좀 예민하게 받았나 봐. 잊어줘',intent:'불편한 말은 접고 넘기려고',signal:'괜찮다니까 넘어가도 되겠다',a:67,v:84,f:{concede:3,indirect:2},
    replies:['에이 예민한 거 아니야ㅋㅋ 별거 아냐','근데 그렇게 말하면 나도 신경 쓰여'],
    note:'별일 아니라고 정리했어. 너가 불편했다는 말은 없던 일이 됐지.'}]},
-{who:'지우',status:'하루 조용했던 다음 날',time:'토요일 오후 6:40',title:'먼저 문을 두드린 쪽',
- context:'어제 그 일 이후로 하루 종일 연락이 없었어. 저녁이 되자 지우가 먼저 길게 보냈어.',
+{who:'연인',status:'하루 조용했던 다음 날',time:'토요일 오후 6:40',title:'먼저 문을 두드린 쪽',
+ context:'어제 그 일 이후로 하루 종일 연락이 없었어. 저녁이 되자 연인이 먼저 길게 보냈어.',
  messages:['자기, 어제 내가 말 심하게 했지. 미안해','친구들 앞에서 그 얘기 한 거, 다시 생각해보니까 내가 웃기려고 한 거였고 네 기분은 생각 못 했어','오늘 저녁에 잠깐 볼까? 너가 가고 싶은 데로 가자'],
  options:[
   {k:'accept',c:'와.. 그렇게 말해주니까 고맙다. 일곱 시에 그 집 앞에서 볼까?',intent:'빨리 화해하고 싶어서',signal:'바로 풀렸으니까 이제 괜찮은 거구나',a:8,v:12,f:{repair:3,care:2},
@@ -277,7 +277,7 @@ const ROUNDS=[
    note:'바로 시간 잡았어. 화해는 그 자리에서 시작됐지.'},
   {k:'sour',c:'그렇게 말하니까 내가 뭐라 하겠어ㅎㅎ 알겠어, 나갈 준비할게',intent:'받아들이는 척 비꼬려고',signal:'아직 화가 안 풀렸구나',a:75,v:73,f:{indirect:3,retaliate:1,distance:1},
    replies:['뭐라 하긴.. 그냥 미안하다고','자기 지금 화난 거지. 오늘 보는 건 의미 없겠다'],
-   note:'지우가 한 발 물러섰어. 화해는 열린 채로 멈췄고.'},
+   note:'연인이 한 발 물러섰어. 화해는 열린 채로 멈췄고.'},
   {k:'defer',c:'고마워. 근데 나 아직 좀 남았어. 오늘은 시간 갖고 내일 짧게 얘기하자',intent:'받긴 하는데 하루는 두고 싶어서',signal:'사과는 받았는데 아직 안 풀렸다는 거네',a:16,v:48,f:{repair:2,direct:2,distance:1},
    replies:['응 그렇게 하자. 나도 좀 정리하고 싶었어','내일은 이 얘기 말고 다른 거 하자ㅎㅎ'],
    note:'하루 미루기로 했어. 내일 다시 얘기하기로 한 약속은 남았지.'},
@@ -697,10 +697,10 @@ const PATKEYS=['apologize','check','cool','short','burst','direct'];
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 /* 라운드 사이 연결: 앞 장면의 선택이 다음 장면의 감정선으로 이어진다 */
 const LINK={
- 0:{care:'어젯밤엔 엄마 얘기로 끝났어. ',press:'어젯밤 통화는 안 됐어. ',ask:'어젯밤엔 하고 싶은 말을 했고, 지우는 지금은 힘들다더라. ',exit:'어젯밤 대화는 “잘 자”에서 끊겼어. '},
- 1:{trade:'토요일은 각자 보냈고, 다음 데이트는 너가 고르기로 했어. ',hold:'지우가 다현이한테 양해를 구해서 토요일 데이트는 지켜졌어. ',rule:'토요일은 각자 보냈고, 다음에 바뀌면 하루 전엔 말하기로 했어. ',wait:'토요일 저녁에 잠깐 만났고, 시간은 너가 맞췄어. '},
- 2:{probe:'그 밤엔 누구인지까지만 듣고 끝났어. 그 뒤로도 찜찜함은 남아 있었지. ',echo:'그 밤엔 너도 맞불을 놨고, 지우는 그걸 알아챘어. 웃으면서 끝났지만 둘 다 찝찝했지. ',ask2:'그 밤엔 몇 시에 끝나는지까지만 듣고 말았어. 안심은 오래 안 갔지. ',cool:'그 밤은 “잘 자”로 끊겼어. 그 뒤로 연락은 짧고 서로 조심스러웠지. '},
- 3:{soft:'어제 대화는 “그 얘기는 빼자”에서 멈췄어. ',clear:'어제는 불편하다고 말했고, 지우는 미안하다면서도 자기도 억울하다고 했어. ',hurt:'어제는 농담 얘기가 어느새 관계 얘기로 커졌어. ',swallow:'어제는 너가 예민했던 걸로 정리됐어. '}};
+ 0:{care:'어젯밤엔 엄마 얘기로 끝났어. ',press:'어젯밤 통화는 안 됐어. ',ask:'어젯밤엔 하고 싶은 말을 했고, 연인은 지금은 힘들다더라. ',exit:'어젯밤 대화는 “잘 자”에서 끊겼어. '},
+ 1:{trade:'토요일은 각자 보냈고, 다음 데이트는 너가 고르기로 했어. ',hold:'연인이 다현이한테 양해를 구해서 토요일 데이트는 지켜졌어. ',rule:'토요일은 각자 보냈고, 다음에 바뀌면 하루 전엔 말하기로 했어. ',wait:'토요일 저녁에 잠깐 만났고, 시간은 너가 맞췄어. '},
+ 2:{probe:'그 밤엔 누구인지까지만 듣고 끝났어. 그 뒤로도 찜찜함은 남아 있었지. ',echo:'그 밤엔 너도 맞불을 놨고, 연인은 그걸 알아챘어. 웃으면서 끝났지만 둘 다 찝찝했지. ',ask2:'그 밤엔 몇 시에 끝나는지까지만 듣고 말았어. 안심은 오래 안 갔지. ',cool:'그 밤은 “잘 자”로 끊겼어. 그 뒤로 연락은 짧고 서로 조심스러웠지. '},
+ 3:{soft:'어제 대화는 “그 얘기는 빼자”에서 멈췄어. ',clear:'어제는 불편하다고 말했고, 연인은 미안하다면서도 자기도 억울하다고 했어. ',hurt:'어제는 농담 얘기가 어느새 관계 얘기로 커졌어. ',swallow:'어제는 너가 예민했던 걸로 정리됐어. '}};
 /* 직접 쓴 답장은 말투에 맞춰 이어준다 */
 const LINK_FREE={
  0:{apologize:'어젯밤엔 너가 먼저 괜찮다고 했어. ',check:'어젯밤엔 확인하는 말로 끝났어. ',cool:'어젯밤은 웃으면서 넘어갔어. ',short:'어젯밤 대화는 짧게 끊겼어. ',burst:'어젯밤엔 서운한 말이 길게 나왔어. ',direct:'어젯밤엔 할 말은 하고 끝났어. '},
@@ -1096,17 +1096,17 @@ function profileFor(h){if(!h.length)return {status:'8시간 만에 온 카톡',t
   accept:{status:'옷 고르는 중',tone:'warm',glyph:'ㅈ'},defer:{status:'내일 약속 잡는 중',tone:'quiet',glyph:'ㅈ'},warn:{status:'답장 고르는 중',tone:'quiet',glyph:'ㅈ'},sour:{status:'읽고 한참 있음',tone:'tired',glyph:'☾'}};
  return map[k]||{status:'메시지를 읽음',tone:'quiet',glyph:'ㅈ'}}
 function chatHeader(round){const p=profileFor(state.history);
- return '<header class="top"><div class="avatar '+p.tone+'">'+p.glyph+'</div><div><strong>지우</strong><small>'+esc(p.status)+'</small></div><span class="round">'+round+'</span><button class="dots" id="friend-menu" aria-label="친구 시선 힌트">⋮</button></header>'}
+ return '<header class="top"><div class="avatar '+p.tone+'">'+p.glyph+'</div><div><strong>연인</strong><small>'+esc(p.status)+'</small></div><span class="round">'+round+'</span><button class="dots" id="friend-menu" aria-label="친구 시선 힌트">⋮</button></header>'}
 function friendView(h){if(!h.length)return '아직 네 답장은 없네. 받은 말만 보고 네 마음까지 알 순 없지.';
  const e=entryAt(h,h.length-1);if(!e)return '아직 네 답장은 없네.';
  if((e.f.distance||0)>=2)return '그만 얘기하자는 말은 보여. 다시 얘기할 문도 남겨둔 건지는 따로 봐야겠네.';
  if((e.f.direct||0)>=2)return '무엇이 불편한지는 말했네. 이제 상대가 어떻게 답하는지도 같이 봐야지.';
  if((e.f.concede||0)>=2)return '양보한 건 보이는데, 포기한 게 뭔지는 아직 안 보이네.';
  return '마음은 보이는데, 그게 요청인지 확인인지는 아직 모르겠네.'}
-function bindFriend(){const b=document.getElementById('friend-menu');if(b)b.onclick=function(){modal('지우 친구가 이 캡처만 봤다면?',friendView(state.history)+'<br><br><small>실제 속마음이 아니라 선택 기록에 붙인 가상 친구의 한 줄이야.</small>')}}
+function bindFriend(){const b=document.getElementById('friend-menu');if(b)b.onclick=function(){modal('연인의 친구가 이 캡처만 봤다면?',friendView(state.history)+'<br><br><small>실제 속마음이 아니라 선택 기록에 붙인 가상 친구의 한 줄이야.</small>')}}
 function intro(){state.phase='intro';
  root('<div class="cover"><span class="eyebrow">LOVE TAROT / VOL. 3.9</span><div class="clock">01:30</div><h1>읽씹당하고<br>점 보는 밤</h1><p class="sub">연애할 때 나는<br>호구일까, 쓰레기일까?</p>'+
- '<div class="notification"><small>지우　　지금</small><p>미안 이제 봄ㅋㅋ<br>엄마 재검 결과 기다리느라 하루 종일 폰이 손에 안 잡혔어..</p></div>'+
+ '<div class="notification"><small>연인　　지금</small><p>미안 이제 봄ㅋㅋ<br>엄마 재검 결과 기다리느라 하루 종일 폰이 손에 안 잡혔어..</p></div>'+
  '<p class="rule-one">착한 척, 이해심 많은 척 다 넣어서<br>진짜 너가 실제로 보낼 카톡을 골라.<br>진짜 속마음은 뒤에서 따로 털 거니까.</p>'+
  '<div class="spacer"></div><div class="cover-bottom"><button class="next" id="start">답장하고 내 마음 들키기　↗</button><p>다섯 번의 카톡 / 속마음 네 번 / 약 6분</p><p class="note">재미로 보는 연애 타로야.</p></div></div>');
  document.getElementById('start').onclick=function(){state=fresh();play()}}
@@ -1133,7 +1133,7 @@ function freeSubmit(){if(state.phase!=='play')return;
  const c=classifyText(v);
  state.history.push({choice:null,text:v,pat:c.pat,pat2:c.second});state.freeOpen=false;reaction()}
 function play(){state.phase='play';const s=scene(state.history),i=state.history.length;
- root(chatHeader('ROUND '+(i+1)+' / 5')+'<section class="conversation"><div class="time">'+esc(s.time)+'</div>'+(i===2?'<div class="story-chip"><span></span>지우의 스토리 / 게시 1분 전</div>':'')+
+ root(chatHeader('ROUND '+(i+1)+' / 5')+'<section class="conversation"><div class="time">'+esc(s.time)+'</div>'+(i===2?'<div class="story-chip"><span></span>연인의 스토리 / 게시 1분 전</div>':'')+
  '<p class="context">'+esc(s.context)+'</p>'+s.messages.map(function(m){return '<div class="msg-row"><div class="bubble">'+esc(m)+'</div></div>'}).join('')+'</section>'+
  (state.freeOpen?freeDock():choiceDock(s)));
  bindPlay();fit()}
