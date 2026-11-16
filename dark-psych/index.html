@@ -45,7 +45,7 @@ body::after{
 .mast .mono{font-size:9.5px;letter-spacing:.19em}
 
 /* ---------- intro ---------- */
-.intro{justify-content:space-between}
+.intro{justify-content:flex-start}
 .intro-body{padding-top:34px}
 .stamp{
   display:inline-block;border:1px solid #7d352c;color:#c95344;
@@ -67,7 +67,7 @@ h1 em{font-style:normal;color:var(--bone);border-bottom:1px solid var(--red);pad
 .docline span:first-child{text-align:left}
 .docline span:last-child{text-align:right;border-right:0}
 .intro-note{margin:18px 0 0;font-size:12.5px;line-height:1.7;color:var(--dim)}
-.intro-foot{padding-top:20px}
+.intro-foot{padding-top:22px;margin-top:auto}
 
 /* ---------- buttons ---------- */
 .btn{
@@ -120,11 +120,11 @@ h1 em{font-style:normal;color:var(--bone);border-bottom:1px solid var(--red);pad
 .opts{display:flex;flex-direction:column}
 .opt{
   display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;
-  background:transparent;border:0;border-bottom:1px solid var(--line2);
+  background:transparent;border:0;border-bottom:1px solid var(--line);
   padding:13px 2px;color:var(--body);font-family:inherit;font-size:13.5px;line-height:1.58;
   cursor:pointer;transition:background .13s ease,color .13s ease;
 }
-.opt .no{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--faint);padding-top:4px;flex:0 0 auto}
+.opt .no{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#7b756a;padding-top:4px;flex:0 0 auto}
 .opt .tx{flex:1}
 .opt:active{background:#171719;color:var(--ink)}
 .opt:focus-visible{outline:1px solid var(--red);outline-offset:-1px}
@@ -659,6 +659,11 @@ const APP=document.getElementById('app');
 const state={phase:'intro',i:0,ans:new Array(SITUATIONS.length).fill(null),picked:null};
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function ra(word){
+  var t=String(word),c=t.charCodeAt(t.length-1);
+  if(c<0xAC00||c>0xD7A3)return '라고';
+  return ((c-0xAC00)%28)?'이라고':'라고';
+}
 function save(){try{localStorage.setItem(KEY,JSON.stringify({phase:state.phase,i:state.i,ans:state.ans}))}catch(e){}}
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY));
   if(v&&Array.isArray(v.ans)&&v.ans.length===SITUATIONS.length&&v.phase!=='result'&&v.ans.some(function(a){return a!==null})){
@@ -786,7 +791,7 @@ function result(){
   var evHTML=ev.map(function(x){
     return '<div class="ev">'
       +'<p class="ev-q">“'+esc(x.opt.c)+'”</p>'
-      +'<p class="ev-k">다크심리학에선 <b>'+esc(x.opt.sk)+'</b>라고 불러.</p>'
+      +'<p class="ev-k">다크심리학에선 <b>'+esc(x.opt.sk)+'</b>'+ra(x.opt.sk)+' 불러.</p>'
       +'<p class="ev-t">'+esc(x.opt.tr)+'</p></div>';
   }).join('');
   if(!shown){
@@ -987,12 +992,12 @@ async function storyBlob(){
   trl.lines.forEach(function(ln,k){x.fillText(ln,84,1606+k*36)});
 
   /* 푸터 */
-  x.strokeStyle=LINE;x.beginPath();x.moveTo(84,1780);x.lineTo(W-84,1780);x.stroke();
-  spText(x,'나, 은근히 다크심리학 쓰고 있나?',84,1826,22,0.6,BODY,'left','DPSerif');
+  x.strokeStyle=LINE;x.beginPath();x.moveTo(84,1766);x.lineTo(W-84,1766);x.stroke();
+  spText(x,'나, 은근히 다크심리학 쓰고 있나?',84,1808,22,0.6,BODY,'left','DPSerif');
   x.textAlign='right';x.fillStyle=DIM;x.font='20px sans-serif';
-  x.fillText('pomm2.github.io/dark-psych',W-84,1826);
+  x.fillText('pomm2.github.io/dark-psych',W-84,1808);
   x.textAlign='left';x.fillStyle='#5b574f';x.font='18px DPSerif';
-  x.fillText('재미로 보는 테스트 · 심리 진단 아님',84,1862);
+  x.fillText('재미로 보는 테스트 · 심리 진단 아님',84,1844);
 
   return await new Promise(function(res,rej){c.toBlob(function(b){b?res(b):rej(new Error('image'))},'image/png')});
 }
