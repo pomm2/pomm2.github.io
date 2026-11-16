@@ -1156,12 +1156,23 @@ async function makeCard(h,d,mode){const BIG=mode==='story',an=analysis(h,d),e=an
  x.fillText('성격·애착 진단이 아닙니다',450,1449);x.fillText('읽씹당하고 점 보는 밤 v3.6',450,1482)}
  return await new Promise(function(res,rej){canvas.toBlob(function(b){b?res(b):rej(new Error('image'))},'image/png')})}
 /* ---------- story card: 요약 성적표 (1080x1920) ---------- */
-function wrapLines(ctx,text,max){const out=[];let row='';
- for(const ch of String(text)){if(row&&ctx.measureText(row+ch).width>max&&!/[.,!?。…]/.test(ch)){out.push(row);row=ch}else row+=ch}
- if(row)out.push(row);return out}
+function wrapWords(ctx,text,max){
+ const words=String(text).split(' '),rows=[];let row='';
+ words.forEach(function(wd){const test=row?row+' '+wd:wd;
+  if(row&&ctx.measureText(test).width>max){rows.push(row);row=wd}else row=test});
+ if(row)rows.push(row);
+ for(let guard=0;guard<8&&rows.length>1;guard++){
+  const last=rows[rows.length-1];
+  if(ctx.measureText(last).width>=max*0.46)break;
+  const prev=rows[rows.length-2].split(' ');
+  if(prev.length<2)break;
+  const moved=prev.pop(),cand=moved+' '+last;
+  if(ctx.measureText(cand).width>max)break;
+  rows[rows.length-2]=prev.join(' ');rows[rows.length-1]=cand}
+ return rows}
 function fitLines(ctx,text,max,size,min,family){
  let fs=size,lines;
- for(;;){ctx.font=fs+'px '+family;lines=wrapLines(ctx,text,max);if(lines.length<=2||fs<=min)break;fs-=2}
+ for(;;){ctx.font=fs+'px '+family;lines=wrapWords(ctx,text,max);if(lines.length<=2||fs<=min)break;fs-=2}
  return {lines:lines,size:fs}}
 function drawRadarPaper(x,cx,cy,r,axes){
  const pt=function(i,rr){const a=-Math.PI/2+Math.PI*2*i/5;return [cx+Math.cos(a)*rr,cy+Math.sin(a)*rr]};
@@ -1194,7 +1205,7 @@ async function storyBlob(){const an=analysis(state.history,state.desires),e=an.c
  x.textAlign='left';
  x.fillStyle='#8c3f36';x.font='19px sans-serif';x.fillText('TYPE',552,300);
  x.fillStyle='#14110f';x.font='58px LoveSerif,serif';x.fillText(an.type,552,366);
- x.fillStyle='#3a352c';x.font='23px sans-serif';wrap(x,an.tag,552,412,468,32);
+ x.fillStyle='#3a352c';x.font='23px sans-serif';wrapWords(x,an.tag,468).forEach(function(ln,k){x.fillText(ln,552,412+k*32)});
  x.fillStyle='#a9987e';x.fillRect(552,474,468,1);
  an.metrics.forEach(function(m,i){const yy=506+i*86;
   x.textAlign='left';x.fillStyle='#3a352c';x.font='22px sans-serif';x.fillText(m.label,552,yy+38);
@@ -1231,7 +1242,7 @@ async function storyBlob(){const an=analysis(state.history,state.desires),e=an.c
  x.fillStyle='#6b6353';x.font='17px sans-serif';x.fillText('THE CARD',600,1400);
  x.fillStyle='#14110f';x.font='28px LoveSerif,serif';x.fillText(e.roman+' · '+e.en,600,1434);
  x.fillStyle='#a9987e';x.fillRect(600,1448,420,1);
- x.fillStyle='#3a352c';x.font='29px LoveSerif,serif';wrap(x,e.line,600,1486,420,43);
+ x.fillStyle='#3a352c';x.font='29px LoveSerif,serif';wrapWords(x,e.line,420).forEach(function(ln,k){x.fillText(ln,600,1486+k*43)});
  x.fillStyle='#5a5446';x.font='20px sans-serif';x.fillText('다섯 축 중 제일 높은 건 '+top.label+' '+top.value+'.',600,1630);
  /* footer */
  x.fillStyle='#211d18';x.fillRect(60,1726,960,2);
