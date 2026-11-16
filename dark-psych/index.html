@@ -666,10 +666,11 @@ function ra(word){
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify({phase:state.phase,i:state.i,ans:state.ans}))}catch(e){}}
 function load(){try{const v=JSON.parse(localStorage.getItem(KEY));
-  if(v&&Array.isArray(v.ans)&&v.ans.length===SITUATIONS.length&&v.phase!=='result'&&v.ans.some(function(a){return a!==null})){
+  if(v&&Array.isArray(v.ans)&&v.ans.length===SITUATIONS.length&&v.ans.some(function(a){return a!==null})){
     state.ans=v.ans.map(function(a){return (typeof a==='number'&&a>=0&&a<4)?a:null});
     state.i=Math.min(v.i||0,SITUATIONS.length-1);
-    state.phase='play';state.picked=state.ans[state.i];
+    if(v.phase==='result'&&state.ans.every(function(a){return a!==null})){state.phase='result';state.picked=null;}
+    else{state.phase='play';state.picked=state.ans[state.i];}
   }}catch(e){}}
 
 /* ---------- intro ---------- */
