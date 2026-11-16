@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6efe2">
+<meta name="description" content="아직 안 망했다 v2.0 — 사건 D 「친구 약혼자 외도 목격」 5분 플레이어블 데모">
+<title>아직 안 망했다 · 사건 D</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><b>아직 안 망했다</b><span>사건 D</span></div>
+    <div class="tools">
+      <button id="btn-restart" type="button">처음부터</button>
+      <button id="btn-log" type="button">백로그</button>
+    </div>
+  </header>
+  <main id="stage" class="stage"></main>
+  <div id="hint" class="hint" hidden>화면을 눌러 계속</div>
+</div>
+
+<div id="backlog" class="modal" hidden>
+  <section class="log-panel" role="dialog" aria-modal="true" aria-label="백로그">
+    <div class="log-head">
+      <h2>지금까지 본 것</h2>
+      <button id="backlog-close" type="button" class="close">닫기</button>
+    </div>
+    <ol id="log-list"></ol>
+  </section>
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="scenes.js"></script>
+<script src="engine.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    if (window.SCENES && window.LHM) window.LHM.boot(window.SCENES);
+  });
+</script>
+</body>
+</html>
