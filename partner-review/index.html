@@ -2111,6 +2111,7 @@ async function makeShareLink(){
   smBusy = false;
   smOk.disabled = false; smOk.textContent = "링크 만들기";
   var ok = await copyText(url);
+  smUrl.value = url;
   if (ok){
     closeShareModal();
     toast("공유 링크 복사 완료 · 비밀번호 " + code);
