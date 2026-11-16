@@ -948,7 +948,7 @@ function fit(){if(state.phase==='result')return;const box=document.querySelector
  const dock=document.querySelector('.dock');if(dock){for(let n=13;n>=10.5;n-=0.5){dock.style.setProperty('--choice',n+'px');if(APP.scrollHeight<=APP.clientHeight+1&&(!box||box.scrollHeight<=box.clientHeight+1))break}}}
 function profileFor(h){if(!h.length)return {status:'8시간 만에 온 카톡',tone:'quiet',glyph:'☾'};
  const i=h.length-1,a=h[i];
- if(isFree(a))return {status:'답장 쓰는 중',tone:'quiet',glyph:'ㅈ'};
+ if(isFree(a))return {status:'방금 읽음',tone:'quiet',glyph:'ㅈ'};
  const k=ROUNDS[i].options[a.choice].k;
  const map={care:{status:'엄마한테 얘기 중',tone:'quiet',glyph:'ㅈ'},press:{status:'방금 읽음',tone:'quiet',glyph:'ㅈ'},ask:{status:'답장 쓰다 지움',tone:'quiet',glyph:'ㅈ'},exit:{status:'읽고 답 없음',tone:'tired',glyph:'☾'},
   trade:{status:'내일 데이트 검색 중',tone:'warm',glyph:'ㅈ'},hold:{status:'다현이한테 말하는 중',tone:'warm',glyph:'ㅈ'},rule:{status:'핸드폰 내려놓음',tone:'quiet',glyph:'ㅈ'},wait:{status:'저녁 시간 맞춰보는 중',tone:'warm',glyph:'ㅈ'},
@@ -1090,6 +1090,17 @@ function wrapWords(ctx,text,x,y,max,line){const words=String(text).split(' ');le
  for(const w of words){const test=row?row+' '+w:w;
   if(ctx.measureText(test).width>max&&row){ctx.fillText(row,x,y);y+=line;row=w}else row=test}
  if(row)ctx.fillText(row,x,y);return y}
+function wrapBalanced(ctx,text,x,y,max,line){
+ if(ctx.measureText(text).width<=max)return wrapWords(ctx,text,x,y,max,line);
+ const words=String(text).split(' ');
+ let best=null;
+ for(let i=1;i<words.length;i++){const a=words.slice(0,i).join(' '),b=words.slice(i).join(' ');
+  if(ctx.measureText(a).width>max||ctx.measureText(b).width>max)continue;
+  const worst=Math.max(ctx.measureText(a).width,ctx.measureText(b).width);
+  if(!best||worst<best.worst)best={a:a,b:b,worst:worst};
+  if(ctx.measureText(b).width<=max&&/[,]$/.test(a)&&!/[,]$/.test(best.a))best={a:a,b:b,worst:worst}}
+ if(!best)return wrapWords(ctx,text,x,y,max,line);
+ ctx.fillText(best.a,x,y);ctx.fillText(best.b,x,y+line);return y+line}
 function wrap(ctx,text,x,y,max,line){let row='';for(const ch of text){if(ctx.measureText(row+ch).width>max&&!/[.,!?。…]/.test(ch)){ctx.fillText(row,x,y);row=ch;y+=line}else row+=ch}ctx.fillText(row,x,y);return y}
 async function makeCard(h,d){const an=analysis(h,d),e=an.card;await document.fonts.ready;
  const canvas=document.createElement('canvas');canvas.width=900;canvas.height=1600;const x=canvas.getContext('2d');
@@ -1204,10 +1215,10 @@ async function storyBlob(){const an=analysis(state.history,state.desires),e=an.c
  x.strokeStyle='#8d8168';x.lineWidth=1;x.beginPath();x.moveTo(60,896);x.lineTo(1020,896);x.stroke();
  x.fillStyle='#5f7a3c';x.font='16px sans-serif';x.fillText('장점',60,950);
  x.fillStyle='#24211c';x.font='30px LoveSerif,serif';
- const py=wrapWords(x,an.pro,150,952,860,41);
+ const py=wrapBalanced(x,an.pro,150,952,860,41);
  x.fillStyle='#8c3f36';x.font='16px sans-serif';x.fillText('단점',60,py+58);
  x.fillStyle='#24211c';x.font='30px LoveSerif,serif';
- const cy2=wrapWords(x,an.con,150,py+60,860,41);
+ const cy2=wrapBalanced(x,an.con,150,py+60,860,41);
  /* charts */
  x.fillStyle='#8d8168';x.font='15px sans-serif';
  x.fillText('FIVE SIDES / 성향 다섯 축',60,1162);
