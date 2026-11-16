@@ -53,6 +53,10 @@ body.results{background:#0c0e0f;color:#e9e5d9;overflow-x:hidden}
 .ed-title{font-family:var(--serif);font-weight:400;font-size:31px;line-height:1.34;letter-spacing:-.7px;margin:0 0 14px}
 .ed-deck{font-size:13px;line-height:1.85;color:#c6c0b1;margin:0;max-width:34ch}
 .ed-reversed{display:inline-block;margin:18px 0 0;font-size:8px;letter-spacing:1.4px;color:#e6c07a;border:1px solid #6d5836;padding:5px 8px}
+.ed-rev{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:20px 0 0}
+.ed-rev-badge{display:inline-block;font-size:9.5px;letter-spacing:1.7px;font-weight:700;color:#120f0c;background:#c85a41;padding:7px 11px;line-height:1}
+.ed-rev-line{margin:0;flex:1 1 100%;font-size:11.5px;line-height:1.75;color:#e9cbbf;border-left:2px solid #c85a41;padding:1px 0 1px 10px}
+.ed-rev-line b{color:#fbf2ec;font-weight:600}
 .ed-hero{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:24px 0;border-bottom:1px solid var(--line);align-items:start}
 .ed-figure{margin:0}
 .ed-tarot{display:block;width:100%;aspect-ratio:9/16;object-fit:contain;background:#eee7d5;border:1px solid #2a2822}
@@ -380,8 +384,8 @@ const CARDS=[
  {roman:'IX',en:'THE MIRROR',name:'누가 더 참았는지 따지는 쪽',line:'따지다 보면 정작 내 마음이 뒤로 밀려.',art:'mirror'},
  {roman:'XI',en:'THE FOOL',name:'답장에 마음 맡긴 쪽',line:'안심할 열쇠를 상대 손에 다 맡겨놨어.',art:'fool'},
  {roman:'XXI',en:'THE CLEANER',name:'거리부터 두는 쪽',line:'대답보다 거리가 먼저 필요해진 밤.',art:'cleaner'},
- {roman:'VIII',en:'THE BOUNDARY',name:'다정해도 선은 긋는 쪽',line:'좋아해도 싫은 건 싫다고 말해.',art:'mirror'},
- {roman:'XVIII',en:'THE UNSENT',name:'마음 방향 고르는 쪽',line:'오늘 고른 답 하나로 너가 정해지진 않아.',art:'cat'},
+ {roman:'VIII',en:'THE BOUNDARY',name:'다정해도 선은 긋는 쪽',line:'좋아해도 싫은 건 싫다고 말해.',art:'boundary'},
+ {roman:'XVIII',en:'THE UNSENT',name:'마음 방향 고르는 쪽',line:'오늘 고른 답 하나로 너가 정해지진 않아.',art:'unsent'},
  {roman:'XIII',en:'THE KNOT',name:'붙잡으면서 놓으려는 쪽',line:'붙잡고 싶은 밤에 혼자 있고 싶은 마음이 같이 와.',art:'knot'},
  {roman:'XII',en:'THE HANGED MAN',name:'타이밍만 보다 놓치는 쪽',line:'할 말은 있는데 언제 꺼낼지만 계속 미뤄.',art:'hourglass'}];
 
@@ -587,107 +591,310 @@ const PAT_MOTIVES={
   {c:'지금이라도 확실히 하고 싶었어. 어물쩍 넘기면 또 같을 테니까',cat:'confirm',a:64,v:22},
   {c:'받아들이는지보다 내 말이 무게 있게 들렸으면 했어',cat:'recognition',a:70,v:28},
   {c:'오늘은 여기까지 하고 내일 이어서 하려고 했어',cat:'defer',a:50,v:38}]};
-/* ===== WOODCUT TAROT ART (v3.4: arch frame + cartouche + halo + symbols) ===== */
+/* ===== WOODCUT TAROT ART v3.10 =====
+   하나의 원형 메달리온(판화 액자) + 카드마다 다른 장면 10종.
+   180도로 뒤집어도(역방향) 액자가 깨지지 않도록 틀은 원형·회전대칭만 쓴다. */
+
+/* ---- 공용 조각 (모두 원점 기준) ---- */
+const ART_HEART='<path d="M-31 -15 C-62 -52 -95 3 -48 42 L0 83 L48 42 C95 3 62 -52 31 -15 L0 15Z" fill="#a23b35" stroke="#24211c" stroke-width="4"/><path d="M-45 1 Q-60 7 -30 34M-27 -17 Q-10 -1 -2 20M14 35 L36 13" fill="none" stroke="#532b27" stroke-width="3"/>';
+const ART_HEART_HOLLOW='<path d="M-31 -15 C-62 -52 -95 3 -48 42 L0 83 L48 42 C95 3 62 -52 31 -15 L0 15Z" fill="#eee8d6" stroke="#24211c" stroke-width="5"/>';
+const ART_PHONE='<rect x="-40" y="-80" width="80" height="160" rx="13" fill="url(#ink)" stroke="#24211c" stroke-width="3"/><rect x="-31" y="-69" width="62" height="132" rx="6" fill="#eee8d6" stroke="#39342d" stroke-width="2"/><rect x="-23" y="-55" width="40" height="11" rx="5.5" fill="#c9bfa7"/><rect x="-23" y="-38" width="28" height="9" rx="4.5" fill="#d8cdb2"/><rect x="-23" y="-21" width="34" height="9" rx="4.5" fill="#d8cdb2"/><circle cx="-15" cy="66" r="3.4" fill="#eee8d6"/><path d="M-9 -77 H9" stroke="#eee3ca" stroke-width="2.4"/>';
+const ART_PHONE_DOWN='<rect x="-40" y="-80" width="80" height="160" rx="13" fill="url(#ink)" stroke="#24211c" stroke-width="3"/><rect x="-30" y="-70" width="60" height="140" rx="8" fill="none" stroke="#4a4438" stroke-width="2"/><circle cx="26" cy="-58" r="5" fill="#a23b35"/>';
+const ART_ROPE=function(d){return '<path d="'+d+'" fill="none" stroke="#24211c" stroke-width="27" stroke-linecap="round"/>'+
+ '<path d="'+d+'" fill="none" stroke="#eee8d6" stroke-width="19" stroke-linecap="round"/>'+
+ '<path d="'+d+'" fill="none" stroke="#39342d" stroke-width="2.6" stroke-dasharray="9 11" opacity=".55"/>'};
+/* 바닥선 + 그림자: 10장 모두 같은 자리에 깔아 판면을 통일한다 */
+const ART_RULE='<path d="M-238 224 H238" stroke="#24211c" stroke-width="2.6"/>'+
+ '<path d="M-208 232 H208" stroke="#39342d" stroke-width="1.2" opacity=".5"/>';
+const ART_SHADOW=function(r){return '<ellipse cx="0" cy="217" rx="'+r+'" ry="11" fill="#39342d" opacity=".15"/>'};
+const ART_BASE=ART_SHADOW(150)+ART_RULE;
+
+/* ---- 장면 10종: 원점(0,0) 기준, 반지름 285 안쪽 ---- */
+const ART_SCENES={
+/* X · 먼저 양보하는 쪽 — 하트가 찍힌 카드를 먼저 넣는 쪽 */
+atm:
+ ART_BASE+
+ '<rect x="-198" y="-196" width="242" height="360" rx="9" fill="url(#ink)" stroke="#24211c" stroke-width="3.4"/>'+
+ '<rect x="-186" y="-184" width="218" height="336" rx="4" fill="none" stroke="#eee8d6" stroke-width="1.2" opacity=".4"/>'+
+ /* 화면 */
+ '<rect x="-176" y="-176" width="198" height="90" rx="5" fill="#eee8d6" stroke="#24211c" stroke-width="2.6"/>'+
+ '<path d="M-160 -150 H-60M-160 -130 H-12M-160 -110 H-96" stroke="#39342d" stroke-width="3"/>'+
+ '<circle cx="0" cy="-160" r="6" fill="#a23b35"/>'+
+ /* 슬롯 */
+ /* 키패드 */
+ '<g fill="#eee8d6" opacity=".85">'+
+ '<rect x="-166" y="52" width="26" height="18" rx="3"/><rect x="-128" y="52" width="26" height="18" rx="3"/><rect x="-90" y="52" width="26" height="18" rx="3"/>'+
+ '<rect x="-166" y="80" width="26" height="18" rx="3"/><rect x="-128" y="80" width="26" height="18" rx="3"/><rect x="-90" y="80" width="26" height="18" rx="3"/>'+
+ '<rect x="-166" y="108" width="26" height="18" rx="3"/><rect x="-128" y="108" width="26" height="18" rx="3"/><rect x="-90" y="108" width="26" height="18" rx="3"/></g>'+
+ /* 슬롯에 반쯤 들어간 카드 (슬롯 테두리가 카드 위로 겹쳐 깊이를 만든다) */
+ '<g transform="translate(132 6) rotate(-4)"><rect x="-92" y="-44" width="184" height="88" rx="7" fill="#eee8d6" stroke="#24211c" stroke-width="3"/>'+
+ '<g transform="translate(-6 -2) scale(.32)">'+ART_HEART+'</g>'+
+ '<path d="M34 22 H70M34 32 H58" stroke="#39342d" stroke-width="2.4"/></g>'+
+ '<rect x="-178" y="-10" width="202" height="30" rx="4" fill="#111110" stroke="#24211c" stroke-width="2.8"/>'+
+ '<path d="M-170 20 H16" stroke="#eee8d6" stroke-width="2" opacity=".4"/>'+
+ /* 밀어 넣는 자국 */
+ '<path d="M214 -14 H242M214 8 H248M214 30 H238" stroke="#24211c" stroke-width="3" stroke-linecap="round"/>',
+
+/* IV · 반응만 확인하는 쪽 — 미끼로 매단 폰, 다가오는 물고기 */
+fisher:
+ /* 물 */
+ '<path d="M-238 186 Q-168 166 -98 186 Q-28 206 42 186 Q112 166 182 186 Q216 196 240 190" fill="none" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M-226 210 Q-156 194 -86 210 Q-16 226 54 210 Q124 194 188 210" fill="none" stroke="#39342d" stroke-width="1.5" opacity=".6"/>'+
+ /* 낚싯대 */
+ '<path d="M-198 -178 Q-104 -206 -6 -148" fill="none" stroke="#24211c" stroke-width="12" stroke-linecap="round"/>'+
+ '<path d="M-198 -178 Q-104 -206 -6 -148" fill="none" stroke="#5a5346" stroke-width="4" stroke-linecap="round" opacity=".5"/>'+
+ '<path d="M-158 -196 l9 15M-108 -204 l7 14M-58 -196 l5 13" stroke="#eee8d6" stroke-width="2.6"/>'+
+ /* 낚싯줄 */
+ '<path d="M-6 -148 Q44 -104 34 -44" fill="none" stroke="#24211c" stroke-width="2.2"/>'+
+ /* 바늘 */
+ '<path d="M34 -44 V12 a20 20 0 1 0 20 20" fill="none" stroke="#24211c" stroke-width="3.6" stroke-linecap="round"/>'+
+ '<path d="M27 -44 H41" stroke="#24211c" stroke-width="3.6"/>'+
+ /* 미끼 */
+ '<g transform="translate(72 26) rotate(15) scale(.44)">'+ART_PHONE+'</g>'+
+ /* 물고기 */
+ '<path d="M-214 84 Q-132 16 -32 84 Q-132 152 -214 84Z" fill="#eee8d6" stroke="#24211c" stroke-width="3.2"/>'+
+ '<path d="M-214 84 L-258 48 L-242 84 L-258 122Z" fill="url(#ink)" stroke="#24211c" stroke-width="2.6"/>'+
+ '<path d="M-140 34 Q-120 84 -140 136M-166 48 Q-152 84 -166 122" fill="none" stroke="#39342d" stroke-width="2.2"/>'+
+ '<circle cx="-72" cy="70" r="9" fill="#24211c"/><circle cx="-69" cy="67" r="3" fill="#eee8d6"/>'+
+ '<path d="M-96 118 q22 14 44 2" fill="none" stroke="#39342d" stroke-width="2.4"/>'+
+ /* 뜬 마음 */
+ '<g transform="translate(156 -132) scale(.28)">'+ART_HEART+'</g>'+
+ '<g transform="translate(212 -80) scale(.2)">'+ART_HEART+'</g>',
+
+/* VII · 자존심 세우다 혼자 남은 고양이 — 등 돌린 고양이와 엎어둔 폰 */
+cat:
+ ART_BASE+
+ '<path d="M-176 -206 A52 52 0 1 0 -108 -124 A40 40 0 1 1 -176 -206Z" fill="#24211c"/>'+
+ /* 몸통 */
+ '<path d="M-96 208 Q-118 40 -64 -48 Q-30 -102 12 -106 Q60 -102 88 -36 Q124 46 108 208Z" fill="url(#ink)" stroke="#24211c" stroke-width="3.4"/>'+
+ /* 머리 */
+ '<ellipse cx="6" cy="-158" rx="74" ry="64" fill="url(#ink)" stroke="#24211c" stroke-width="3.4"/>'+
+ /* 귀 */
+ '<path d="M-54 -196 L-46 -264 L-2 -218Z" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M66 -196 L58 -264 L14 -218Z" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M-42 -208 L-39 -242 L-19 -216Z" fill="#eee8d6" opacity=".45"/>'+
+ '<path d="M54 -208 L51 -242 L31 -216Z" fill="#eee8d6" opacity=".45"/>'+
+ /* 목선 */
+ '<path d="M-52 -110 Q6 -84 62 -112" fill="none" stroke="#eee8d6" stroke-width="2.2" opacity=".5"/>'+
+ /* 꼬리 */
+ '<path d="M104 200 Q180 196 178 128 Q176 92 146 96" fill="none" stroke="url(#ink)" stroke-width="26" stroke-linecap="round"/>'+
+ '<path d="M104 200 Q180 196 178 128 Q176 92 146 96" fill="none" stroke="#24211c" stroke-width="3" stroke-linecap="round" opacity=".85"/>'+
+ /* 등 결 */
+ '<path d="M-4 -96 Q-4 40 6 118M-30 -76 Q-22 30 -14 112M24 -74 Q32 30 28 112" fill="none" stroke="#eee8d6" stroke-width="2" opacity=".5"/>'+
+ '<path d="M-64 20 Q-8 0 50 22M-70 62 Q-8 40 58 64M-74 104 Q-8 82 64 106" fill="none" stroke="#eee8d6" stroke-width="1.5" opacity=".35"/>'+
+ /* 엎어둔 폰 */
+ '<g transform="translate(-158 160) rotate(13) scale(.42)">'+ART_PHONE_DOWN+'</g>'+
+ '<circle cx="-118" cy="142" r="7" fill="#a23b35"/>',
+
+/* IX · 누가 더 참았는지 따지는 쪽 — 금 간 손거울에 비친 두 개의 마음 */
+mirror:
+ ART_BASE.replace('cy="216"','cy="214"')+
+ /* 받침 */
+ '<ellipse cx="0" cy="204" rx="92" ry="19" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M-12 118 H12 V204 H-12Z" fill="url(#ink)" stroke="#24211c" stroke-width="2.6"/>'+
+ '<path d="M-30 182 Q0 168 30 182" fill="none" stroke="#eee8d6" stroke-width="2" opacity=".4"/>'+
+ /* 손거울 테 */
+ '<ellipse cx="0" cy="-56" rx="130" ry="162" fill="url(#ink)" stroke="#24211c" stroke-width="3.6"/>'+
+ '<ellipse cx="0" cy="-56" rx="110" ry="142" fill="#f7f1e0" stroke="#24211c" stroke-width="2.8"/>'+
+ '<ellipse cx="0" cy="-56" rx="102" ry="134" fill="none" stroke="#39342d" stroke-width="1.2" opacity=".45"/>'+
+ /* 금 */
+ '<path d="M34 -190 L26 -132 L52 -78 L22 -18 L48 40 L20 96 L34 148" fill="none" stroke="#24211c" stroke-width="2.4"/>'+
+ '<path d="M26 -132 L-12 -110 L-4 -68M22 -18 L-16 0 L-8 42M20 96 L-12 112" fill="none" stroke="#39342d" stroke-width="1.6"/>'+
+ /* 비친 두 마음 */
+ '<g transform="translate(-52 -66) scale(.44)">'+ART_HEART+'</g>'+
+ '<g transform="translate(-44 34) scale(.24)">'+ART_HEART_HOLLOW+'</g>'+
+ /* 유리 아래쪽 판화 음영 */
+ '<path d="M-92 62 Q0 96 92 62 L88 88 Q0 118 -88 88Z" fill="#39342d" opacity=".12"/>',
+
+/* XI · 답장에 마음 맡긴 쪽 — 폰에 실로 묶어 띄운 마음 */
+fool:
+ ART_RULE+
+ '<path d="M24 82 C4 50 14 20 36 -4 C58 -28 50 -50 30 -74" fill="none" stroke="#a23b35" stroke-width="3.4" stroke-linecap="round"/>'+
+ '<circle cx="24" cy="82" r="7" fill="none" stroke="#a23b35" stroke-width="3.4"/>'+
+ '<g transform="translate(24 -150) rotate(-8) scale(.9)">'+ART_HEART+'</g>'+
+ '<path d="M-8 -112 Q24 -128 58 -114" fill="none" stroke="#532b27" stroke-width="2" opacity=".65"/>'+
+ '<path d="M-10 -166 Q22 -184 62 -168" fill="none" stroke="#532b27" stroke-width="2" opacity=".5"/>'+
+ '<g transform="translate(34 148) rotate(9) scale(.52)">'+ART_PHONE+'</g>'+
+ '<path d="M-190 -172 l5 13 13 5 -13 5 -5 13 -5 -13 -13 -5 13 -5Z" fill="#24211c"/>'+
+ '<path d="M150 -196 l4 11 11 4 -11 4 -4 11 -4 -11 -11 -4 11 -4Z" fill="#24211c"/>'+
+ '<path d="M-166 34 l3.6 9 9 3.6 -9 3.6 -3.6 9 -3.6 -9 -9 -3.6 9 -3.6Z" fill="#39342d"/>'+
+ '<g transform="translate(-198 96) scale(.18)">'+ART_HEART+'</g>',
+
+/* XXI · 거리부터 두는 쪽 — 두 폰 사이의 실을 끊는 가위 */
+cleaner:
+ ART_BASE+
+ '<g transform="translate(-172 62) rotate(-14) scale(.58)">'+ART_PHONE+'</g>'+
+ '<g transform="translate(174 14) rotate(12) scale(.58)">'+ART_PHONE+'</g>'+
+ /* 두 폰을 잇던 실 */
+ '<path d="M-140 34 Q-70 16 0 2 Q72 -12 142 -28" fill="none" stroke="#a23b35" stroke-width="4"/>'+
+ /* 끊긴 두 끝 말림 */
+ '<path d="M-14 2 q-18 -12 -36 -4M20 -2 q18 12 36 4" fill="none" stroke="#a23b35" stroke-width="3.4" stroke-linecap="round"/>'+
+ /* 가위 */
+ '<g transform="translate(4 6) rotate(-16)">'+
+ '<path d="M-8 -6 L-190 -72 L-200 -44 Z" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M-8 6 L-190 72 L-200 44 Z" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M-152 -60 L-180 -50M-152 60 L-180 50" stroke="#eee8d6" stroke-width="2.2" opacity=".65"/>'+
+ '<path d="M-4 -8 Q52 -56 86 -72" fill="none" stroke="#24211c" stroke-width="9.5" stroke-linecap="round"/>'+
+ '<path d="M-4 8 Q52 56 86 72" fill="none" stroke="#24211c" stroke-width="9.5" stroke-linecap="round"/>'+
+ '<ellipse cx="108" cy="-86" rx="34" ry="26" fill="none" stroke="#24211c" stroke-width="12"/>'+
+ '<ellipse cx="108" cy="86" rx="34" ry="26" fill="none" stroke="#24211c" stroke-width="12"/>'+
+ '<ellipse cx="108" cy="-86" rx="34" ry="26" fill="none" stroke="#eee8d6" stroke-width="2" opacity=".35"/>'+
+ '<ellipse cx="108" cy="86" rx="34" ry="26" fill="none" stroke="#eee8d6" stroke-width="2" opacity=".35"/>'+
+ '<circle cx="0" cy="0" r="10" fill="#eee8d6" stroke="#24211c" stroke-width="3.6"/>'+
+ '</g>',
+
+/* VIII · 다정해도 선은 긋는 쪽 — 울타리 위로 내민 마음과 바닥에 그은 선 */
+boundary:
+ ART_BASE+
+ /* 울타리 기둥 */
+ '<rect x="-196" y="-52" width="40" height="188" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<rect x="-92" y="-52" width="40" height="188" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<rect x="12" y="-52" width="40" height="188" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<rect x="116" y="-52" width="40" height="188" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M-176 -52 L-176 -74 L-156 -94 L-136 -74 L-136 -52Z M-72 -52 L-72 -74 L-52 -94 L-32 -74 L-32 -52Z M32 -52 L32 -74 L52 -94 L72 -74 L72 -52Z M136 -52 L136 -74 L156 -94 L176 -74 L176 -52Z" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ /* 가로대 */
+ '<rect x="-176" y="-36" width="332" height="22" fill="#eee8d6" stroke="#24211c" stroke-width="2.8"/>'+
+ '<rect x="-176" y="56" width="332" height="22" fill="#eee8d6" stroke="#24211c" stroke-width="2.8"/>'+
+ '<path d="M-176 -25 H156M-176 67 H156" stroke="#39342d" stroke-width="1.2" opacity=".45"/>'+
+ /* 울타리 너머의 마음 */
+ '<g transform="translate(-38 -140) rotate(-6) scale(.54)">'+ART_HEART+'</g>'+
+ /* 다정한 온기 */
+ '<path d="M-96 -168 q10 -12 22 -4M42 -172 q12 -12 24 -2" fill="none" stroke="#a23b35" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>'+
+ /* 기둥에 기대 둔 폰 */
+ '<g transform="translate(150 104) rotate(-12) scale(.32)">'+ART_PHONE_DOWN+'</g>',
+
+/* XVIII · 마음 방향 고르는 쪽 — 부치지 못한 봉투 더미와 떠나가는 종이비행기 */
+unsent:
+ ART_BASE+
+ '<g transform="translate(-66 -6) rotate(-13)"><rect x="-92" y="-54" width="184" height="108" rx="4" fill="#e0d8c3" stroke="#24211c" stroke-width="2.6"/><path d="M-92 -54 L0 8 L92 -54" fill="none" stroke="#24211c" stroke-width="2"/></g>'+
+ '<g transform="translate(-34 12) rotate(9)"><rect x="-92" y="-54" width="184" height="108" rx="4" fill="#e8e1ce" stroke="#24211c" stroke-width="2.6"/><path d="M-92 -54 L0 8 L92 -54" fill="none" stroke="#24211c" stroke-width="2"/></g>'+
+ '<g transform="translate(4 40) rotate(-5)">'+
+ '<rect x="-122" y="-76" width="244" height="152" rx="5" fill="#eee8d6" stroke="#24211c" stroke-width="3.2"/>'+
+ '<path d="M-122 -76 L0 16 L122 -76" fill="none" stroke="#24211c" stroke-width="2.8"/>'+
+ '<path d="M-122 76 L-14 -6M122 76 L14 -6" fill="none" stroke="#39342d" stroke-width="1.6" opacity=".7"/>'+
+ '<g transform="translate(0 22) scale(.24)">'+ART_HEART+'</g>'+
+ '<rect x="74" y="-64" width="38" height="46" fill="url(#ink)" stroke="#24211c" stroke-width="2"/>'+
+ '<path d="M82 -50 H104M82 -42 H96" stroke="#eee8d6" stroke-width="1.8"/>'+
+ '</g>'+
+ /* 떠나가는 종이비행기 */
+ '<g transform="translate(112 -198) rotate(-14) scale(1.08)">'+
+ '<path d="M0 0 L96 -34 L38 10 L34 38 Z" fill="#eee8d6" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M0 0 L38 10 L34 38" fill="none" stroke="#24211c" stroke-width="2.6"/>'+
+ '<path d="M0 0 L96 -34" stroke="#39342d" stroke-width="1.4" opacity=".5"/>'+
+ '</g>'+
+ '<path d="M92 -150 Q66 -120 44 -88 Q24 -60 14 -32" fill="none" stroke="#a23b35" stroke-width="2.6" stroke-dasharray="7 8"/>',
+
+/* XIII · 붙잡으면서 놓으려는 쪽 — 매듭에 걸린 두 고리, 아래로는 풀린 밧줄 */
+knot:
+ ART_RULE+
+ /* 위에서 내려온 밧줄이 매듭에서 끝난다 */
+ ART_ROPE('M0 -262 V-142')+
+ '<path d="M-30 -150 q-16 18 2 30 q20 12 28 -8 M30 -150 q16 18 -2 30 q-20 12 -28 -8 M0 -134 v26" fill="none" stroke="#a23b35" stroke-width="7" stroke-linecap="round"/>'+
+ '<circle cx="0" cy="-134" r="9" fill="#a23b35" stroke="#24211c" stroke-width="2.6"/>'+
+ /* 맞물린 두 고리 (가운데가 겹쳐 사슬처럼 보이게) */
+ '<circle cx="-46" cy="-30" r="92" fill="none" stroke="#24211c" stroke-width="27"/>'+
+ '<circle cx="-46" cy="-30" r="92" fill="none" stroke="url(#ink)" stroke-width="21"/>'+
+ '<circle cx="-46" cy="-30" r="81" fill="none" stroke="#eee8d6" stroke-width="2.2" opacity=".35"/>'+
+ '<circle cx="46" cy="-30" r="92" fill="none" stroke="#24211c" stroke-width="27"/>'+
+ '<circle cx="46" cy="-30" r="92" fill="none" stroke="url(#ink)" stroke-width="21"/>'+
+ '<circle cx="46" cy="-30" r="81" fill="none" stroke="#eee8d6" stroke-width="2.2" opacity=".35"/>'+
+ /* 고리 아래로 이어져 풀리는 밧줄 */
+ ART_ROPE('M0 66 V108')+
+ '<path d="M0 108 Q-36 158 -64 210M0 108 Q10 166 6 220M0 108 Q46 156 76 204" fill="none" stroke="#24211c" stroke-width="9.5" stroke-linecap="round"/>'+
+ '<path d="M0 108 Q-36 158 -64 210M0 108 Q10 166 6 220M0 108 Q46 156 76 204" fill="none" stroke="#eee8d6" stroke-width="4.6" stroke-linecap="round"/>',
+
+/* XII · 타이밍만 보다 놓치는 쪽 — 모래가 멈춘 모래시계와 시계 */
+hourglass:
+ ART_BASE+
+ '<rect x="-142" y="-218" width="284" height="26" rx="4" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<rect x="-142" y="178" width="284" height="26" rx="4" fill="url(#ink)" stroke="#24211c" stroke-width="3"/>'+
+ '<path d="M-148 -192 V178M148 -192 V178" stroke="#24211c" stroke-width="7"/>'+
+ '<path d="M-120 -192 H120 L16 -34 V-12 H-16 V34 L-120 178 H120" fill="#eee8d6" opacity=".5"/>'+
+ '<path d="M-120 -192 H120 L16 -34 V-12 H-16 V34 L-120 178 H120" fill="none" stroke="#24211c" stroke-width="3.4"/>'+
+ /* 위 모래 */
+ '<path d="M-104 -180 H104 Q52 -146 18 -40 H-18 Q-52 -146 -104 -180Z" fill="#3a352c"/>'+
+ '<path d="M-92 -158 H92" stroke="#8a8272" stroke-width="1.6" opacity=".85"/>'+
+ /* 떨어지는 모래 */
+ '<path d="M-1 -36 V26" stroke="#3a352c" stroke-width="3" stroke-dasharray="4 7"/>'+
+ /* 아래 모래 */
+ '<path d="M-88 166 H88 Q52 104 0 102 Q-52 104 -88 166Z" fill="#3a352c"/>'+
+ '<path d="M-66 150 H66" stroke="#8a8272" stroke-width="1.6" opacity=".85"/>'+
+ /* 시계 */
+ '<g transform="translate(-188 -142)">'+
+ '<circle r="50" fill="#f7f1e0" stroke="#24211c" stroke-width="4"/>'+
+ '<circle r="50" fill="none" stroke="#39342d" stroke-width="1.2" opacity=".45"/>'+
+ '<path d="M0 0 V-30M0 0 L20 16" stroke="#24211c" stroke-width="4.4" stroke-linecap="round"/>'+
+ '<circle r="4.4" fill="#a23b35"/>'+
+ '<path d="M0 -42 V-36M0 36 V42M-42 0 H-36M42 0 H36" stroke="#24211c" stroke-width="2.6"/>'+
+ '</g>'+
+ /* 옆에 놓인 폰 */
+ '<g transform="translate(166 118) rotate(12) scale(.38)">'+ART_PHONE_DOWN+'</g>'
+};
+
 function artSvg(kind){
-const heart='<path d="M-31 -15 C-62 -52 -95 3 -48 42 L0 83 L48 42 C95 3 62 -52 31 -15 L0 15Z" fill="#a23b35" stroke="#22201c" stroke-width="3"/><path d="M-45 1 Q-60 7 -30 34M-27 -17 Q-10 -1 -2 20M14 35 L36 13M-20 45 L1 62" fill="none" stroke="#532b27" stroke-width="2"/>';
-const phone='<rect x="-42" y="-85" width="84" height="170" rx="12" fill="#242421"/><rect x="-34" y="-74" width="68" height="145" rx="7" fill="url(#ink)" stroke="#dfd6be" stroke-width="2"/><path d="M-10 -67H10M-9 78H9" stroke="#eee3ca" stroke-width="2"/>';
-const receipt='<path d="M-32 -82 L-22 -76 -12 -82 -2 -76 8 -82 18 -76 32 -82 V95 L22 88 12 95 2 88 -8 95 -18 88 -32 95Z" fill="#eee8d6"/><path d="M-22 -48H22M-22 -33H22M-22 -18H9M-22 2H22M-22 17H22M-22 37H22M-22 62H22" fill="none" stroke="#39342d" stroke-width="2"/>';
-const SCENE={
-atm:'<path d="M99 200 Q78 270 99 340 L341 340 L358 217 330 200Z" fill="url(#ink)"/><path d="M104 221 Q212 240 350 218 L345 298 Q220 315 100 298Z" fill="#242421"/><path d="M175 82 L231 76 225 190 Q186 213 224 242 Q254 280 197 315 Q136 356 196 393 L133 414 Q85 365 137 323 Q195 282 154 252 Q123 210 162 177Z" fill="#eee8d6"/><path d="M177 104L214 100M174 119L211 115M172 134L208 130M168 151L208 146M167 166L199 162M145 355L168 372M139 371L159 387M155 335L177 345" stroke="#39342d" stroke-width="3"/><rect x="292" y="240" width="70" height="39" rx="7" fill="#d8ceb6"/><circle cx="325" cy="259" r="5" fill="#2a2620"/><g transform="translate(275 133) scale(.59)">'+heart+'</g>',
-fisher:'<g transform="translate(225 155) rotate(-9)">'+phone+'</g><path d="M210 80 Q79 12 87 172 Q83 222 128 278 Q159 311 126 338M229 77 Q368 23 352 160 Q345 209 308 245 L318 323M206 202 Q226 285 213 365" fill="none" stroke="#2a2620" stroke-width="3"/><path d="M110 337 q17 26 26 -2 M301 323 q17 27 25 -3 M195 365 q17 27 27 -3" fill="none" stroke="#a23b35" stroke-width="4"/><g transform="translate(110 292) scale(.33)">'+heart+'</g><g transform="translate(324 280) scale(.3)">'+heart+'</g><g transform="translate(220 345) scale(.23)">'+heart+'</g>',
-cat:'<g transform="translate(103 321) rotate(-18) scale(.72)">'+phone+'</g><path d="M235 373 Q171 360 189 282 Q192 240 221 210 L215 154 248 175 Q272 162 291 174 L322 153 315 217 Q348 256 325 310 Q312 344 320 375Z" fill="url(#ink)"/><path d="M227 370 Q336 417 362 343 Q381 301 345 296" fill="none" stroke="#242421" stroke-width="19"/><path d="M225 196Q260 209 309 195M215 244Q262 265 326 243M207 267Q258 286 328 268M204 291Q257 310 323 292M214 318Q258 336 315 318" stroke="#e7dec7" stroke-width="2" fill="none"/><path d="M159 99L168 309M151 312L191 312" fill="none" stroke="#28241f" stroke-width="6"/><ellipse cx="168" cy="117" rx="59" ry="78" fill="#e8dfc9" stroke="#25221e" stroke-width="5"/><ellipse cx="168" cy="117" rx="49" ry="67" fill="url(#pale)"/><path d="M146 112L148 91 164 103 180 92 188 115Q194 149 166 152Q138 151 146 112Z" fill="#242421"/><path d="M154 123h7M173 123h7" stroke="#eee3cb" stroke-width="2"/>',
-mirror:'<path d="M224 91V355M174 375H281L295 403H151Z" fill="url(#ink)"/><path d="M222 96 L226 351" stroke="#242421" stroke-width="20"/><path d="M84 135 Q147 164 224 151 Q293 142 367 171" fill="none" stroke="#242421" stroke-width="14"/><path d="M84 130L31 304M84 130L147 304M367 166L309 351M367 166L428 351" stroke="#242421" stroke-width="3"/><path d="M27 302 Q80 363 152 302Z M302 348 Q362 415 433 348Z" fill="url(#ink)"/><g transform="translate(88 248) scale(.51)">'+heart+'</g><g transform="translate(354 285) scale(.65)">'+phone+'</g><g transform="translate(398 304) rotate(8) scale(.46)">'+receipt+'</g><circle cx="224" cy="80" r="17" fill="url(#ink)"/><path d="M152 402Q221 425 296 402" fill="none" stroke="#242421" stroke-width="4"/>',
-fool:'<path d="M22 332H265L234 355 252 375 220 398 230 441H22Z" fill="url(#ink)"/><path d="M70 312Q84 282 118 281L163 290 223 242Q244 215 264 229L229 279 184 326 118 333Z" fill="#eee8d6"/><path d="M120 299L165 308 220 268M137 309L166 319 211 286M160 283L204 229Q217 211 232 223L213 250M143 287L185 238Q200 222 209 232" fill="none" stroke="#242421" stroke-width="3"/><path d="M101 287L116 331" stroke="#242421" stroke-width="18"/><path d="M107 291L118 321" stroke="#d6c9ac" stroke-width="2"/><g transform="translate(330 162) scale(.66)">'+heart+'</g><path d="M273 250Q310 222 328 204" fill="none" stroke="#a23b35" stroke-dasharray="4 7" stroke-width="3"/>',
-cleaner:'<path d="M31 269Q84 220 145 259L200 272M251 272Q309 283 347 247L432 264" fill="none" stroke="#a23b35" stroke-width="6"/><path d="M190 269L205 261M190 276L202 282M250 267L262 259M249 275L261 282" stroke="#a23b35" stroke-width="2"/><g transform="translate(226 222) rotate(-29)"><ellipse cx="-45" cy="112" rx="28" ry="43" fill="url(#ink)"/><ellipse cx="45" cy="112" rx="28" ry="43" fill="url(#ink)"/><ellipse cx="-45" cy="112" rx="15" ry="28" fill="#eee8d6"/><ellipse cx="45" cy="112" rx="15" ry="28" fill="#eee8d6"/><path d="M-37 80L20 -110 33 -126 9 25 37 80 21 84-5 37 -22 83Z" fill="#ddd4bd"/><path d="M-20 82L-35 -113 -24 -128 0 -12 19 83Z" fill="url(#ink)"/><circle cy="14" r="8" fill="#a23b35"/></g>',
-knot:'<path d="M291 74H420V424H291Z" fill="url(#pale)" stroke="#242421" stroke-width="3"/><path d="M291 74 L262 108 V392 L291 424" fill="#eee8d6" stroke="#242421" stroke-width="3"/><circle cx="308" cy="262" r="7" fill="#a23b35"/><g transform="translate(160 304) rotate(-10) scale(.62)">'+phone+'</g><path d="M150 208 A58 58 0 1 0 266 208 A58 58 0 1 0 150 208" fill="none" stroke="#a23b35" stroke-width="6"/><path d="M196 150 A52 52 0 1 0 300 150 A52 52 0 1 0 196 150" fill="none" stroke="#a23b35" stroke-width="6"/><path d="M186 96 Q222 128 250 108 Q286 84 318 116" fill="none" stroke="#a23b35" stroke-width="4" stroke-dasharray="7 6"/><g transform="translate(352 196) scale(.34)">'+heart+'</g>',
-hourglass:'<circle cx="236" cy="146" r="78" fill="#eee8d6" stroke="#242421" stroke-width="3"/><circle cx="236" cy="146" r="69" fill="none" stroke="#39342d" stroke-width="1.5"/><path d="M236 146V96M236 146L274 168" stroke="#242421" stroke-width="4"/><path d="M168 206H304M168 400H304" stroke="#242421" stroke-width="7"/><path d="M186 212H286L244 300H228Z" fill="#eee8d6" stroke="#242421" stroke-width="4"/><path d="M228 300H244L286 394H186Z" fill="#eee8d6" stroke="#242421" stroke-width="4"/><path d="M196 236H276L244 288H228Z" fill="#d8ceb6"/><path d="M232 306H240L272 386H200Z" fill="#d8ceb6"/><path d="M236 292V322" stroke="#39342d" stroke-width="2" stroke-dasharray="2 5"/><path d="M176 212V400M296 212V400" stroke="#242421" stroke-width="3"/><g transform="translate(352 372) rotate(16) scale(.38)">'+phone+'</g>'
-};
-let art=SCENE[kind]||SCENE.atm;
-if(kind==='boundary')art=SCENE.mirror;
-if(kind==='unsent')art=SCENE.cat;
-
-const SYM={
-sword:'<g><path d="M0 -40 L7 -28 L5 20 L-5 20 L-7 -28Z"/><path d="M-17 20H17M0 20V38M-8 38H8M0 -40V-46"/></g>',
-key:'<g><circle cx="0" cy="-24" r="12"/><circle cx="0" cy="-24" r="5"/><path d="M0 -12V34M0 26H10M0 16H8M0 6H6"/></g>',
-scale:'<g><path d="M0 -34V30M-18 30H18M-26 -20H26"/><path d="M-26 -20 L-34 2 H-18Z"/><path d="M26 -20 L34 2 H18Z"/><path d="M0 -34 L-26 -20M0 -34 L26 -20"/></g>',
-hourglass:'<g><path d="M-18 -30H18M-18 30H18M-14 -30C-14 -10 0 -8 0 0C0 8 -14 10 -14 30M14 -30C14 -10 0 -8 0 0C0 8 14 10 14 30"/><path d="M-9 20H9"/></g>',
-lock:'<g><rect x="-15" y="-6" width="30" height="30"/><path d="M-8 -6V-16A8 8 0 0 1 8 -16V-6"/><circle cx="0" cy="9" r="3.5"/><path d="M0 13V19"/></g>',
-star:'<g><path d="M0 -22 L5 -6 21 0 5 6 0 22 -5 6 -21 0 -5 -6Z"/><path d="M-30 0H-24M24 0H30M0 -32V-26M0 26V32"/></g>',
-moon:'<g><path d="M5 -20A20 20 0 1 0 5 20A15 15 0 1 1 5 -20Z"/><path d="M22 -18 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"/></g>',
-rings:'<g><circle cx="-10" cy="0" r="14"/><circle cx="10" cy="0" r="14"/></g>',
-hook:'<g><path d="M0 -30V4A11 11 0 0 0 22 4"/><path d="M-7 -30H7"/><path d="M22 4 l-3 -7"/></g>',
-eye:'<g><path d="M-26 0C-17 -13 17 -13 26 0C17 13 -17 13 -26 0Z"/><circle cx="0" cy="0" r="7"/><path d="M0 -14V-20M-14 -8 l-4 -6M14 -8 l4 -6"/></g>'
-};
-const PICK={atm:['key','scale'],fisher:['hook','star'],cat:['moon','key'],mirror:['scale','eye'],fool:['star','key'],
- cleaner:['lock','sword'],boundary:['sword','lock'],unsent:['moon','star'],knot:['rings','moon'],hourglass:['hourglass','star']};
-const sym=s=>SYM[s]||SYM.star;
-
-/* ---- arch plate path (same path used for the clip and the frame) ---- */
-const PLATE='M40 902 H720 V340 A340 322 0 0 0 40 340 Z';
-const INNER='M58 884 H702 V340 A322 304 0 0 0 58 340 Z';
-const frame=
- '<path d="'+PLATE+'" fill="none" stroke="#24211c" stroke-width="3"/>'+
- '<path d="'+INNER+'" fill="none" stroke="#24211c" stroke-width="1.2"/>';
-
-/* ---- corner ornaments: star, crescent, thin filigree ---- */
-function corner(x,y,s){
- return '<g transform="translate('+x+' '+y+') scale('+s+')">'+
- '<path d="M0 -13 L3.4 -3.4 13 0 3.4 3.4 0 13 -3.4 3.4 -13 0 -3.4 -3.4Z" fill="#24211c"/>'+
- '<path d="M-18 0H-13M13 0H18M0 -18V-13M0 13V18" stroke="#24211c" stroke-width="1.1"/>'+
- '</g>';
-}
-function crescent(x,y,s,flip){
- return '<g transform="translate('+x+' '+y+') scale('+(flip?-s:s)+' '+s+')">'+
- '<path d="M6 -15A15 15 0 1 0 6 15A11 11 0 1 1 6 -15Z" fill="#24211c"/>'+
- '<path d="M18 -8 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6Z" fill="#24211c"/>'+
- '<path d="M-8 20 q10 8 20 0" fill="none" stroke="#24211c" stroke-width="1.1"/></g>';
-}
-const orn=
- corner(112,268,1)+corner(648,268,1)+crescent(96,796,1)+crescent(664,796,1,true)+
- '<path d="M44 372 q54 -22 108 -2M716 372 q-54 -22 -108 -2" fill="none" stroke="#39342d" stroke-width="1" opacity=".5"/>'+
- '<path d="M44 858 q54 20 108 2M716 858 q-54 20 -108 2" fill="none" stroke="#39342d" stroke-width="1" opacity=".5"/>';
-
-/* ---- halo rays + dotted orbit ---- */
-let halo='';
-for(let i=0;i<32;i++){const ang=Math.PI*2*i/32,r1=i%2?196:176,r2=i%4===0?292:258;
- halo+='<path d="M'+(380+Math.cos(ang)*r1).toFixed(1)+' '+(520+Math.sin(ang)*r1).toFixed(1)+'L'+(380+Math.cos(ang)*r2).toFixed(1)+' '+(520+Math.sin(ang)*r2).toFixed(1)+'" stroke="#2a2620" stroke-width="1" opacity=".13"/>';}
-const orbit='<ellipse cx="380" cy="522" rx="300" ry="238" fill="none" stroke="#39342d" stroke-width="1.1" stroke-dasharray="3 10" opacity=".45"/>'+
- '<ellipse cx="380" cy="522" rx="252" ry="200" fill="none" stroke="#39342d" stroke-width=".8" opacity=".28"/>';
-
-/* ---- moon phases along the arch ---- */
-let phases='';
-for(let i=0;i<7;i++){
- const a=Math.PI*(1.12+0.126*i);
- const px=380+Math.cos(a)*300,py=340-Math.sin(a)*292;
- const lit=(i/6);
- phases+='<g transform="translate('+px.toFixed(1)+' '+py.toFixed(1)+')">'+
- '<circle r="8" fill="#eee8d6" stroke="#39342d" stroke-width="1.1"/>'+
- '<path d="M0 -8A8 8 0 0 1 0 8A'+(8-16*Math.abs(lit-0.5)).toFixed(1)+' 8 0 0 '+(lit<0.5?1:0)+' 0 -8Z" fill="#39342d" opacity=".8"/></g>';
-}
-
-/* ---- symbols in the four corners ---- */
-const picks=PICK[kind]||PICK.atm;
-const symLayer=
- '<g transform="translate(186 210) scale(.9)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[0])+'</g>'+
- '<g transform="translate(574 210) scale(.9)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".5">'+sym(picks[1])+'</g>'+
- '<g transform="translate(142 862) scale(.52)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".4">'+sym(picks[1])+'</g>'+
- '<g transform="translate(618 862) scale(.52)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".4">'+sym(picks[0])+'</g>';
-
-/* ---- woodcut hatching under the scene ---- */
-let hatch='';for(let i=0;i<26;i++)hatch+='<path d="M'+(72+i*24)+' 866l-22 4" stroke="#39342d" opacity=".33" stroke-width="1"/>';
-
-return '<svg xmlns="http://www.w3.org/2000/svg" width="760" height="940" viewBox="0 0 760 940">'+
- '<defs><pattern id="ink" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#27251f"/><path d="M0 5L5 0" stroke="#d9cdb3" stroke-width=".7"/></pattern>'+
- '<pattern id="pale" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 7L7 0" stroke="#736b5b" stroke-width=".5"/></pattern>'+
- '<radialGradient id="glow" cx="50%" cy="52%" r="50%"><stop offset="0%" stop-color="#fff8e2" stop-opacity=".95"/><stop offset="58%" stop-color="#fff8e2" stop-opacity=".4"/><stop offset="100%" stop-color="#fff8e2" stop-opacity="0"/></radialGradient>'+
- '<clipPath id="plate"><path d="'+PLATE+'"/></clipPath></defs>'+
- '<g clip-path="url(#plate)">'+
- '<ellipse cx="380" cy="520" rx="310" ry="250" fill="url(#glow)"/>'+
- halo+orbit+phases+
- '<g stroke="#26231e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(108 262) scale(1.18)">'+art+'</g></g>'+
- hatch+'</g>'+
- frame+orn+symLayer+
- '</svg>'}
+ const scene=ART_SCENES[kind]||ART_SCENES.atm;
+ const R=330, CY=460;
+ /* ---- 액자: 원형 메달리온 (180도 회전해도 같은 모양) ---- */
+ let ticks='';
+ for(let i=0;i<56;i++){const a=Math.PI*2*i/56,r1=R-13,r2=R-5;
+  ticks+='<path d="M'+(380+Math.cos(a)*r1).toFixed(1)+' '+(CY+Math.sin(a)*r1).toFixed(1)+'L'+(380+Math.cos(a)*r2).toFixed(1)+' '+(CY+Math.sin(a)*r2).toFixed(1)+'" stroke="#39342d" stroke-width="1.1" opacity=".5"/>';}
+ const knot4=function(x,y){return '<path d="M'+x+' '+y+' l11 11 -11 11 -11 -11Z" fill="#24211c"/>';};
+ const medallion=
+  '<circle cx="380" cy="'+CY+'" r="'+R+'" fill="#f7f1e0"/>'+
+  '<circle cx="380" cy="'+CY+'" r="'+R+'" fill="none" stroke="#24211c" stroke-width="3.2"/>'+
+  '<circle cx="380" cy="'+CY+'" r="'+(R-18)+'" fill="none" stroke="#39342d" stroke-width="1.3" opacity=".6"/>'+
+  ticks+
+  knot4(380,CY-R)+knot4(380,CY+R)+knot4(380-R,CY)+knot4(380+R,CY)+
+  '<circle cx="380" cy="'+(CY-R)+'" r="3" fill="#eee8d6"/><circle cx="380" cy="'+(CY+R)+'" r="3" fill="#eee8d6"/>'+
+  '<circle cx="'+(380-R)+'" cy="'+CY+'" r="3" fill="#eee8d6"/><circle cx="'+(380+R)+'" cy="'+CY+'" r="3" fill="#eee8d6"/>';
+ /* ---- 판 모서리 기호: 180도 회전에 대칭 ---- */
+ const SYM={
+  sword:'<g><path d="M0 -40 L7 -28 L5 20 L-5 20 L-7 -28Z"/><path d="M-17 20H17M0 20V38M-8 38H8M0 -40V-46"/></g>',
+  key:'<g><circle cx="0" cy="-24" r="12"/><circle cx="0" cy="-24" r="5"/><path d="M0 -12V34M0 26H10M0 16H8M0 6H6"/></g>',
+  scale:'<g><path d="M0 -34V30M-18 30H18M-26 -20H26"/><path d="M-26 -20 L-34 2 H-18Z"/><path d="M26 -20 L34 2 H18Z"/><path d="M0 -34 L-26 -20M0 -34 L26 -20"/></g>',
+  hourglass:'<g><path d="M-18 -30H18M-18 30H18M-14 -30C-14 -10 0 -8 0 0C0 8 -14 10 -14 30M14 -30C14 -10 0 -8 0 0C0 8 14 10 14 30"/><path d="M-9 20H9"/></g>',
+  lock:'<g><rect x="-15" y="-6" width="30" height="30"/><path d="M-8 -6V-16A8 8 0 0 1 8 -16V-6"/><circle cx="0" cy="9" r="3.5"/><path d="M0 13V19"/></g>',
+  star:'<g><path d="M0 -22 L5 -6 21 0 5 6 0 22 -5 6 -21 0 -5 -6Z"/><path d="M-30 0H-24M24 0H30M0 -32V-26M0 26V32"/></g>',
+  moon:'<g><path d="M5 -20A20 20 0 1 0 5 20A15 15 0 1 1 5 -20Z"/><path d="M22 -18 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"/></g>',
+  rings:'<g><circle cx="-10" cy="0" r="14"/><circle cx="10" cy="0" r="14"/></g>',
+  hook:'<g><path d="M0 -30V4A11 11 0 0 0 22 4"/><path d="M-7 -30H7"/><path d="M22 4 l-3 -7"/></g>',
+  eye:'<g><path d="M-26 0C-17 -13 17 -13 26 0C17 13 -17 13 -26 0Z"/><circle cx="0" cy="0" r="7"/><path d="M0 -14V-20M-14 -8 l-4 -6M14 -8 l4 -6"/></g>'
+ };
+ const PICK={atm:['key','scale'],fisher:['hook','star'],cat:['moon','key'],mirror:['scale','eye'],fool:['star','key'],
+  cleaner:['lock','sword'],boundary:['sword','lock'],unsent:['moon','star'],knot:['rings','moon'],hourglass:['hourglass','star']};
+ const picks=PICK[kind]||PICK.atm,sym=function(s){return SYM[s]||SYM.star};
+ const symLayer=
+  '<g transform="translate(112 186) scale(.92)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".55">'+sym(picks[0])+'</g>'+
+  '<g transform="translate(648 186) scale(.92)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".55">'+sym(picks[1])+'</g>'+
+  '<g transform="translate(112 734) scale(.92)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".55">'+sym(picks[1])+'</g>'+
+  '<g transform="translate(648 734) scale(.92)" fill="none" stroke="#2a2620" stroke-width="2" opacity=".55">'+sym(picks[0])+'</g>'+
+  '<path d="M56 460 H74M686 460 H704" stroke="#39342d" stroke-width="1.2" opacity=".5"/>';
+ /* ---- 판 모서리 판화 해칭 (180도 회전 대칭) ---- */
+ let hatch='';
+ for(let i=0;i<7;i++){
+  hatch+='<path d="M'+(26+i*13)+' 150 L'+(120+i*13)+' 56" stroke="#39342d" stroke-width="1" opacity=".3"/>';
+  hatch+='<path d="M'+(754-i*13)+' 150 L'+(660-i*13)+' 56" stroke="#39342d" stroke-width="1" opacity=".3"/>';
+  hatch+='<path d="M'+(26+i*13)+' 790 L'+(120+i*13)+' 884" stroke="#39342d" stroke-width="1" opacity=".3"/>';
+  hatch+='<path d="M'+(754-i*13)+' 790 L'+(660-i*13)+' 884" stroke="#39342d" stroke-width="1" opacity=".3"/>';
+ }
+ /* ---- 위·아래 장식 (180도 회전 대칭) ---- */
+ const cap=
+  '<path d="M296 96 H464" stroke="#24211c" stroke-width="1.6"/>'+
+  '<path d="M330 84 H430" stroke="#39342d" stroke-width="1" opacity=".65"/>'+
+  '<path d="M380 66 l9 9 -9 9 -9 -9Z" fill="#24211c"/>'+
+  '<circle cx="380" cy="102" r="2.6" fill="#a23b35"/>'+
+  '<path d="M296 824 H464" stroke="#24211c" stroke-width="1.6"/>'+
+  '<path d="M330 836 H430" stroke="#39342d" stroke-width="1" opacity=".65"/>'+
+  '<path d="M380 854 l9 9 -9 9 -9 -9Z" fill="#24211c"/>'+
+  '<circle cx="380" cy="818" r="2.6" fill="#a23b35"/>';
+ return '<svg xmlns="http://www.w3.org/2000/svg" width="760" height="940" viewBox="0 0 760 940">'+
+  '<defs><pattern id="ink" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#27251f"/><path d="M0 5L5 0" stroke="#d9cdb3" stroke-width=".7"/></pattern>'+
+  '<pattern id="pale" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 7L7 0" stroke="#736b5b" stroke-width=".5"/></pattern>'+
+  '<clipPath id="med"><circle cx="380" cy="'+CY+'" r="'+(R-4)+'"/></clipPath></defs>'+
+  hatch+medallion+
+  '<g clip-path="url(#med)"><g transform="translate(380 '+CY+') scale(1.09)">'+scene+'</g></g>'+
+  cap+symLayer+
+  '</svg>'}
 /* ===== PURE LOGIC (no DOM) ===== */
 const WT=[1,1.1,1.2,1.3,1.45];
 const FEATKEYS=['direct','confirm','distance','concede','indirect','retaliate','repair','care'];
@@ -1163,7 +1370,7 @@ function result(){state.phase='result';const h=state.history,d=state.desires,an=
  '<p class="ed-kicker">READ AT 01:30 — 다섯 번의 답장, 네 번의 속마음</p>'+
  '<h1 class="ed-title">'+esc(card.roman+'. '+card.name)+'</h1>'+
  '<p class="ed-deck">'+esc(card.line)+'</p>'+
- (an.reversed?'<p class="ed-reversed">REVERSED / 보낸 말과 바란 말이 어긋난 카드</p>':'')+
+ (an.reversed?'<div class="ed-rev"><span class="ed-rev-badge">겉 ≠ 속 · 역방향</span><p class="ed-rev-line">겉으로 보낸 말과 <b>속마음이 엇갈려</b>서 카드가 거꾸로 섰어. 이 카드의 뜻은 반대로 읽어.</p></div>':'')+
  '</header>'+
  '<section class="ed-hero"><figure class="ed-figure"><img id="tarot" class="ed-tarot" alt="'+esc(card.name+(an.reversed?' / 역방향':''))+'">'+
  '<figcaption>WOODCUT TAROT / '+esc(card.roman)+' · '+esc(card.en)+(an.reversed?' · REVERSED':'')+'</figcaption>'+
@@ -1265,7 +1472,7 @@ async function makeCard(h,d,mode){const BIG=mode==='story',an=analysis(h,d),e=an
  x.moveTo(52,1470);x.quadraticCurveTo(160,1500,268,1476);x.moveTo(848,1470);x.quadraticCurveTo(740,1500,632,1476);x.stroke();x.globalAlpha=1;
  /* ---- top label + roman cartouche ---- */
  x.textAlign='center';x.fillStyle=an.reversed?'#923d37':'#4a453b';x.font=(BIG?20:17)+'px Georgia,serif';
- x.fillText(an.reversed?'REVERSED / 역방향':'READ AT 01:30 · VOL. 3.8',450,108);
+ x.fillText(an.reversed?'겉 ≠ 속 · 역방향':'READ AT 01:30 · VOL. 3.9',450,108);
  x.strokeStyle='#24211c';x.lineWidth=1.5;x.beginPath();
  x.moveTo(316,124);x.lineTo(584,124);x.lineTo(584,206);x.lineTo(316,206);x.closePath();x.stroke();
  x.lineWidth=.8;x.beginPath();x.moveTo(322,130);x.lineTo(578,130);x.lineTo(578,200);x.lineTo(322,200);x.closePath();x.stroke();
@@ -1355,10 +1562,15 @@ async function storyBlob(){const an=analysis(state.history,state.desires),e=an.c
  /* 마스트헤드 + TYPE 히어로 */
  spText(x,'READ AT 01:30',84,96,18,3.2,'sans-serif',MUTED);
  spText(x,'LOVE TAROT',996,96,18,3.2,'sans-serif',MUTED,'right');
- if(an.reversed)spText(x,'REVERSED · 역방향',540,96,17,1.8,'sans-serif',BRICK,'center');
+ if(an.reversed){
+  x.strokeStyle=BRICK;x.lineWidth=1.6;x.fillStyle='rgba(140,45,35,.07)';
+  x.beginPath();x.rect(372,78,336,36);x.fill();x.stroke();
+  spText(x,'겉 ≠ 속 · 역방향',540,104,19,2.2,'sans-serif',BRICK,'center')}
  x.textAlign='center';x.fillStyle=INK;x.font='112px LoveSerif,serif';x.fillText(an.type,540,236);
  const subSize=fitLines(x,an.tag,880,27,19,'LoveSerif,serif').size;
  x.fillStyle=BODY;x.font=subSize+'px LoveSerif,serif';x.fillText(an.tag,540,288);
+ if(an.reversed){x.textAlign='center';x.fillStyle=BRICK;x.font='19px sans-serif';
+  x.fillText('보낸 말과 속마음이 엇갈려 카드가 거꾸로 섰어 · 뜻은 반대로',540,322)}
  /* 정중앙 타로카드 */
  const CW=480,CH=Math.round(CW*1600/900),CX=540-CW/2,CY=344;
  const u=URL.createObjectURL(await cardBlob(null,null,'story'));
