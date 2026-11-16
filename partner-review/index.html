@@ -183,7 +183,26 @@ textarea{resize:vertical;min-height:70px;line-height:1.55}
 .sheet{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 20px 50px -38px rgba(20,31,50,.55)}
 .doc-head{padding:18px 18px 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff, #fafcff)}
 .doc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;font-size:10.5px;letter-spacing:.06em;color:#8493a8;font-weight:700}
-.doc-top .conf{color:var(--red);letter-spacing:.12em}
+.doc-top .conf{
+  display:inline-flex;align-items:center;gap:5px;padding:3px 7px 2px;
+  border:1.5px solid var(--red);border-radius:3px;line-height:1;
+  color:var(--red);background:#fff6f5;font-size:9.5px;font-weight:850;letter-spacing:.14em;
+  print-color-adjust:exact;-webkit-print-color-adjust:exact;
+}
+.doc-top .conf .sep{font-weight:700;letter-spacing:0;opacity:.55}
+.doc-top .conf .ko{letter-spacing:.1em}
+.sample-band{
+  display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;padding:10px 18px;
+  background:#fdf4e0;border-bottom:1px solid #e3c98d;
+  print-color-adjust:exact;-webkit-print-color-adjust:exact;
+}
+.sample-band .sb-tag{
+  display:inline-block;padding:3px 6px 2px;border-radius:3px;line-height:1;
+  background:#8a5f0a;color:#fff;font-size:9px;font-weight:850;letter-spacing:.16em;
+}
+.sample-band .sb-t{font-size:12.5px;font-weight:850;letter-spacing:-.02em;color:#6b4a08}
+.sample-band .sb-d{font-size:11px;font-weight:600;color:#8a6c2f}
+.foot-conf{display:block;margin-top:7px;font-size:9.5px;font-weight:850;letter-spacing:.12em;color:var(--red)}
 .doc-head h1{font-size:25px;font-weight:830;letter-spacing:-.06em;line-height:1.2;margin:11px 0 5px}
 .doc-head .sub{font-size:12.5px;color:var(--muted)}
 .meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-top:15px}
@@ -459,9 +478,10 @@ svg.radar{width:100%;max-width:330px;height:auto;overflow:visible}
   .stamp{width:80px;height:80px}
   .stamp .st-main{font-size:9.5px}
   .sec-no::after{background:#d4dbe6}
-  .verdict,.summary,.riskbox,.tag,.mini,.okr .oh,.rail i,.grade,.stamp,.acc summary,.blinder{
+  .verdict,.summary,.riskbox,.tag,.mini,.okr .oh,.rail i,.grade,.stamp,.acc summary,.blinder,.sample-band,.doc-top .conf,.foot-conf{
     print-color-adjust:exact;-webkit-print-color-adjust:exact;
   }
+  .sample-band{break-inside:avoid}
   .doc-sec{padding:9pt 0}
   .doc-head,.hero,.summary{padding:10pt 0}
   .blinder{padding:9pt 0}
@@ -1365,6 +1385,9 @@ function radarSVG(areaList){
    ========================================================= */
 var LAST = null;
 var FILE_NO = "";
+/* 예시(데모) 이름 — 이 이름으로 발행하면 상단에 SAMPLE 배지가 붙는다 */
+var SAMPLE_NAMES = ["철수", "홍길동", "아무개"];
+function isSampleName(n){ return SAMPLE_NAMES.indexOf(String(n || "").trim()) >= 0; }
 
 function buildReport(){
   if (STATE.answers.some(function(a){ return a === null; })) {
@@ -1440,11 +1463,15 @@ function buildReport(){
       : "개선 계획 없이는 재계약이 어려운 파트너";
 
   var heatClass = STATE.heat === "hot" ? " hot" : (STATE.heat === "mild" ? " mild" : "");
+  var isSample = isSampleName(STATE.name);
 
   var out = ''
   + '<div class="sheet" id="reportSheet">'
+  +   (isSample
+        ? '<div class="sample-band"><span class="sb-tag">SAMPLE</span><span class="sb-t">예시 결과창</span><span class="sb-d">실제 인물 평가가 아닌 기능 예시입니다</span></div>'
+        : '')
   +   '<div class="doc-head">'
-  +     '<div class="doc-top"><span>' + esc(no) + '</span><span class="conf">CONFIDENTIAL</span></div>'
+  +     '<div class="doc-top"><span>' + esc(no) + '</span><span class="conf">CONFIDENTIAL<span class="sep">//</span><span class="ko">대외비</span></span></div>'
   +     '<h1>2026 파트너 정기 인사평가서</h1>'
   +     '<p class="sub">' + esc(reportDateText()) + ' 발행 · 평가 주기: 분기 1회 · 열람 등급: 기밀(대외비)</p>'
   +     '<dl class="meta-grid">'
@@ -1524,7 +1551,7 @@ function buildReport(){
   +   '</div>'
 
   +   '<div class="doc-foot">'
-  +     '<div class="sign"><b>평가자 서명</b>본 평가서는 12문항 자기 체크 방식으로 작성되었고,<br>제출 시점의 경험에 근거함.<br>' + esc(no) + '</div>'
+  +     '<div class="sign"><b>평가자 서명</b>본 평가서는 12문항 자기 체크 방식으로 작성되었고,<br>제출 시점의 경험에 근거함.<br>' + esc(no) + '<span class="foot-conf">CONFIDENTIAL // 대외비 · 무단 복제·배포 금지</span></div>'
   +     '<div class="seal">PARTNER<br>HR<br>SEAL</div>'
   +   '</div>'
   + '</div>';
@@ -1643,7 +1670,16 @@ function fallbackPNG(){
   /* header */
   ctx.fillStyle = "#224fc5"; ctx.fillRect(0, 0, W, 12);
   y = 58;
-  draw("PARTNER HR · CONFIDENTIAL", PAD, y, F(800, 17), "#224fc5"); y += 44;
+  draw("PARTNER HR · CONFIDENTIAL // 대외비", PAD, y, F(800, 17), "#224fc5");
+  if (isSampleName(STATE.name)){
+    ctx.font = F(800, 17);
+    var hw = ctx.measureText("PARTNER HR · CONFIDENTIAL // 대외비").width;
+    var bx = PAD + hw + 16, by = y - 15, bw = 168, bh = 25;
+    ctx.fillStyle = "#fdf4e0"; ctx.fillRect(bx, by, bw, bh);
+    ctx.strokeStyle = "#c9a45e"; ctx.lineWidth = 1; ctx.strokeRect(bx + .5, by + .5, bw - 1, bh - 1);
+    draw("예시 결과창 (SAMPLE)", bx + 9, by + 17, F(800, 13), "#8a5f0a");
+  }
+  y += 44;
   y += draw("2026 파트너 정기 인사평가서", PAD, y, F(800, 40), "#141f32", CW) + 6;
   var rel = REL_META[STATE.rel] || { period:"교제" };
   y += draw(reportDateText() + " 발행 · " + STATE.name + " · " + STATE.rel + (STATE.period ? " " + STATE.period : ""), PAD, y, F(500, 18), "#4f6077", CW) + 26;
@@ -1748,6 +1784,7 @@ function summaryText(){
   var heatLabel = { mild:"순한맛", hr:"HR 팩폭 기본", hot:"핵불닭" }[STATE.heat];
   var lines = [];
   lines.push("【2026 파트너 정기 인사평가서】");
+  if (isSampleName(STATE.name)) lines.push("[예시 결과창 · SAMPLE] 실제 인물 평가가 아닌 기능 예시입니다");
   lines.push("대상: " + STATE.name + " (" + STATE.rel + (STATE.period ? " · " + STATE.period : "") + ")");
   lines.push("종합: " + r.pct + "점 / 100 · 등급 " + r.grade.g);
   lines.push("처분: " + r.grade.stamp);
