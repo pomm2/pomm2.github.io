@@ -572,7 +572,7 @@ svg.radar{width:100%;max-width:330px;height:auto;overflow:visible}
 
         <div class="field">
           <label for="fName">평가 대상 <span class="opt">필수</span></label>
-          <input type="text" id="fName" placeholder="이름 또는 닉네임 (예: 경준, 썸남A)" maxlength="18" autocomplete="off" enterkeyhint="next">
+          <input type="text" id="fName" placeholder="이름 또는 닉네임 (예: 철수, 썸남A)" maxlength="18" autocomplete="off" enterkeyhint="next">
         </div>
 
         <div class="field">
@@ -673,7 +673,7 @@ svg.radar{width:100%;max-width:330px;height:auto;overflow:visible}
     <h2 id="smTitle">결과 링크 만들기</h2>
     <p class="modal-sub">링크를 받는 사람에게 알려줄 <b>4자리 비밀번호</b>를 정하세요. 그 번호를 넣어야 평가서가 열립니다.</p>
     <label class="modal-lab" for="smPin">공유 비밀번호</label>
-    <input type="text" id="smPin" inputmode="numeric" pattern="[0-9]*" maxlength="4" value="0201" autocomplete="off" aria-describedby="smNote">
+    <input type="text" id="smPin" inputmode="numeric" pattern="[0-9]*" maxlength="4" value="1234" autocomplete="off" aria-describedby="smNote">
     <p class="warn" id="smWarn">숫자 4자리를 입력해 주세요.</p>
     <div class="modal-actions">
       <button type="button" class="btn ghost" id="smCancel">취소</button>
@@ -696,7 +696,7 @@ svg.radar{width:100%;max-width:330px;height:auto;overflow:visible}
 /* =========================================================
    PIN LOCK
    ========================================================= */
-var PIN = "0201";
+var PIN = "1234";
 var pin = "", tries = 0;
 var lock = document.getElementById("lock");
 var lockCard = document.getElementById("lockCard");
@@ -2062,7 +2062,7 @@ var smUrl = $("smUrl"), smResult = $("smResult"), smOk = $("smOk");
 var smBusy = false;
 
 function openShareModal(){
-  smPin.value = "0201";
+  smPin.value = "1234";
   smWarn.classList.remove("show");
   smResult.hidden = true;
   smUrl.value = "";
