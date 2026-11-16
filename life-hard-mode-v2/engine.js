@@ -2,9 +2,9 @@
    저장 키는 lhm_v2_demo 하나만 쓴다. v1.0(v095) 키는 읽지도 쓰지도 않는다. */
 
 (function (global, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else global.LHM = factory();
-})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(globalThis);
+  else global.LHM = factory(global);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (global) {
   'use strict';
 
   var VERSION = '2.0-demo';
