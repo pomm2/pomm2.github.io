@@ -606,8 +606,7 @@ const ART_ROPE=function(d){return '<path d="'+d+'" fill="none" stroke="#24211c" 
 /* 바닥선 + 그림자: 10장 모두 같은 자리에 깔아 판면을 통일한다 */
 const ART_RULE='<path d="M-238 224 H238" stroke="#24211c" stroke-width="2.6"/>'+
  '<path d="M-208 232 H208" stroke="#39342d" stroke-width="1.2" opacity=".5"/>';
-const ART_SHADOW=function(r){return '<ellipse cx="0" cy="217" rx="'+r+'" ry="11" fill="#39342d" opacity=".15"/>'};
-const ART_BASE=ART_SHADOW(150)+ART_RULE;
+const ART_BASE=ART_RULE;
 
 /* ---- 장면 10종: 원점(0,0) 기준, 반지름 285 안쪽 ---- */
 const ART_SCENES={
@@ -872,10 +871,10 @@ function artSvg(kind){
  /* ---- 판 모서리 판화 해칭 (180도 회전 대칭) ---- */
  let hatch='';
  for(let i=0;i<7;i++){
-  hatch+='<path d="M'+(26+i*13)+' 150 L'+(120+i*13)+' 56" stroke="#39342d" stroke-width="1" opacity=".3"/>';
-  hatch+='<path d="M'+(754-i*13)+' 150 L'+(660-i*13)+' 56" stroke="#39342d" stroke-width="1" opacity=".3"/>';
-  hatch+='<path d="M'+(26+i*13)+' 790 L'+(120+i*13)+' 884" stroke="#39342d" stroke-width="1" opacity=".3"/>';
-  hatch+='<path d="M'+(754-i*13)+' 790 L'+(660-i*13)+' 884" stroke="#39342d" stroke-width="1" opacity=".3"/>';
+  hatch+='<path d="M'+(26+i*13)+' 150 L'+(120+i*13)+' 56" stroke="#39342d" stroke-width="1" opacity=".22"/>';
+  hatch+='<path d="M'+(754-i*13)+' 150 L'+(660-i*13)+' 56" stroke="#39342d" stroke-width="1" opacity=".22"/>';
+  hatch+='<path d="M'+(26+i*13)+' 790 L'+(120+i*13)+' 884" stroke="#39342d" stroke-width="1" opacity=".22"/>';
+  hatch+='<path d="M'+(754-i*13)+' 790 L'+(660-i*13)+' 884" stroke="#39342d" stroke-width="1" opacity=".22"/>';
  }
  /* ---- 위·아래 장식 (180도 회전 대칭) ---- */
  const cap=
