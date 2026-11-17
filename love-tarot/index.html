@@ -1359,6 +1359,7 @@ function mismatch(h,d){let best=null;
  return {round:best.r,sent:best.e.c,wanted:best.m.c,intent:best.e.intent,signal:best.e.signal,cat:best.m.cat,kind:best.kind,reversed:['closed-waiting','demand-rest','repair-anger'].indexOf(best.kind)>=0,why:whyMap[best.kind],short:shortMap[best.kind]}}
 /* 네 번 다 겉=속을 고른 판: 엇갈림을 전제한 문단을 그대로 두면 사실과 다르다 */
 const PURE_TENSION={title:'이번엔 어긋난 자리가 없어',body:'네 번 다 보낸 말이랑 속마음이 같은 데 있었어. 그래서 겉≠속으로 뜯을 자리가 거의 없어. 대신 이런 판에서 걸리는 건 “이유까지 말했는지”야. “괜찮아” 한마디랑 “엄마 재검 때문에 내가 더 신경 쓰여서 그래”는 상대한테 남는 게 완전히 달라.'};
+const PURE_SILENT={title:'말을 아낀 판이야',body:'읽씹한 라운드가 있으면 겉≠속을 따질 말 자체가 없어. 대신 이런 판에서 걸리는 건 “말을 아꼈다”는 거야. 상대는 네 마음을 한 번도 못 들었고, 너는 그 밤들을 혼자 다 정리했어. 이건 배려가 아니라 침묵이야.'};
 function honestCount(h,d){let n=0;MOTIVE_ROUNDS.forEach(function(r){const m=motiveAt(r,h,d);if(m&&m.same)n++});return n}
 function metricsOf(h){const f=featureProfile(h);return [{k:'concede',label:'을 지수',value:f.concede},{k:'direct',label:'선 긋기',value:f.direct},{k:'distance',label:'거리 두기',value:f.distance}]}
 function korCount(n){return ['','한','두','세','네','다섯'][n]||String(n)}
@@ -1537,7 +1538,8 @@ function analysis(h,d,stay){
  const qd=quadrantOf(a.anxiety,av);
  const typed=typedList(h);
  const card=mm&&mm.reversed?{roman:CARDS[s.card].roman,en:CARDS[s.card].en,name:CARDS[s.card].name,line:mm.why.split('. ')[0]+'.',art:CARDS[s.card].art}:CARDS[s.card];
- const pure=honestCount(h,d)===4?PURE_TENSION:null;
+ let anySilent=false;for(let i=0;i<h.length;i++)if(isSilentEntry(h,i))anySilent=true;
+ const pure=honestCount(h,d)===4?(anySilent?PURE_SILENT:PURE_TENSION):null;
  const altRound=mm?mm.round:0,first=entryAt(h,0);
  return {anxiety:a.anxiety,avoidance:av,quadrant:qd,type:QUAD_TYPES[qd][0],tag:QUAD_TYPES[qd][1],
   features:f,strategy:s,pro:s.pro,con:s.con,card:card,reversed:!!(mm&&mm.reversed),mismatch:mm,
@@ -1555,20 +1557,26 @@ function groups(h,d){const an=analysis(h,d),mm=an.mismatch||{sent:'',wanted:'',r
  let other=0,best=-1;
  for(const i of [1,2,3,0]){const e=entryAt(h,i);if(!e)continue;const sc=(e.f.distance||0)+(e.f.concede||0);if(sc>best){best=sc;other=i}}
  const me=entryAt(h,4)||entryAt(h,h.length-1)||{c:''};
+ const meSilent=isSilentEntry(h,4)||isSilentEntry(h,h.length-1);
+ const otherSilent=isSilentEntry(h,other);
+ const same=mm.kind==='same';
  const jh=[
   ['시원','어제 그 얘기 왜 꺼냈어ㅋㅋ 표정 봤잖아'],
   ['한결','그건 걔가 잘못했지. 친구들 앞에서 그 얘긴 좀 심했어'],
-  ['지안','사과했는데 답이 “'+short(me.c,32)+'” 이거면 걔도 어디서부터 풀어야 할지 모르겠다ㅋㅋ'],
+  ['지안',meSilent?'사과했는데 답도 없으면 걔도 어디서부터 풀어야 할지 모르겠다ㅋㅋ'
+   :'사과했는데 답이 “'+short(me.c,32)+'” 이거면 걔도 어디서부터 풀어야 할지 모르겠다ㅋㅋ'],
   ['시원','둘 다 지쳐서 결국 한 명이 먼저 접는 수밖에 없지']];
- const same=mm.kind==='same';
  const mn=[
   ['연우','그 말 듣고 웃었어? 나라면 그 자리에서 나왔어'],
-  ['재이',same?'근데 너가 보낸 건 “'+short((entryAt(h,other)||{c:''}).c,34)+'” 이거잖아. 속도 그쪽이었으면 상대도 그대로 들었겠네'
+  ['재이',otherSilent?'근데 너는 읽고도 답을 안 했잖아. 상대가 그걸로 오해할 만도 하지. 그래도 먼저 그런 건 걔잖아'
+   :same?'근데 너가 보낸 건 “'+short((entryAt(h,other)||{c:''}).c,34)+'” 이거잖아. 속도 그쪽이었으면 상대도 그대로 들었겠네'
    :'근데 너가 보낸 건 “'+short((entryAt(h,other)||{c:''}).c,34)+'” 이거잖아. 상대가 그걸로 오해할 만도 하지. 그래도 먼저 그런 건 걔잖아'],
-  same?['도현','이번엔 안 접고 보냈네. 그게 제일 어려운 건데']
+  otherSilent?['도현','이번엔 답장을 아예 안 했네. 그게 제일 센 말인 건 알지']
+   :same?['도현','이번엔 안 접고 보냈네. 그게 제일 어려운 건데']
    :['도현','속으론 “'+short(mm.wanted||'',34)+'” 이랬구나. 그건 말 안 하면 상대는 평생 몰라'],
-  same?['연우','그래서 다음엔 그냥 말하자는 거지. 이번처럼 그대로']
-   :['연우','그래서 다음엔 그냥 말하자는 거지. 돌려 말고']];
+  ['연우',otherSilent?'그래서 다음엔 그냥 말하자는 거지. 읽고 참는 것보다'
+   :same?'그래서 다음엔 그냥 말하자는 거지. 이번처럼 그대로'
+   :'그래서 다음엔 그냥 말하자는 거지. 돌려 말고']];
  const pack=function(rows){return rows.map(function(r){return {n:r[0],c:r[1],tone:CHAT_TONE[r[0]]||'a'}})};
  return {jiwoo:pack(jh),mine:pack(mn)}}
 
@@ -1683,7 +1691,8 @@ function partnerRead(h,d){
    {q:'미안하다는 말이 늦어도 오긴 하니?',ok:(own.length+late.length)>=3,
     d:'인정한 자리: '+list(own.concat(late))+' / 넘어간 자리: '+list(rows.filter(function(x){return x.p.k==='ignore'||x.p.k==='deflect'||x.p.k==='guard'}))},
    {q:'사과 뒤에 변명이 붙니?',ok:bad.length<2,
-    d:bad.length===0?'다섯 번 다 변명 없이 자기 몫만 말했어. 이건 쉽지 않은 거야.'
+    d:(bad.length===0&&own.length===0)?'사과도 변명도 없이 그냥 넘어갔어. 이건 변명보다 나쁜 쪽이야.'
+     :bad.length===0?'다섯 번 다 변명 없이 자기 몫만 말했어. 이건 쉽지 않은 거야.'
      :(bad.length===1?'한 번('+list(bad)+')만 변명이 섞였어. 나머지는 자기 몫으로 말했고.'
      :'변명이 먼저 나온 자리: '+list(bad)+'. 사과랑 변명이 같이 오면 상대 기억엔 변명만 남아.')},
    {q:'너가 선을 그으면 물러서니?',ok:!!(last&&last.p.k==='own'),
