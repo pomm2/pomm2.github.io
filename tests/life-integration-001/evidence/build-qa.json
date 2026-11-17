@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "scope": "임시 게임 core 변경은 버전/별도키만 / scenes,choiceUI 보존 /3fixture valid /계약3분기 동일결과 /JS파싱 /직접 리소스 경로",
+  "reports": [
+    {
+      "choice": 0,
+      "next": "n_preparation",
+      "cashDelta": -600000
+    },
+    {
+      "choice": 1,
+      "next": "n_preparation",
+      "cashDelta": -300000
+    },
+    {
+      "choice": 2,
+      "next": "n_renew",
+      "cashDelta": 0
+    }
+  ],
+  "limits": "브라우저 표시/모바일/실제애니메이션 별도 확인"
+}
