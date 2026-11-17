@@ -1682,7 +1682,8 @@ function partnerRead(h,d){
  const bad=rows.filter(function(x){return x.p.k==='deflect'||x.p.k==='guard'});
  const last=rows[rows.length-1]||null;
  let verdict;
- if(risk>=6)verdict={k:'warn',t:'지금은 너가 접는 쪽으로 굴러가',b:'미안하다는 말은 나오는데 그게 늦고, 자꾸 네 반응에 조건이 붙어. 이대로 가면 다음에도 같은 자리에서 접는 건 너야.'};
+ if(risk>=6)verdict={k:'warn',t:'지금은 너가 접는 쪽으로 굴러가',
+  b:(own.length===0?'이번 다섯 번엔 제대로 인정하는 자리가 없었어. 사과가 없는 자리에서 다음에도 접는 건 너야.':'미안하다는 말은 나오는데 그게 늦고, 자꾸 네 반응에 조건이 붙어. 이대로 가면 다음에도 같은 자리에서 접는 건 너야.')};
  else if(risk>=4)verdict={k:'mid',t:'미안한 마음은 있는데, 전달이 어설퍼',b:'잘못한 건 아는데 그걸 너가 먼저 달래줘야 끝나는 구조야. 나쁜 사람이라서가 아니라, 미루는 버릇이 몸에 밴 거야.'};
  else verdict={k:'ok',t:'최소한 자기가 뭘 잘못했는지는 알아',b:'다섯 번 중에 제대로 인정하는 자리가 있었어. 문제는 인정하고 나서 다음에 어떻게 할지를 안 정한다는 거야.'};
  const list=function(a){return a.length?a.slice().sort(function(x,y){return x.r-y.r}).map(function(x){return 'R'+(x.r+1)}).join('·'):'없어'};
