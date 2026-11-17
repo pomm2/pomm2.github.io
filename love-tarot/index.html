@@ -304,8 +304,9 @@ body[data-phase="verdict"] #app{background:#08090a;max-width:460px;height:100dvh
 @media(max-width:390px){.vd-q{font-size:22px}.vd{padding:20px 17px calc(16px + env(safe-area-inset-bottom))}.vd-opt{font-size:12px;padding:12px}.ed-stayline b{font-size:15px}}
 .ed-stay-x{margin:10px 0 0!important;padding:10px 0 0;border-top:1px solid #2a2c24;font-size:12px;line-height:1.92;color:#d8c9b4!important}
 .ed-pick-x{margin:9px 0 0!important;padding:9px 0 0;border-top:1px solid #33401f;font-size:12px;line-height:1.92;color:#cfd8bd!important}
-.silent-note{display:flex;align-items:center;justify-content:center;gap:9px;margin:8px 0 14px;font-size:12.5px;color:#9aa7b8}
-.silent-note span{font-size:9.5px;letter-spacing:.4px;color:#cfe0a9;border:1px solid #4d5a3a;padding:3px 7px;border-radius:2px}
+.silent-note{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px 0 14px;font-size:12.5px;color:#9aa7b8}
+.silent-note .read-badge{flex-shrink:0;font-size:9.5px;letter-spacing:.4px;color:#cfe0a9;border:1px solid #4d5a3a;padding:3px 7px;border-radius:2px}
+.silent-note .read-label{font-size:12.5px;letter-spacing:.1px;color:#9aa7b8;white-space:nowrap}
 .vd{justify-content:center}
 .vd-opts{margin-bottom:0}
 @media(max-height:720px){.vd{justify-content:flex-start}}
@@ -900,7 +901,7 @@ const STAY=[
    앞에서 어떻게 했는지(읽씹·양보·쿨한 척·직진)와 마지막에 뭘 골랐는지를 겹쳐 읽는다.
    bump: 회피 점수 보정치 */
 const CROSS={
- 'quiet-cut':{bump:8,
+ 'quiet-cut':{bump:14,
   short:'앞에서 다 괜찮은 척(또는 읽씹)해놓고 마지막엔 혼자 정리했네. 이건 갈등을 푼 게 아니라 피한 거야.',
   body:'읽씹하거나 괜찮은 척 넘긴 라운드가 있었고, 마지막엔 혼자 결론을 냈어. 이 조합은 싸운 게 아니라 조용히 문을 닫는 쪽이야. 상대는 마지막 말만 듣고, 그 전에 쌓인 건 아무도 못 들은 채로 남아.',
   fork:'이대로면 3개월 안에 연락이 끊기는 식으로 끝나. 싸운 적이 없어서 둘 다 이유를 몰라.'},
@@ -1289,11 +1290,14 @@ function attachment(h,d){let y=0,x=0,total=0;
  h.forEach(function(a,i){const e=entryAt(h,i);if(!e)return;y+=e.a*WT[i];x+=e.v*WT[i];total+=WT[i]});
  if(d){MOTIVE_ROUNDS.forEach(function(r){if(Number.isInteger(d[r])&&h.length>r){const m=motiveAt(r,h,d);if(!m)return;y+=m.a*0.55;x+=m.v*0.55;total+=0.55}})}
  const anxiety=total?Math.round(y/total):0,avoidance=total?Math.round(x/total):0;
- const quadrant=anxiety>=50?(avoidance>=50?'mixed':'anxious'):(avoidance>=50?'avoidant':'secure');
- const types={secure:['안정형','연락이 없어도 크게 안 흔들려'],anxious:['불안형','답장이 와야 마음이 놓여'],avoidant:['회피형','마음이 시끄러우면 대화창부터 닫아'],mixed:['혼란형','붙잡으면서도 나갈 문을 열어둬']};
- return {anxiety:anxiety,avoidance:avoidance,quadrant:quadrant,type:types[quadrant][0],tag:types[quadrant][1],n:h.length}}
+ const quadrant=quadrantOf(anxiety,avoidance);
+ return {anxiety:anxiety,avoidance:avoidance,quadrant:quadrant,type:QUAD_TYPES[quadrant][0],tag:QUAD_TYPES[quadrant][1],n:h.length}}
 const QUAD_TYPES={secure:['안정형','연락이 없어도 크게 안 흔들려'],anxious:['불안형','답장이 와야 마음이 놓여'],avoidant:['회피형','마음이 시끄러우면 대화창부터 닫아'],mixed:['혼란형','붙잡으면서도 나갈 문을 열어둬']};
-function quadrantOf(an,av){return an>=50?(av>=50?'mixed':'anxious'):(av>=50?'avoidant':'secure')}
+/* 두 축이 다 높아도 한쪽이 20 넘게 앞서면 그쪽으로 읽는다.
+   혼란형은 둘 다 높고 비슷할 때만 (읽씹으로 거리를 크게 벌린 판은 회피형 쪽으로) */
+function quadrantOf(an,av){
+ if(an>=50&&av>=50)return Math.abs(av-an)>=20?(av>an?'avoidant':'anxious'):'mixed';
+ return an>=50?'anxious':(av>=50?'avoidant':'secure')}
 function isSilentEntry(h,i){const a=h&&h[i];return !!a&&!isFree(a)&&!!ROUNDS[i]&&ROUNDS[i].options[a.choice]&&ROUNDS[i].options[a.choice].k==='silent'}
 function crossOf(h,d,stay,f){
  const silent=[];for(let i=0;i<(h||[]).length;i++)if(isSilentEntry(h,i))silent.push(i);
@@ -1900,7 +1904,7 @@ function reaction(){state.phase='reaction';const prev=state.history.slice(0,-1),
  const lastIdx=state.history.length-1;
  const sil=!isFree(a)&&ROUNDS[lastIdx]&&ROUNDS[lastIdx].options[a.choice]&&ROUNDS[lastIdx].options[a.choice].k==='silent';
  root(chatHeader('ROUND '+state.history.length+' / 5')+'<section class="conversation reaction-wrap"><div class="time">'+esc(s.time)+'</div>'+
- (sil?'<div class="silent-note"><span>읽음</span>답장은 안 보냈어</div>':'<div class="msg-row me"><span class="stamp"><span class="unread">1</span>방금</span><div class="bubble">'+esc(a.text)+'</div></div>')+
+ (sil?'<div class="silent-note"><span class="read-badge">읽음</span><span class="read-label">답장은 안 보냈어</span></div>':'<div class="msg-row me"><span class="stamp"><span class="unread">1</span>방금</span><div class="bubble">'+esc(a.text)+'</div></div>')+
  '<div class="incoming-replies">'+e.replies.map(function(t){return '<div class="msg-row"><div class="bubble">'+esc(t)+'</div></div>'}).join('')+'</div>'+
  (e.free?'<div class="free-chip"><b>'+esc(e.name)+'</b><span>'+(e.mixed?'으로 같이 읽혔어':'으로 읽혔어')+'</span></div>':'')+
  '<p class="reaction-comment">'+esc(e.note)+'</p></section><section class="dock"><button class="next" id="next">'+
