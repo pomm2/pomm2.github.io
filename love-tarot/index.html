@@ -1215,7 +1215,7 @@ function repeatLine(h){const es=h.map(function(a,i){return entryAt(h,i)}).filter
  const phrase={distance:'대화를 접는 쪽으로 끝났어',concede:'내 몫을 접는 쪽으로 끝났어',confirm:'확인을 받아야 끝나는 답장이었어',direct:'하고 싶은 말을 정면으로 꺼냈어',indirect:'정면으로 말하지 않고 돌려 말했어',retaliate:'똑같이 돌려주는 쪽이었어',care:'상대 사정을 먼저 챙겼어',repair:'화해를 받아들이는 쪽이었어'};
  let top='direct',mx=-1;Object.keys(counts).forEach(function(k){if(counts[k]>mx){mx=counts[k];top=k}});
  const sample=es.filter(function(o){return o.f[top]})[0]||es[0];
- return {key:top,count:mx,text:'다섯 번 중에 '+korCount(mx)+' 번은 '+phrase[top]+'. 제일 먼저 떠오르는 답장은 “'+(sample?sample.c:'')+'”야.'}}
+ return {key:top,count:mx,text:'답장마다 결을 세어보면, 다섯 번 중 '+korCount(mx)+' 번은 '+phrase[top]+'. 제일 먼저 떠오르는 답장은 “'+(sample?sample.c:'')+'”야.'}}
 
 /* ---------- 직접 쓴 답장: 6패턴 + 세부 특성(복합 의도) ---------- */
 function emptyFeats(){return {direct:0,confirm:0,distance:0,concede:0,indirect:0,retaliate:0,repair:0,care:0}}
@@ -1538,7 +1538,7 @@ function partnerSection(an){const pr=an.partner;
  '<h3 class="ed-h3">계속 만나도 될까 — 위험 신호 3개</h3>'+
  '<div class="ed-check">'+pr.checks.map(function(c){return '<div class="ed-check-row '+(c.ok?'ok':'warn')+'"><span>'+(c.ok?'✓':'!')+'</span><div><b>'+esc(c.q)+'</b><p>'+esc(c.d)+'</p></div></div>'}).join('')+'</div>'+
  '<div class="ed-verdict '+pr.verdict.k+'"><span>한 줄 판정</span><b>'+esc(pr.verdict.t)+'</b><p>'+esc(pr.verdict.b)+'</p></div>'+
- '<p class="ed-body">계속 볼 거면 바뀌어야 하는 건 딱 하나야. <b>'+esc(an.strategy.actTitle)+'</b>. 이거 하나만 되면 나머지는 따라와.</p></section>'}
+ '<p class="ed-body">계속 볼 거면 딱 하나만 해봐. <b>'+esc(an.strategy.actTitle)+'</b>. 이거 하나만 되면 나머지는 따라와.</p></section>'}
 
 function packRow(k,v){return '<div class="ed-pack-row"><span class="ed-pack-k">'+esc(k)+'</span><p>'+esc(v)+'</p>'+
  '<button class="ed-copy" data-copy="'+esc(v)+'" aria-label="'+esc(k)+' 복사">복사</button></div>'}
