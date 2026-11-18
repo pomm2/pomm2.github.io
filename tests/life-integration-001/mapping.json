@@ -1,0 +1,38 @@
+{
+  "version": "v2.1.3-artmap-r1",
+  "baseline": "2587455501f33fa9032efef4b95654634dc64e8f",
+  "approval": "임시 매핑만 승인 / 최종 미술 미승인",
+  "entries": [
+    {
+      "scene": "n_life",
+      "kind": "일상 연락",
+      "asset": "../assets/art-24.webp",
+      "source": "기존 내장 art24",
+      "condition": "항상",
+      "limit": "소하와 통화/메시지를 읽는 일상 맥락 / 휴대폰 반복을 전체적으로 해결한 것은 아님"
+    },
+    {
+      "scene": "n_contract",
+      "kind": "중요 계약 선택",
+      "asset": "../assets/contract-review.webp",
+      "source": "ART-REVIEW-006 B / 미승인 원화",
+      "condition": "선택 전",
+      "limit": "상대와 계약/돌아보기 구도 시범. 대면 장소/상대 외형은 확정된 사건 사실이 아니며 실제 눈 움직임 없음"
+    },
+    {
+      "scene": "n_preparation",
+      "kind": "계약 수락 이후 결과",
+      "asset": "../assets/art-33.webp",
+      "source": "기존 내장 art33",
+      "condition": "이전 n_contract의 solo/joint 계약을 실제 수락했을 때만",
+      "limit": "서류 정리/비용 영수증 맥락. 전용 행사 정산 결과 CG는 누락"
+    }
+  ],
+  "missing": [
+    "라운지 대기실 일상 전용 자산",
+    "성공/실패/취소 행사 결과 전용 CG",
+    "동일 얼굴의 상대→플레이어 시선 전환 원화",
+    "직업별 완전 분리 원화",
+    "기준 외형이 다른 기존 원화/ART006 사이 일관성"
+  ]
+}

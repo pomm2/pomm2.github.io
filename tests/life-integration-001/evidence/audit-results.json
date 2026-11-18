@@ -1,0 +1,344 @@
+{
+  "baseline": "2587455501f33fa9032efef4b95654634dc64e8f",
+  "version": "v2.1.3-plan003",
+  "sceneCount": 32,
+  "tests": [
+    {
+      "id": "T01",
+      "name": "편의점 시작과 신규4입구/급여",
+      "result": "PASS",
+      "evidence": [
+        {
+          "choice": "[편의점 알바 유지]",
+          "job": "retail",
+          "salary": 2100000,
+          "next": "v_retail",
+          "day": 22
+        },
+        {
+          "choice": "[라운지 접객원으로 이직]",
+          "job": "night",
+          "salary": 4500000,
+          "next": "n_first",
+          "day": 7
+        },
+        {
+          "choice": "[BJ 방송 시작]",
+          "job": "streamer",
+          "salary": 1200000,
+          "next": "v_stream",
+          "day": 18
+        },
+        {
+          "choice": "[촬영 보조로 이직 / 모델 준비]",
+          "job": "model",
+          "salary": 1700000,
+          "next": "v_model",
+          "day": 24
+        }
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "모델 준비와 데뷔 분리/이직 이름",
+      "result": "PASS",
+      "evidence": {
+        "job": "프리랜서 광고 모델",
+        "cash": 4552689,
+        "salary": 0
+      }
+    },
+    {
+      "id": "T03",
+      "name": "40만원 현금부족 차단",
+      "result": "PASS",
+      "evidence": "부족 현금 선택은 실행 거절"
+    },
+    {
+      "id": "T04",
+      "name": "협상800만 실수령/전액반환",
+      "result": "PASS",
+      "evidence": {
+        "seed": 1,
+        "received": 8000000,
+        "returned": 8000000,
+        "cashAfterReceipt": 12203226
+      }
+    },
+    {
+      "id": "T05",
+      "name": "NPC 무작위/회차 저장 유지",
+      "result": "PASS",
+      "evidence": {
+        "kinds": {
+          "steady": 41,
+          "demanding": 18
+        },
+        "scope": "도윤만/초기회차전체배정아님"
+      }
+    },
+    {
+      "id": "T06",
+      "name": "비밀 공개 여부가 실제본문에 남음",
+      "result": "PASS",
+      "evidence": {
+        "eventKnowledge": true,
+        "supportAfter": 0
+      }
+    },
+    {
+      "id": "T07",
+      "name": "관계가 공동계약 기회로 연결",
+      "result": "PASS",
+      "evidence": {
+        "low": [
+          "“제 이름으로 할게요.”",
+          "“이번 건은 안 맡을게요.”"
+        ],
+        "high": [
+          "“제 이름으로 할게요.”",
+          "“소하랑 반씩 맡을게요.”",
+          "“이번 건은 안 맡을게요.”"
+        ]
+      }
+    },
+    {
+      "id": "T08",
+      "name": "동일계약 위험성공/실패 손익 차이",
+      "result": "PASS",
+      "evidence": {
+        "success": {
+          "net": 2400000,
+          "choiceCash": 3000000,
+          "ending": [
+            "내 이름으로 맡은 행사는 예약 목표를 넘겼다. 선금과 잔금에서 예약금과 현장 비용을 뺀 내 순손익은 ＋2,400,000원이다.",
+            "다음 행사 견적을 요청받았다. 조건을 다시 보고 답할 수 있다.",
+            "도윤의 지원은 끝났다. 남아 있는 돈은 받기로 합의했던 기간의 지원금과 일한 보수다.",
+            "소하에게 다음 근무 일정을 보냈다.",
+            "현재 일은 편의점 야간 알바. 월 근로수입은 2,100,000원이다.",
+            "남은 대출은 30,089,687원. 이번에 남긴 현금은 7,270,000원이다."
+          ]
+        },
+        "failure": {
+          "net": -600000,
+          "choiceCash": 0,
+          "ending": [
+            "내 이름으로 맡은 행사는 예약 목표에 못 미쳤다. 선금과 잔금에서 예약금과 현장 비용을 뺀 내 순손익은 −600,000원이다.",
+            "이번 정산을 기준으로 다음에는 어떤 비용까지 맡을지 다시 계산하고 있다.",
+            "도윤의 지원은 끝났다. 남아 있는 돈은 받기로 합의했던 기간의 지원금과 일한 보수다.",
+            "소하에게 다음 근무 일정을 보냈다.",
+            "현재 일은 편의점 야간 알바. 월 근로수입은 2,100,000원이다.",
+            "남은 대출은 30,089,687원. 이번에 남긴 현금은 4,270,000원이다."
+          ]
+        }
+      }
+    },
+    {
+      "id": "T09",
+      "name": "未확정약속 취소라벨 오류 재현",
+      "result": "PASS",
+      "evidence": {
+        "action": "추가 일정을 받는다",
+        "labels": [
+          {
+            "text": "추가 보수 +₩2,000,000",
+            "kind": "reward"
+          },
+          {
+            "text": "생일 약속 취소",
+            "kind": "cost"
+          },
+          {
+            "text": "피로 증가",
+            "kind": "cost"
+          },
+          {
+            "text": "빠지는 근무 정산 −₩350,000",
+            "kind": "cost"
+          }
+        ],
+        "canceledSoha": false
+      }
+    },
+    {
+      "id": "T10",
+      "name": "상태가 확률/행동/본문에 영향",
+      "result": "PASS",
+      "evidence": {
+        "low": 0.35,
+        "high": 0.6,
+        "appearance": "외모상태필드없음"
+      }
+    },
+    {
+      "id": "T11",
+      "name": "돈 외 관계선택/후속",
+      "result": "PASS",
+      "evidence": {
+        "cash": 0,
+        "health": -4,
+        "relations": {
+          "minseo": 0,
+          "soha": 1,
+          "doyun": 0,
+          "vendor": 0
+        },
+        "ending": [
+          "현재 일은 편의점 야간 알바. 월 근로수입은 2,100,000원이다.",
+          "남은 대출은 30,169,633원. 이번에 남긴 현금은 4,510,000원이다."
+        ]
+      }
+    },
+    {
+      "id": "T12",
+      "name": "이력없는행사 엔딩 미삽입/엔딩객체1개",
+      "result": "PASS",
+      "evidence": {
+        "endings": [
+          "ending"
+        ],
+        "ending24": "명시된24종판정/컬렉션없음"
+      }
+    },
+    {
+      "id": "T13",
+      "name": "조기상환에도 종료선택 없음",
+      "result": "PASS",
+      "evidence": {
+        "debt": 0,
+        "ended": false,
+        "choices": [
+          "[편의점 알바 유지]",
+          "[라운지 접객원으로 이직]",
+          "[BJ 방송 시작]",
+          "[촬영 보조로 이직 / 모델 준비]"
+        ]
+      }
+    },
+    {
+      "id": "T14",
+      "name": "구저장형식/이름마이그레이션",
+      "result": "PASS",
+      "evidence": {
+        "valid": true,
+        "job": "기획사 사무 계약직",
+        "key": "lhm_v21_life_first_20261117"
+      }
+    },
+    {
+      "id": "T15",
+      "name": "4입구×5성격 2000회 신규실행/180일",
+      "result": "PASS",
+      "evidence": {
+        "games": 2000,
+        "edges": 13624,
+        "routeStats": {
+          "retail": {
+            "min": 5,
+            "max": 5,
+            "maxDateSkip": 78,
+            "games": 500
+          },
+          "night": {
+            "min": 15,
+            "max": 17,
+            "maxDateSkip": 25,
+            "games": 500
+          },
+          "streamer": {
+            "min": 5,
+            "max": 5,
+            "maxDateSkip": 72,
+            "games": 500
+          },
+          "model": {
+            "min": 5,
+            "max": 5,
+            "maxDateSkip": 84,
+            "games": 500
+          }
+        },
+        "visited": [
+          "v_retail",
+          "v_retail2",
+          "common_opportunity",
+          "last",
+          "n_first",
+          "n_promise",
+          "n_meet",
+          "n_information",
+          "n_offer",
+          "n_conditions",
+          "n_afterpromise",
+          "n_follow",
+          "n_contract",
+          "n_renew",
+          "n_life",
+          "n_relationship",
+          "n_preparation",
+          "n_settlement",
+          "v_stream",
+          "v_stream2",
+          "v_model",
+          "v_model2"
+        ],
+        "observedEndingTitles": [
+          "상환일 다음 날",
+          "다음 약속이 잡혀 있다",
+          "낮에 출근하는 생활",
+          "다음 달 근무표",
+          "둘이 나눠 맡는 다음 일",
+          "돌려준 선금, 남겨둔 일정",
+          "내 번호로 들어오는 견적",
+          "다음 견적서를 다시 쓰는 밤",
+          "대출 잔액 0원",
+          "다음 계약을 기다리며"
+        ]
+      }
+    },
+    {
+      "id": "T16",
+      "name": "개발설명 잔존/블랙코미디는 체감 QA 별도",
+      "result": "PASS",
+      "evidence": "선불금과 예약금 처리는 끝났다. 이번에는 현장에 필요한 자료를 정리할 차례다. 새 비용을 지불하는 준비 옵션은 아직 조건이 정해지지 않아 제안받지 않았다. 지금 정할 건 누구에게 어떤 정보를 전할지다."
+    }
+  ],
+  "findings": [
+    {
+      "id": "BUG-01",
+      "priority": "P1",
+      "scene": "n_conditions",
+      "issue": "확정 약속이 없어도 생일 약속 취소 비용 라벨 표시",
+      "actual": [
+        {
+          "text": "추가 보수 +₩2,000,000",
+          "kind": "reward"
+        },
+        {
+          "text": "생일 약속 취소",
+          "kind": "cost"
+        },
+        {
+          "text": "피로 증가",
+          "kind": "cost"
+        },
+        {
+          "text": "빠지는 근무 정산 −₩350,000",
+          "kind": "cost"
+        }
+      ]
+    },
+    {
+      "id": "ISSUE-02",
+      "priority": "P2",
+      "scene": "n_preparation",
+      "issue": "플레이 대사에 미승인 제작조건 설명이 노출",
+      "actual": "선불금과 예약금 처리는 끝났다. 이번에는 현장에 필요한 자료를 정리할 차례다. 새 비용을 지불하는 준비 옵션은 아직 조건이 정해지지 않아 제안받지 않았다. 지금 정할 건 누구에게 어떤 정보를 전할지다."
+    }
+  ],
+  "limits": [
+    "VM 기능 QA/실제 브라우저 전 경로 플레이 아님",
+    "주관적 재미/자연스러운 대사/180일 체감은 미통과",
+    "24엔딩/전체NPC 시스템 QA 아님"
+  ]
+}
