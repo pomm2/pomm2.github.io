@@ -2113,7 +2113,7 @@ function partnerSection(an){const pr=an.partner;
  const fork=function(title,steps,cls,tag){return '<div class="ed-fork '+cls+'"><div class="ed-fork-h"><span>'+tag+'</span><b>'+esc(title)+'</b></div>'+
   steps.map(function(s,i){return '<div class="ed-fork-step"><span>'+['1개월','2개월','3개월'][i]+'</span><p>'+esc(s)+'</p></div>'}).join('')+'</div>'};
  return '<section class="ed-sec"><p class="ed-num"><b>10</b> 3개월</p><h2>이대로 3개월 vs 오늘 선 긋기</h2>'+
- '<p class="ed-lede">'+(q.text?'R'+(q.round+1)+'에서 “'+esc(short(q.text,26))+'” 보낸 그 선택부터 갈라져':'지금 이 흐름 그대로')+'</p>'+
+ '<p class="ed-lede">'+(q.text?'R'+(q.round+1)+'에서 “'+esc(short(q.text,26))+'”라고 보낸 그 선택부터 갈라져':'지금 이 흐름 그대로')+'</p>'+
  fork('이대로 가면',st.keep3,'keep','A')+fork('지금 선 그으면',st.line3,'cut','B')+
  (an.stay?'<div class="ed-pick"><span>너가 마지막에 고른 쪽</span><b>'+esc(an.stay.fork)+' · '+esc(an.stay.tag)+'</b><p>'+esc(an.stay.forkNote)+'</p>'+(an.cross?'<p class="ed-pick-x">'+esc(an.cross.fork)+'</p>':'')+'</div>':'')+
  '<p class="ed-note">두 갈래 다 너가 고른 답장에서 시작된 흐름이야. 운이 아니라 순서 문제라서, 순서만 바꿔도 B로 간다.</p></section>'}function chatsAndBlind(an,h,d){const pr=an.partner;
