@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>390px QA 프레임 / LIFE HARD MODE INTEGRATION-001</title>
+<style>
+  body{margin:0;background:#20202a;color:#e8e4ee;font:13px/1.6 system-ui,sans-serif}
+  header{padding:6px 12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #3a3a48}
+  header a{color:#9fc6ff;text-decoration:none;border-bottom:1px dotted #9fc6ff}
+  header b{font-weight:700;letter-spacing:.02em}
+  #log{color:#ffd08a}
+  .wrap{padding:8px 0}
+  iframe{width:390px;height:844px;border:0;background:#fff;display:block;margin:0 auto;box-shadow:0 0 0 1px #4a4a5c}
+</style>
+<header>
+  <b>390×844 QA 프레임</b>
+  <span>QA 전용 껍데기. 실제 게임/UI를 390px 폭으로 띄웁니다.</span>
+  <a href="?src=../game/">게임</a>
+  <a href="?src=../ui.html">UI 시범</a>
+  <a href="?src=../compare.html">4상태 비교</a>
+  <a href="?src=../game/">새로고침</a>
+  <span id="log">오류 기록 없음</span>
+</header>
+<div class="wrap"><iframe id="f" title="390px QA 프레임"></iframe></div>
+<script>
+  const p = new URLSearchParams(location.search);
+  const src = p.get('src') || '../game/';
+  const f = document.getElementById('f');
+  const logEl = document.getElementById('log');
+  const errors = [];
+  window.__qaErrors = errors;
+  f.addEventListener('load', () => {
+    let w;
+    try { w = f.contentWindow; } catch (e) { return; }
+    w.addEventListener('error', e => {
+      const t = e.target;
+      if (t && (t.tagName === 'IMG' || t.tagName === 'SCRIPT' || t.tagName === 'LINK')) {
+        errors.push('resource: ' + (t.currentSrc || t.src || t.href));
+      } else {
+        errors.push('error: ' + e.message + ' @ ' + (e.filename || '') + ':' + (e.lineno || ''));
+      }
+      render();
+    }, true);
+    w.addEventListener('unhandledrejection', e => { errors.push('rejection: ' + e.reason); render(); });
+    const ce = w.console.error;
+    w.console.error = function () { errors.push('console.error: ' + [].join.call(arguments, ' ')); ce.apply(w.console, arguments); render(); };
+    render();
+  });
+  function render() {
+    logEl.textContent = errors.length ? '오류 ' + errors.length + '건 — ' + errors.slice(0, 3).join(' / ') : '오류 기록 없음';
+  }
+  f.src = src;
+</script>
+</html>
