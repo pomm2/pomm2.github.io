@@ -1928,7 +1928,7 @@ function insightsOf(h,d,mm){
  picks.slice(0,3).forEach(function(ri){
   if(lines.length>=2)return;
   const x=ev[ri];if(!x||seen[x.text])return;seen[x.text]=1;
-  lines.push('R'+x.r+' “'+short(x.text,34)+'” — 걔는 이걸 “'+x.signal+'”로 들었을 수 있어'+(x.intent?' (고른 이유 · '+x.intent+')':'')+'.');
+  lines.push('R'+x.r+' “'+short(x.text,34)+'” — 걔는 “'+x.signal+'”로 들었을 수 있어'+(x.intent?' (고른 이유 · '+x.intent+')':'')+'.');
  });
  out.push({k:'receive',title:'걔 폰엔 이렇게 보였어',chips:picks.slice(0,2).map(function(ri){return 'R'+(ri+1)}),
   lead:'보낸 말과, 걔가 들은 것',
