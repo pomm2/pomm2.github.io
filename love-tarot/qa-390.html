@@ -1,9 +1,12 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><title>QA 390</title>
-<style>html,body{margin:0;background:#2b2b2b}iframe{display:block;border:0;width:390px;height:844px;background:#fff}
+<style>html,body{margin:0;background:#2b2b2b}iframe{display:block;border:0;width:390px;background:#fff}
 #log{position:fixed;left:400px;top:0;width:560px;height:100%;overflow:auto;color:#9fe08a;font:11px/1.6 monospace;padding:8px;white-space:pre-wrap}
-#log b{color:#ff9c8a}</style></head>
+</style></head>
 <body>
-<iframe id="f" src="./index.html?qa=1" width="390" height="844"></iframe>
+<script>
+const H=(new URLSearchParams(location.search).get('h')||'844');
+document.write('<iframe id="f" src="./index.html?qa=1" width="390" height="'+H+'"></iframe>');
+</script>
 <div id="log">console/errors…</div>
 <script>
 const f=document.getElementById('f'),log=document.getElementById('log');
@@ -13,6 +16,6 @@ f.addEventListener('load',()=>{
   w.addEventListener('error',e=>add('ERROR '+e.message,1));
   w.addEventListener('unhandledrejection',e=>add('REJECT '+(e.reason&&e.reason.message||e.reason),1));
   const ce=w.console;['error','warn'].forEach(k=>{const o=ce[k].bind(ce);ce[k]=function(){add(k.toUpperCase()+' '+[].join.call(arguments,' '),k==='error');o.apply(ce,arguments)}});
-  add('frame ready');
+  add('frame ready '+H);
 });
 </script></body></html>
