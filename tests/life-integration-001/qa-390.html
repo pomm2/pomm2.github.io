@@ -15,16 +15,16 @@
 <header>
   <b>390×844 QA 프레임</b>
   <span>QA 전용 껍데기. 실제 게임/UI를 390px 폭으로 띄웁니다.</span>
-  <a href="?src=../game/">게임</a>
-  <a href="?src=../ui.html">UI 시범</a>
-  <a href="?src=../compare.html">4상태 비교</a>
-  <a href="?src=../game/">새로고침</a>
+  <a href="?src=game/">게임</a>
+  <a href="?src=ui.html">UI 시범</a>
+  <a href="?src=compare.html">4상태 비교</a>
+  <a href="?src=game/">새로고침</a>
   <span id="log">오류 기록 없음</span>
 </header>
 <div class="wrap"><iframe id="f" title="390px QA 프레임"></iframe></div>
 <script>
   const p = new URLSearchParams(location.search);
-  const src = p.get('src') || '../game/';
+  const src = p.get('src') || 'game/';
   const f = document.getElementById('f');
   const logEl = document.getElementById('log');
   const errors = [];
