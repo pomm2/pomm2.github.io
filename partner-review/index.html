@@ -396,9 +396,7 @@ svg.radar{width:100%;max-width:250px;height:auto;overflow:visible}
 /* 문서 하단 고지 — 화면·PDF·PNG 공통 포함 */
 .foot-disclaimer{margin-top:9px;padding-top:7px;border-top:1px dotted #dbe2ea;font-size:8.5px;color:#8493a3;letter-spacing:.01em;line-height:1.5}
 .foot-disclaimer b{font-weight:800;color:#6b7a8c;letter-spacing:.04em}
-/* PNG 캡처용 고정 폭 렌더 (화면 레이아웃에는 영향 없음) */
-.sheet.exporting{width:760px!important;max-width:none!important}
-.sheet.exporting .memo p,.sheet.exporting .rv td{letter-spacing:-.01em}
+
 
 @media(max-width:560px){
   .doc-head,.doc-sec,.doc-foot{padding-left:15px;padding-right:15px}
@@ -1617,6 +1615,7 @@ function radarSVG(areaList){
    ========================================================= */
 var LAST = null;
 var FILE_NO = "";
+var SHEET_HTML = "";
 /* 예시(데모) 이름 — 이 이름으로 발행하면 상단에 SAMPLE 배지가 붙는다 */
 var SAMPLE_NAMES = ["철수", "홍길동", "아무개"];
 function isSampleName(n){ return SAMPLE_NAMES.indexOf(String(n || "").trim()) >= 0; }
@@ -1846,6 +1845,7 @@ function buildReport(){
   +   '</div>'
   + '</div>';
 
+  SHEET_HTML = out;
   var container = $("reportOut");
   container.innerHTML = out;
   setStep("step-report");
@@ -1887,14 +1887,14 @@ $("btnPng").addEventListener("click", async function(){
   btn.disabled = true; btn.textContent = "이미지 만드는 중…";
   try {
     if (window.html2canvas){
-      /* 모바일에서도 글자가 뭉개지지 않도록 문서를 760px 고정 폭으로 다시 렌더한 뒤
-         출력 폭 1080px 기준 배율로 캡처함 (세로 길이에 따라 배율을 깎지 않음). */
+      /* 화면 폭(모바일 390 포함)과 무관하게, 760px 고정 폭 문서를 오프스크린에 다시 렌더해
+         1080px 출력 기준 배율로 캡처함 — 세로가 길어도 배율을 깎지 않음. */
       var EXPORT_W = 1080, SHEET_W = 760;
-      node.classList.add("exporting");
+      var job = await renderExportNode(SHEET_W);
       var canvas;
       try {
-        canvas = await window.html2canvas(node, {
-          scale: Math.min(3, Math.max(1, EXPORT_W / SHEET_W)),
+        canvas = await window.html2canvas(job.node, {
+          scale: Math.min(3.2, Math.max(1, EXPORT_W / SHEET_W)),
           backgroundColor: "#ffffff",
           useCORS: true,
           logging: false,
@@ -1904,7 +1904,7 @@ $("btnPng").addEventListener("click", async function(){
           scrollY: 0
         });
       } finally {
-        node.classList.remove("exporting");
+        if (job.frame && job.frame.parentNode) job.frame.parentNode.removeChild(job.frame);
       }
       var url = canvas.toDataURL("image/png");
       var name = fileName("png");
@@ -1927,6 +1927,41 @@ $("btnPng").addEventListener("click", async function(){
     btn.disabled = false; btn.textContent = "이미지(PNG) 저장";
   }
 });
+
+/* 화면 폭과 무관한 고정 폭 문서에서 시트를 다시 렌더 (PNG 캡처용) */
+function renderExportNode(width){
+  return new Promise(function(resolve, reject){
+    var css = "";
+    document.querySelectorAll("style").forEach(function(st){ css += st.textContent + "\n"; });
+    var head = '<meta charset="utf-8">';
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(function(l){
+      head += '<link rel="stylesheet" href="' + l.href + '">';
+    });
+    var body = '<body style="margin:0;background:#fff"><div style="width:' + width + 'px">' + SHEET_HTML + '</div></body>';
+    var f = document.createElement("iframe");
+    f.setAttribute("aria-hidden", "true");
+    f.style.cssText = "position:fixed;left:-12000px;top:0;width:1024px;height:1200px;border:0;background:#fff";
+    document.body.appendChild(f);
+    var d = f.contentDocument;
+    if (!d){ if (f.parentNode) f.parentNode.removeChild(f); reject(new Error("no-doc")); return; }
+    try {
+      d.open(); d.write("<!DOCTYPE html><html lang=\"ko\"><head>" + head + "<style>" + css + "</style></head>" + body + "</html>"); d.close();
+    } catch(e){
+      if (f.parentNode) f.parentNode.removeChild(f);
+      reject(e); return;
+    }
+    var settled = false;
+    function done(){
+      if (settled) return;
+      var n = d.getElementById("reportSheet");
+      if (!n){ if (f.parentNode) f.parentNode.removeChild(f); reject(new Error("no-sheet")); return; }
+      settled = true;
+      setTimeout(function(){ resolve({ node:n, frame:f }); }, 260);
+    }
+    try { d.fonts.ready.then(done); } catch(e){}
+    setTimeout(done, 1500);
+  });
+}
 
 function fallbackPNG(){
   if (!LAST) return;
