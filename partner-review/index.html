@@ -1140,6 +1140,7 @@ function fillTokens(t){
 
 /* ---- 초안 보존 (새로고침·잠금 후 재입장 대응) ---- */
 var DRAFT_KEY = "pr.draft.v2";
+var STAGE = "info";
 function saveDraft(at){
   if (!$("step-info").hidden){
     STATE.name = $("fName").value.trim();
@@ -1151,7 +1152,7 @@ function saveDraft(at){
       name:STATE.name, rel:STATE.rel, period:STATE.period, memo:STATE.memo,
       heat:STATE.heat, feel:STATE.feel,
       answers:STATE.answers.map(function(v){ return (v === null || v === undefined) ? -1 : v; }),
-      q:STATE.q, docNo:STATE.docNo, issue:STATE.issue, at:at || "info"
+      q:STATE.q, docNo:STATE.docNo, issue:STATE.issue, at:at || STAGE
     }));
   } catch(e){}
 }
@@ -1201,7 +1202,7 @@ function enterApp(){
       toast("작성하던 평가서를 그대로 열었습니다");
       return;
     }
-    if (draft.at === "questions" && STATE.name && STATE.rel){
+    if (draft.at === "q" && STATE.name && STATE.rel){
       showQuestion(Math.min(Math.max(draft.q || 0, 0), QUESTIONS.length - 1));
       toast("작성하던 문항부터 이어집니다");
       return;
@@ -1219,6 +1220,7 @@ function setStep(id){
   ["step-info","step-q","step-heat","step-report"].forEach(function(s){
     $(s).hidden = (s !== id);
   });
+  STAGE = id.replace("step-", "");
   window.scrollTo({ top:0, behavior:"instant" in window ? "instant" : "auto" });
 }
 
@@ -1245,6 +1247,7 @@ document.querySelectorAll("#relChips button").forEach(function(b){
 });
 
 $("fName").addEventListener("input", function(){
+  saveDraft("info");
   var w = $("infoWarn");
   if (!w.classList.contains("show")) return;
   var n = this.value.trim();
@@ -1314,7 +1317,7 @@ function showQuestion(i){
       });
       var doneNow = STATE.answers.filter(function(x){ return x !== null; }).length;
       $("pQ").style.width = Math.round((doneNow / QUESTIONS.length) * 100) + "%";
-      saveDraft("questions");
+      saveDraft("q");
       setTimeout(function(){
         if (i < QUESTIONS.length - 1) showQuestion(i + 1);
         else showHeat();
@@ -2191,7 +2194,7 @@ $("btnRelock").addEventListener("click", function(){
     return;
   }
   /* 잠그기 전에 작성 상태를 보존 — 다시 들어오면 같은 평가서가 그대로 열림 */
-  saveDraft("report");
+  saveDraft();
   try { sessionStorage.removeItem("pr.auth"); } catch(e){}
   pin = ""; paintDots();
   lockErr.classList.remove("show");
